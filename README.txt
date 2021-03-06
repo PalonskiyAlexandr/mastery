@@ -1,0 +1,1 @@
+for deployment write mvn jetty: run in command line
