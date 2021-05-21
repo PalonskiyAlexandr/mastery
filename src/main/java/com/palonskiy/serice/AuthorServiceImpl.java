@@ -3,18 +3,21 @@ package com.palonskiy.serice;
 import com.palonskiy.converters.AuthorConverter;
 import com.palonskiy.converters.BookConverter;
 import com.palonskiy.dao.AuthorDao;
+import com.palonskiy.dao.BookDao;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.exceptions.ExistingEntityException;
 import com.palonskiy.exceptions.NoResultException;
 import com.palonskiy.exceptions.NullAuthorException;
+import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
-import com.palonskiy.model.BookAuthor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -24,18 +27,18 @@ import java.util.stream.Collectors;
 public class AuthorServiceImpl implements AuthorService {
 
     private AuthorDao authorDao;
-    private BookAuthorService bookAuthorService;
     private BookService bookService;
+    private BookDao bookDao;
 
-    public AuthorServiceImpl(AuthorDao authorDao, BookAuthorService bookAuthorService, BookService bookService) {
+    public AuthorServiceImpl(AuthorDao authorDao,BookDao bookDao, BookService bookService) {
         this.authorDao = authorDao;
-        this.bookAuthorService = bookAuthorService;
+        this.bookDao = bookDao;
         this.bookService = bookService;
     }
 
     @Override
     public List<AuthorDto> get() {
-        return AuthorConverter.toDtoList(authorDao.get());
+        return AuthorConverter.toDtoList(authorDao.getAll());
     }
 
     @Override
@@ -50,28 +53,25 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<BookDto> getAuthorBooks(int id) {
-        List<BookAuthor> authorBooks = authorDao.getAuthorBooks().stream()
-                .filter(authorBook -> (authorBook.getAuthor() == authorDao.getById(Long.valueOf(id))))
-                .collect(Collectors.toList());
-        List<Book> books = new ArrayList<>();
-        for (BookAuthor authorBook : authorBooks) {
-            books.add(authorBook.getBook());
-        }
-        return BookConverter.toDtoList(books);
+        return BookConverter.toDtoList(authorDao.getAuthorBooks(Long.valueOf(id)));
     }
 
     @Override
+    //ультра-мусор
     public void add(BookAuthorDto bookAuthorDto) {
         if (bookAuthorDto.getAuthor() != null) {
-            if (authorDao.checkIfExist(bookAuthorDto.getAuthor().getSecondName()) == null) {
-                authorDao.add(AuthorConverter.toAuthor(bookAuthorDto.getAuthor()));
-                Long authorId = authorDao.getId();
-                Long bookId = bookAuthorDto.getBook().getId();
-                if (bookAuthorDto.getBook() != null && bookService.checkIfExist(bookAuthorDto.getBook().getName()) == null) {
-                    bookService.addOnlyBook(bookAuthorDto.getBook());
-                    bookId = bookService.getId();
+            if (!authorDao.checkIfExist(bookAuthorDto.getAuthor()) ) {
+                Author author = AuthorConverter.toAuthor(bookAuthorDto.getAuthor());
+                if (bookAuthorDto.getBook() != null && !bookService.checkIfExist(bookAuthorDto.getBook().getName())) {
+                    Book book = BookConverter.toBook(bookAuthorDto.getBook());
+                    Long bookId = bookDao.add(book);
+                    Long authorId = authorDao.add(author);
+                    book.setAuthors(Arrays.asList(authorDao.getById(authorId)));
+                    bookDao.update(book);
+                    author.setBooks(Arrays.asList(bookDao.getById(bookId)));
+                    authorDao.update(author);
                 }
-                bookAuthorService.add(bookAuthorDto, authorId, bookId);
+                authorDao.add(author);
             } else throw new ExistingEntityException();
         } else
             throw new NullAuthorException();
@@ -83,22 +83,11 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public Long getId() {
-        return authorDao.getId();
-    }
-
-    @Override
     public void delete(int id) {
-        List<Long> books = bookAuthorService.findBooksByAuthor(Long.valueOf(id));
-        for (Long bookId : books) {
-            if (bookAuthorService.findAuthorsByBook(bookId).size() < 2) {
-                bookService.delete(Math.toIntExact(bookId));
-            }
-        }
         authorDao.delete(Long.valueOf(id));
     }
 
-    @Override
+/*    @Override
     public List<BookAuthorDto> sortByBirthday(int year) {
         return Optional.of(bookAuthorService.get().stream()
                 .filter(bookAuthor -> (bookAuthor.getAuthor().getBirthday().getYear() == year))
@@ -132,6 +121,6 @@ public class AuthorServiceImpl implements AuthorService {
                 .collect(Collectors.toList()))
                 .filter(a -> !a.isEmpty())
                 .orElseThrow(() -> new NoResultException());
-    }
+    }*/
 
 }

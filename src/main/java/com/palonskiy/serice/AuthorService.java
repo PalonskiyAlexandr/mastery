@@ -13,8 +13,6 @@ public interface AuthorService {
 
     void add(BookAuthorDto bookAuthorDto);
 
-    Long getId();
-
     void addOnlyAuthor(AuthorDto authorDto);
 
     void delete(int id);
@@ -23,11 +21,11 @@ public interface AuthorService {
 
     void update(AuthorDto authorDto);
 
-    List<BookAuthorDto> sortByBirthday(int year);
+/*    List<BookAuthorDto> sortByBirthday(int year);
 
     List<BookAuthorDto> sortBySex(String sex);
 
     List<BookAuthorDto> sortByName(String name);
 
-    List<BookAuthorDto> sortBySecondName(String name);
+    List<BookAuthorDto> sortBySecondName(String name);*/
 }

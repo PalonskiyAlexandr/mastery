@@ -28,8 +28,10 @@ public class Book {
     @Pattern(regexp = "^[А-ЯA-Z][a-zA-Zа-яА-Я ]+", message = PATTERN_MESSAGE)
     private String name;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private List<BookAuthor> authors = new ArrayList<>();
+    @ManyToMany(mappedBy = "books",
+            cascade = CascadeType.ALL)
+   /* @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)*/
+    private List<Author> authors = new ArrayList<>();
 
     @NotNull(message = NULL_MESSAGE)
     private LocalDate year;
@@ -58,11 +60,11 @@ public class Book {
         this.name = name;
     }
 
-    public List<BookAuthor> getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<BookAuthor> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 

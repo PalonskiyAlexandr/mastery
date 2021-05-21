@@ -1,78 +1,44 @@
 package com.palonskiy.dao;
 
+import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.model.Author;
-import com.palonskiy.model.BookAuthor;
-import org.hibernate.Session;
+import com.palonskiy.model.Book;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class AuthorDaoImpl implements AuthorDao {
-
-    private Long id;
-
-    private SessionFactory sessionFactory;
+public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao  {
 
     public AuthorDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    private Session currentSession() {
-        return sessionFactory.getCurrentSession();
+        super(sessionFactory, Author.class);
     }
 
     @Override
-    public List<Author> get() {
-        return currentSession().createQuery("from Author").list();
+    public List<Book> getAuthorBooks(Long authorId) {
+        String hql = "SELECT b FROM Book b INNER JOIN b.authors a WHERE a.id = :authorId";
+        return currentSession().createQuery(hql, Book.class)
+                .setParameter("authorId", authorId)
+                .getResultList();
     }
 
     @Override
-    public List<BookAuthor> getAuthorBooks() {
-        return currentSession().createQuery("from BookAuthor").list();
-    }
-
-    @Override
-    public Author getById(Long id) {
-        String hql = "from Author b where b.id = :id";
-        return currentSession().createQuery(hql, Author.class)
-                .setParameter("id", id)
-                .getSingleResult();
-    }
-
-    @Override
-    public void add(Author author) {
-        currentSession().save(author);
-        id = author.getId();
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void delete(Long id) {
-        currentSession().delete(getById(id));
-    }
-
-    @Override
-    public Author checkIfExist(String secondName) {
+    public Boolean checkIfExist(AuthorDto authorDto) {
         try {
-            String hql = "from Author b where b.secondName = :secondName";
-            return currentSession().createQuery(hql, Author.class)
-                    .setParameter("secondName", secondName)
-                    .getSingleResult();
+            CriteriaBuilder cb = currentSession().getCriteriaBuilder();
+            CriteriaQuery<Author> query = cb.createQuery(Author.class);
+            Root<Author> tRoot = query.from(Author.class);
+            query.where(cb.equal(tRoot.get("secondName"), authorDto.getSecondName()),cb.equal(tRoot.get("firstName"), authorDto.getFirstName()));
+            currentSession().createQuery(query).getSingleResult();
+            return true;
         } catch (NoResultException e) {
-            return null;
+            return false;
         }
-    }
-
-    @Override
-    public void update(Author author) {
-        currentSession().update(author);
     }
 
 }

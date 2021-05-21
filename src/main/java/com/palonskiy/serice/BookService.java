@@ -12,23 +12,20 @@ public interface BookService {
 
     List<AuthorDto> getBookAuthors(int id);
 
-    void addOnlyBook(BookDto bookDto);
-
-    Long getId();
+    Long addOnlyBook(BookDto bookDto);
 
     void add(BookAuthorDto bookAuthorDto);
-
     void delete(int id);
 
-    Book checkIfExist(String name);
+    Boolean checkIfExist(String name);
 
     BookDto getById(int id);
 
     void update(BookDto bookDto);
 
-    List<BookAuthorDto> sortByYear(int year);
+/*    List<BookAuthorDto> sortByYear(int year);
 
     List<BookAuthorDto> sortByName(String name);
 
-    List<BookAuthorDto> sortByPublisher(String name);
+    List<BookAuthorDto> sortByPublisher(String name);*/
 }

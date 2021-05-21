@@ -41,9 +41,14 @@ public class Author {
     @Enumerated(EnumType.STRING)
     private Sex sex;
 
-
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<BookAuthor> books = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+   /* @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)*/
+    private List<Book> books = new ArrayList<>();
 
     public Author() {
     }
@@ -88,11 +93,11 @@ public class Author {
         this.sex = sex;
     }
 
-    public List<BookAuthor> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<BookAuthor> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 

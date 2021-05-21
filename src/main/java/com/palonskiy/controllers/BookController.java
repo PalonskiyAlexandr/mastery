@@ -19,17 +19,17 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/Mastery_jar/book")
+    @GetMapping("/book")
     public ResponseEntity<List<BookDto>> get() {
         return new ResponseEntity<>(bookService.get(), HttpStatus.OK);
     }
 
-    @GetMapping("/Mastery_jar/bookAuthors/{id}")
+    @GetMapping("bookAuthors/{id}")
     public ResponseEntity<List<AuthorDto>> getBookAuthors(@PathVariable int id) {
         return new ResponseEntity<>(bookService.getBookAuthors(id), HttpStatus.OK);
     }
 
-    @PostMapping("/Mastery_jar/book")
+    @PostMapping("/book")
     public ResponseEntity<?> newBook(@RequestBody BookAuthorDto bookAuthorDto) {
         bookService.add(bookAuthorDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
@@ -52,7 +52,7 @@ public class BookController {
         return new ResponseEntity<>(bookService.getById(id), HttpStatus.OK);
     }
 
-    @GetMapping("/Mastery_jar/bookByName")
+  /*  @GetMapping("/Mastery_jar/bookByName")
     public ResponseEntity<List<BookAuthorDto>> getBookByName(@RequestParam String name) {
         return new ResponseEntity<>(bookService.sortByName(name), HttpStatus.OK);
     }
@@ -65,6 +65,6 @@ public class BookController {
     @GetMapping("/Mastery_jar/bookByPublisher")
     public ResponseEntity<List<BookAuthorDto>> getBookByPublisher(@RequestParam String name) {
         return new ResponseEntity<>(bookService.sortByPublisher(name), HttpStatus.OK);
-    }
+    }*/
 
 }
