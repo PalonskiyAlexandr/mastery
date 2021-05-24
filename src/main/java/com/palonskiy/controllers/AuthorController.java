@@ -1,9 +1,12 @@
 package com.palonskiy.controllers;
 
 import com.palonskiy.dto.AuthorDto;
-import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.serice.AuthorService;
+
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import java.util.List;
 
 @RestController
 public class AuthorController {
+
     private AuthorService authorService;
 
     public AuthorController(AuthorService authorService) {
@@ -19,8 +23,8 @@ public class AuthorController {
     }
 
     @GetMapping("/author")
-    public ResponseEntity<List<AuthorDto>> get() {
-        return new ResponseEntity<>(authorService.get(), HttpStatus.OK);
+    public ResponseEntity<List<AuthorDto>> getAll() {
+        return new ResponseEntity<>(authorService.getAll(), HttpStatus.OK);
     }
 
     @GetMapping("/author/{id}")
@@ -40,8 +44,8 @@ public class AuthorController {
     }
 
     @PostMapping("/author")
-    public ResponseEntity<?> newAuthor(@RequestBody BookAuthorDto bookAuthorDto) {
-        authorService.add(bookAuthorDto);
+    public ResponseEntity<?> newAuthor(@RequestBody AuthorDto AuthorDto) {
+        authorService.add(AuthorDto);
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
@@ -52,22 +56,22 @@ public class AuthorController {
     }
 
 /*    @GetMapping("/bookByAuthorName")
-    public ResponseEntity<List<BookAuthorDto>> getBookByAuthorName(@RequestParam String name) {
-        return new ResponseEntity<>(authorService.sortByName(name), HttpStatus.OK);
+    public ResponseEntity<List<BookDto>> getBookByAuthorName(@RequestParam String name) {
+        return new ResponseEntity<>(authorService.getByJoinField(name, "firstName"), HttpStatus.OK);
     }
-
+//LocalDate???
     @GetMapping("/bookByAuthorBirthday")
-    public ResponseEntity<List<BookAuthorDto>> getBookByAuthorBirthday(@RequestParam int year) {
-        return new ResponseEntity<>(authorService.sortByBirthday(year), HttpStatus.OK);
+    public ResponseEntity<List<BookDto>> getBookByAuthorBirthday(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
+        return new ResponseEntity<>(authorService.getByJoinField(date, "birthday"), HttpStatus.OK);
     }
 
     @GetMapping("/bookByAuthorSecondName")
-    public ResponseEntity<List<BookAuthorDto>> getBookByAuthorSecondName(@RequestParam String secondName) {
-        return new ResponseEntity<>(authorService.sortBySecondName(secondName), HttpStatus.OK);
+    public ResponseEntity<List<BookDto>> getBookByAuthorSecondName(@RequestParam String secondName) {
+        return new ResponseEntity<>(authorService.getByJoinField(secondName, "secondName"), HttpStatus.OK);
     }
 
     @GetMapping("/bookByAuthorSex")
-    public ResponseEntity<List<BookAuthorDto>> getBookByAuthorSex(@RequestParam String sex) {
-        return new ResponseEntity<>(authorService.sortBySex(sex), HttpStatus.OK);
+    public ResponseEntity<List<BookDto>> getBookByAuthorSex(@RequestParam String sex) {
+        return new ResponseEntity<>(authorService.getByJoinField(sex, "sex"), HttpStatus.OK);
     }*/
 }

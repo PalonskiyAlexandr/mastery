@@ -1,5 +1,5 @@
 package com.palonskiy.model;
 
-public enum Sex {
+public enum Gender {
     MALE, FEMALE, UNDEFINED
 }

@@ -6,11 +6,11 @@ import com.palonskiy.model.Book;
 
 import java.util.List;
 
-public interface AuthorDao extends CrudDao<Author>{
+public interface AuthorDao extends CrudDao<Author> {
 
     List<Book> getAuthorBooks(Long authorId);
 
     Boolean checkIfExist(AuthorDto authorDto);
 
-
+    List<Book> getByJoinField(Object obj, String fieldName);
 }

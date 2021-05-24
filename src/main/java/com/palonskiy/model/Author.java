@@ -39,15 +39,10 @@ public class Author {
     private LocalDate birthday;
 
     @Enumerated(EnumType.STRING)
-    private Sex sex;
+    private Gender gender;
 
-    @ManyToMany(cascade = CascadeType.ALL)
-    @JoinTable(
-            name = "book_author",
-            joinColumns = @JoinColumn(name = "author_id"),
-            inverseJoinColumns = @JoinColumn(name = "book_id")
-    )
-   /* @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)*/
+    @ManyToMany(mappedBy = "authors",
+            cascade = CascadeType.ALL)
     private List<Book> books = new ArrayList<>();
 
     public Author() {
@@ -85,12 +80,12 @@ public class Author {
         this.birthday = birthday;
     }
 
-    public Sex getSex() {
-        return sex;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setSex(Sex sex) {
-        this.sex = sex;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
     public List<Book> getBooks() {
@@ -110,13 +105,13 @@ public class Author {
                 Objects.equals(firstName, author.firstName) &&
                 Objects.equals(secondName, author.secondName) &&
                 Objects.equals(birthday, author.birthday) &&
-                sex == author.sex &&
+                gender == author.gender &&
                 Objects.equals(books, author.books);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, secondName, birthday, sex, books);
+        return Objects.hash(id, firstName, secondName, birthday, gender, books);
     }
 
     @Override
@@ -126,7 +121,7 @@ public class Author {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", birthday=" + birthday +
-                ", sex=" + sex +
+                ", sex=" + gender +
                 ", books=" + books +
                 '}';
     }

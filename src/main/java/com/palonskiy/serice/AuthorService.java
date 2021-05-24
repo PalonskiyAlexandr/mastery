@@ -1,19 +1,17 @@
 package com.palonskiy.serice;
 
 import com.palonskiy.dto.AuthorDto;
-import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
+import com.palonskiy.model.Author;
 
 import java.util.List;
 
 public interface AuthorService {
-    List<AuthorDto> get();
+    List<AuthorDto> getAll();
 
     List<BookDto> getAuthorBooks(int id);
 
-    void add(BookAuthorDto bookAuthorDto);
-
-    void addOnlyAuthor(AuthorDto authorDto);
+    Author add(AuthorDto authorDto);
 
     void delete(int id);
 
@@ -21,11 +19,5 @@ public interface AuthorService {
 
     void update(AuthorDto authorDto);
 
-/*    List<BookAuthorDto> sortByBirthday(int year);
-
-    List<BookAuthorDto> sortBySex(String sex);
-
-    List<BookAuthorDto> sortByName(String name);
-
-    List<BookAuthorDto> sortBySecondName(String name);*/
+    List<BookDto> getByJoinField(Object obj, String fieldName);
 }

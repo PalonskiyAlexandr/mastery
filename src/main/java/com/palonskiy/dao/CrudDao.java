@@ -9,7 +9,9 @@ public interface CrudDao<T> {
 
     void update(T obj);
 
-    Long add(T obj);
+    T add(T obj);
 
     T getById(Long id);
+
+    List<T> getByField(Object obj, String field);
 }

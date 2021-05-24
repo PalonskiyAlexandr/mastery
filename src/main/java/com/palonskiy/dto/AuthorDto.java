@@ -1,6 +1,6 @@
 package com.palonskiy.dto;
 
-import com.palonskiy.model.Sex;
+import com.palonskiy.model.Gender;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,7 +13,7 @@ public class AuthorDto {
     private String secondName;
     private LocalDate birthday;
     @Enumerated(EnumType.STRING)
-    private Sex sex;
+    private Gender gender;
 
     public AuthorDto() {
     }
@@ -50,11 +50,11 @@ public class AuthorDto {
         this.birthday = birthday;
     }
 
-    public Sex getSex() {
-        return sex;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setSex(Sex sex) {
-        this.sex = sex;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 }

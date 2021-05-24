@@ -3,6 +3,8 @@ package com.palonskiy.dao;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
@@ -13,6 +15,8 @@ import java.util.List;
 
 @Repository
 public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
+
+    private static final Logger logger = LoggerFactory.getLogger(CrudDaoImpl.class);
 
     public BookDaoImpl(SessionFactory sessionFactory) {
         super(sessionFactory, Book.class);
@@ -33,7 +37,8 @@ public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
             CriteriaQuery<Book> query = cb.createQuery(Book.class);
             Root<Book> tRoot = query.from(Book.class);
             query.where(cb.equal(tRoot.get("name"), name));
-            currentSession().createQuery(query).getSingleResult();
+            Book book = currentSession().createQuery(query).getSingleResult();
+            logger.debug("found existing book:{}", book);
             return true;
         } catch (NoResultException e) {
             return false;
