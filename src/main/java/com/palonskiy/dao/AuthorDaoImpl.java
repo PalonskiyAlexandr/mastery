@@ -26,6 +26,7 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
 
     @Override
     public List<Book> getAuthorBooks(Long authorId) {
+        logger.debug("getting books of author with id {}", authorId);
         String hql = "SELECT b FROM Book b INNER JOIN b.authors a WHERE a.id = :authorId";
         return currentSession().createQuery(hql, Book.class)
                 .setParameter("authorId", authorId)
@@ -44,13 +45,13 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
 
     @Override
     public Boolean checkIfExist(AuthorDto authorDto) {
+        logger.debug("finding existing author {}", authorDto);
         try {
             CriteriaBuilder cb = currentSession().getCriteriaBuilder();
             CriteriaQuery<Author> query = cb.createQuery(Author.class);
             Root<Author> tRoot = query.from(Author.class);
             query.where(cb.equal(tRoot.get("secondName"), authorDto.getSecondName()), cb.equal(tRoot.get("firstName"), authorDto.getFirstName()));
             Author author = currentSession().createQuery(query).getSingleResult();
-            logger.debug("found existing author:{}", author);
             return true;
         } catch (NoResultException e) {
             return false;

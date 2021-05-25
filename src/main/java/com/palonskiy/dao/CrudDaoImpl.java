@@ -29,10 +29,10 @@ public abstract class CrudDaoImpl<T> implements CrudDao<T> {
 
     @Override
     public List<T> getAll() {
+        logger.debug("getting all entities");
         CriteriaQuery<T> query = currentSession().getCriteriaBuilder().createQuery(clazz);
         Root<T> tRoot = query.from(clazz);
         query.select(tRoot);
-        logger.debug("getting all entities");
         return currentSession().createQuery(query).getResultList();
     }
 
@@ -44,33 +44,33 @@ public abstract class CrudDaoImpl<T> implements CrudDao<T> {
 
     @Override
     public T add(T obj) {
-        logger.debug("getting for add {}", obj);
+        logger.debug("adding {}", obj);
         return getById((Long) currentSession().save(obj));
     }
 
     @Override
     public void delete(Long id) {
-        logger.debug("deleting by id={}", id);
+        logger.debug("deleting by id {}", id);
         currentSession().delete(getById(id));
     }
 
     @Override
     public T getById(Long id) {
+        logger.debug("getting by id {}", id);
         CriteriaBuilder cb = currentSession().getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(clazz);
         Root<T> tRoot = query.from(clazz);
         query.where(cb.equal(tRoot.get("id"), id));
-        logger.debug("getting by id={}", id);
         return currentSession().createQuery(query).getSingleResult();
     }
 
     @Override
     public  List<T>  getByField(Object obj, String fieldName) {
+        logger.debug("getting by field: {} with value: {}", fieldName, obj);
         CriteriaBuilder cb = currentSession().getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(clazz);
         Root<T> tRoot = query.from(clazz);
         query.where(cb.equal(tRoot.get(fieldName), obj));
-        logger.debug("getting by field:{} with value:{}", fieldName, obj);
         return currentSession().createQuery(query).getResultList();
     }
 

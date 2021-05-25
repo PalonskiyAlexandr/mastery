@@ -1,6 +1,6 @@
 package com.palonskiy.configuration;
 
-import org.apache.tomcat.dbcp.dbcp2.BasicDataSource;
+import com.zaxxer.hikari.HikariDataSource;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -28,8 +28,8 @@ public class HibernateConfig {
 
     @Bean
     public DataSource dataSource() {
-        BasicDataSource dataSource = new BasicDataSource();
-        dataSource.setUrl(url);
+        HikariDataSource dataSource = new HikariDataSource();
+        dataSource.setJdbcUrl(url);
         dataSource.setUsername(login);
         dataSource.setPassword(password);
         dataSource.setDriverClassName(driver);
