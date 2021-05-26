@@ -5,7 +5,7 @@ import java.util.List;
 public interface CrudDao<T> {
     List<T> getAll();
 
-    void delete(Long id);
+    void delete(T obj);
 
     void update(T obj);
 

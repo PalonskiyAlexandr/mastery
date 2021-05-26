@@ -49,11 +49,7 @@ class CrudDaoImplTest {
         cQuery = mock(CriteriaQuery.class);
         tRoot = mock(Root.class);
         query = mock(Query.class);
-
-
     }
-
-    private final String FIELD_NAME = "firstName";
 
     @Test
     void getAll() {
@@ -105,11 +101,10 @@ class CrudDaoImplTest {
         // given
         long id = 13L;
 
-        Object savedObject = new Object();
-        Object entity = new Object();
+        Object obj = new Object();
 
         when(sessionFactory.getCurrentSession()).thenReturn(session);
-        when(query.getSingleResult()).thenReturn(savedObject);
+
 
         //when
         crudDao.delete(id);
@@ -120,17 +115,51 @@ class CrudDaoImplTest {
 
     @Test
     void getById() {
-       /* assertNotNull(authorDaoMock);
-        authorDaoMock.getById(1L);
-        verify(authorDaoMock).getById(1L);
-        //TODO check return entity*/
+        // given
+        Object obj = new Object();
+        long id = 13L;
+
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.getCriteriaBuilder()).thenReturn(cb);
+        when(cb.createQuery(clazz)).thenReturn(cQuery);
+        when(cQuery.from(clazz)).thenReturn(tRoot);
+        when(session.createQuery(cQuery)).thenReturn(query);
+        when(query.getSingleResult()).thenReturn(obj);
+
+        //when
+        crudDao.getById(id);
+
+
+        //then
+        verify(query).getSingleResult();
     }
 
     @Test
     void getByField() {
-        /*assertNotNull(authorDaoMock);
-        authorDaoMock.getByField(authorMock, FIELD_NAME);
-        verify(authorDaoMock).getByField(authorMock, FIELD_NAME);
-        //TODO check return entity*/
+        // given
+        List<Object> list = new ArrayList<>();
+        Object fieldObj = mock(Object.class);
+        String fieldName = "firstName";
+
+        Session session = mock(Session.class);
+        CriteriaBuilder cb = mock(CriteriaBuilder.class);
+        CriteriaQuery cQuery = mock(CriteriaQuery.class);
+        Root tRoot = mock(Root.class);
+        Query query = mock(Query.class);
+
+        when(sessionFactory.getCurrentSession()).thenReturn(session);
+        when(session.getCriteriaBuilder()).thenReturn(cb);
+        when(cb.createQuery(clazz)).thenReturn(cQuery);
+        when(cQuery.from(clazz)).thenReturn(tRoot);
+        when(session.createQuery(cQuery)).thenReturn(query);
+        when(query.getResultList()).thenReturn(list);
+
+
+        //when
+        crudDao.getByField(fieldObj, fieldName);
+
+
+        //then
+        verify(query).getResultList();
     }
 }

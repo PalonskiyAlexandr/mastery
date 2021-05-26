@@ -49,9 +49,9 @@ public abstract class CrudDaoImpl<T> implements CrudDao<T> {
     }
 
     @Override
-    public void delete(Long id) {
-        logger.debug("deleting by id {}", id);
-        currentSession().delete(getById(id));
+    public void delete(T obj) {
+        logger.debug("deleting entity {}", obj);
+        currentSession().delete(obj);
     }
 
     @Override

@@ -51,7 +51,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public void delete(int id) {
-        authorDao.delete(Long.valueOf(id));
+        authorDao.delete(authorDao.getById(Long.valueOf(id)));
     }
 
     @Override

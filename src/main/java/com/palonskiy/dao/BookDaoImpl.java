@@ -24,6 +24,7 @@ public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
 
     @Override
     public List<Author> getBookAuthors(Long bookId) {
+        logger.debug("getting authors of book with id {}", bookId);
         String hql = "SELECT a FROM Author a INNER JOIN a.books b WHERE b.id = :bookId";
         logger.debug("getting authors of book with id:{}", bookId);
         return currentSession().createQuery(hql, Author.class)
@@ -33,13 +34,13 @@ public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
 
     @Override
     public Boolean checkIfExist(String name) {
+        logger.debug("finding existing book by name {}", name);
         try {
             CriteriaBuilder cb = currentSession().getCriteriaBuilder();
             CriteriaQuery<Book> query = cb.createQuery(Book.class);
             Root<Book> tRoot = query.from(Book.class);
             query.where(cb.equal(tRoot.get("name"), name));
-            Book book = currentSession().createQuery(query).getSingleResult();
-            logger.debug("found existing book:{}", book);
+            currentSession().createQuery(query).getSingleResult();
             return true;
         } catch (NoResultException e) {
             return false;

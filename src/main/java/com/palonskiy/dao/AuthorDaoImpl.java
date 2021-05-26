@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -28,9 +29,12 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
     public List<Book> getAuthorBooks(Long authorId) {
         logger.debug("getting books of author with id {}", authorId);
         String hql = "SELECT b FROM Book b INNER JOIN b.authors a WHERE a.id = :authorId";
-        return currentSession().createQuery(hql, Book.class)
-                .setParameter("authorId", authorId)
-                .getResultList();
+        Query query = currentSession().createQuery(hql, Book.class);
+        query = query.setParameter("authorId", authorId);
+        List<Book> list = query.getResultList();
+
+        return list;
+
     }
 
     @Override
@@ -51,7 +55,7 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
             CriteriaQuery<Author> query = cb.createQuery(Author.class);
             Root<Author> tRoot = query.from(Author.class);
             query.where(cb.equal(tRoot.get("secondName"), authorDto.getSecondName()), cb.equal(tRoot.get("firstName"), authorDto.getFirstName()));
-            Author author = currentSession().createQuery(query).getSingleResult();
+            currentSession().createQuery(query).getSingleResult();
             return true;
         } catch (NoResultException e) {
             return false;
