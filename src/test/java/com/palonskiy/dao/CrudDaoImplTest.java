@@ -4,7 +4,6 @@ import com.palonskiy.model.Author;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -25,30 +24,29 @@ import static org.junit.jupiter.api.Assertions.*;
 @ExtendWith(MockitoExtension.class)
 class CrudDaoImplTest {
 
+    private Class clazz = Object.class;
 
-    private SessionFactory sessionFactory;
-    private Class clazz;
+    private long id = 13L;
 
-    //@InjectMocks
-    private CrudDaoImpl crudDao;
-
+    @Mock
     private Session session;
+    @Mock
     private CriteriaBuilder cb;
+    @Mock
     private CriteriaQuery cQuery;
+    @Mock
     private Root tRoot;
+    @Mock
     private Query query;
+
+    @Mock
+    private SessionFactory sessionFactory;
+
+    private CrudDaoImpl crudDao;
 
     @BeforeEach
     public void init() {
-        clazz = Object.class;
-        sessionFactory = mock(SessionFactory.class);
-        crudDao = new CrudDaoImpl(sessionFactory, Object.class) {};
-
-        session = mock(Session.class);
-        cb = mock(CriteriaBuilder.class);
-        cQuery = mock(CriteriaQuery.class);
-        tRoot = mock(Root.class);
-        query = mock(Query.class);
+        crudDao = new CrudDaoImpl(sessionFactory, Object.class);
     }
 
     @Test
@@ -99,10 +97,6 @@ class CrudDaoImplTest {
     @Test
     void delete() {
         // given
-        long id = 13L;
-
-        Object obj = new Object();
-
         when(sessionFactory.getCurrentSession()).thenReturn(session);
 
 
@@ -117,7 +111,6 @@ class CrudDaoImplTest {
     void getById() {
         // given
         Object obj = new Object();
-        long id = 13L;
 
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.getCriteriaBuilder()).thenReturn(cb);
@@ -141,11 +134,6 @@ class CrudDaoImplTest {
         Object fieldObj = mock(Object.class);
         String fieldName = "firstName";
 
-        Session session = mock(Session.class);
-        CriteriaBuilder cb = mock(CriteriaBuilder.class);
-        CriteriaQuery cQuery = mock(CriteriaQuery.class);
-        Root tRoot = mock(Root.class);
-        Query query = mock(Query.class);
 
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.getCriteriaBuilder()).thenReturn(cb);

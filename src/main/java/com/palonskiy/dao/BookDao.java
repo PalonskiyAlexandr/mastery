@@ -9,7 +9,7 @@ public interface BookDao extends CrudDao<Book>{
 
     List<Author> getBookAuthors(Long BookId);
 
-    Boolean checkIfExist(String name);
+    boolean checkIfExist(String name);
 
 
 }

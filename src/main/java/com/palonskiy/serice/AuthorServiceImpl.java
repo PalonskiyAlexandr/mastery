@@ -7,8 +7,6 @@ import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.exceptions.NoResultException;
 import com.palonskiy.model.Author;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

@@ -33,7 +33,7 @@ public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
     }
 
     @Override
-    public Boolean checkIfExist(String name) {
+    public boolean checkIfExist(String name) {
         logger.debug("finding existing book by name {}", name);
         try {
             CriteriaBuilder cb = currentSession().getCriteriaBuilder();
@@ -43,6 +43,7 @@ public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
             currentSession().createQuery(query).getSingleResult();
             return true;
         } catch (NoResultException e) {
+            logger.warn("can not find the same already existing entity: {0}", e);
             return false;
         }
 

@@ -1,13 +1,15 @@
 package com.palonskiy.dao;
 
-import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,31 +18,27 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class BookDaoImplTest {
 
-    private SessionFactory sessionFactory;
-    private BookDaoImpl bookDao;
-
+    @Mock
     private Session session;
+    @Mock
     private CriteriaBuilder cb;
-    private CriteriaQuery cQuery;
+    @Mock
     private Root tRoot;
+    @Mock
     private Query query;
 
-    @BeforeEach
-    public void init() {
-        sessionFactory = mock(SessionFactory.class);
-        bookDao = new BookDaoImpl(sessionFactory) {};
+    @Mock
+    private SessionFactory sessionFactory;
 
-        session = mock(Session.class);
-        cb = mock(CriteriaBuilder.class);
-        cQuery = mock(CriteriaQuery.class);
-        tRoot = mock(Root.class);
-        query = mock(Query.class);
-    }
+    @InjectMocks
+    private BookDaoImpl bookDao;
+
+
     @Test
     void getBookAuthors() {
         Long id = 13L;

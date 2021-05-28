@@ -10,7 +10,7 @@ public interface AuthorDao extends CrudDao<Author> {
 
     List<Book> getAuthorBooks(Long authorId);
 
-    Boolean checkIfExist(AuthorDto authorDto);
+    boolean checkIfExist(AuthorDto authorDto);
 
     List<Book> getByJoinField(Object obj, String fieldName);
 }

@@ -6,8 +6,12 @@ import com.palonskiy.model.Book;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.query.Query;
-import org.junit.jupiter.api.BeforeEach;
+
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -16,32 +20,25 @@ import javax.persistence.criteria.Root;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 class AuthorDaoImplTest {
 
-    private SessionFactory sessionFactory;
-    private AuthorDaoImpl authorDao;
-
+    @Mock
     private Session session;
+    @Mock
     private CriteriaBuilder cb;
-    private CriteriaQuery cQuery;
+    @Mock
     private Root tRoot;
+    @Mock
     private Query query;
 
-    @BeforeEach
-    public void init() {
-        sessionFactory = mock(SessionFactory.class);
-        authorDao = new AuthorDaoImpl(sessionFactory) {};
+    @Mock
+    private SessionFactory sessionFactory;
 
-        session = mock(Session.class);
-        cb = mock(CriteriaBuilder.class);
-        cQuery = mock(CriteriaQuery.class);
-        tRoot = mock(Root.class);
-        query = mock(Query.class);
-    }
+    @InjectMocks
+    private AuthorDaoImpl authorDao;
 
     @Test
     void getAuthorBooks() {
@@ -49,7 +46,6 @@ class AuthorDaoImplTest {
         List<Object> list = new ArrayList<>();
         String hql = "SELECT b FROM Book b INNER JOIN b.authors a WHERE a.id = :authorId";
         String parameter = "authorId";
-        Class clazz = Object.class;
 
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.createQuery(hql, Book.class)).thenReturn(query);
@@ -63,7 +59,6 @@ class AuthorDaoImplTest {
 
     @Test
     void checkIfExist() {
-
         Object obj = new Object();
         AuthorDto authorDto = mock(AuthorDto.class);
         CriteriaQuery cQuery = mock(CriteriaQuery.class);

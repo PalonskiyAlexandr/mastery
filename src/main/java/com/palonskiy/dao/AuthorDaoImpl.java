@@ -3,7 +3,6 @@ package com.palonskiy.dao;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
-import com.palonskiy.serice.AuthorService;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,7 +39,7 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
     @Override
     //TODO refactor joinField method
     public List<Book> getByJoinField(Object obj, String fieldName) {
-        String hql = "SELECT b FROM Book b INNER JOIN b.authors a WHERE :fieldName = :obj";
+        String hql = "SELECT b FROM book b INNER JOIN b.authors a WHERE :fieldName = :obj";
         return currentSession().createQuery(hql, Book.class)
                 .setParameter("obj", obj)
                 .setParameter("fieldName", fieldName)
@@ -48,7 +47,7 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
     }
 
     @Override
-    public Boolean checkIfExist(AuthorDto authorDto) {
+    public boolean checkIfExist(AuthorDto authorDto) {
         logger.debug("finding existing author {}", authorDto);
         try {
             CriteriaBuilder cb = currentSession().getCriteriaBuilder();
@@ -58,6 +57,7 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
             currentSession().createQuery(query).getSingleResult();
             return true;
         } catch (NoResultException e) {
+            logger.warn("can not find the same already existing entity: {0}", e);
             return false;
         }
     }

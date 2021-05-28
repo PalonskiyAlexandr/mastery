@@ -4,6 +4,7 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
@@ -11,9 +12,10 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 import java.util.List;
 
-@Repository
-public abstract class CrudDaoImpl<T> implements CrudDao<T> {
+public class CrudDaoImpl<T> implements CrudDao<T> {
+
     protected SessionFactory sessionFactory;
+
     protected Class<T> clazz;
 
     private static final Logger logger = LoggerFactory.getLogger(CrudDaoImpl.class);
@@ -72,9 +74,5 @@ public abstract class CrudDaoImpl<T> implements CrudDao<T> {
         Root<T> tRoot = query.from(clazz);
         query.where(cb.equal(tRoot.get(fieldName), obj));
         return currentSession().createQuery(query).getResultList();
-    }
-
-    public Class<T> getClazz() {
-        return clazz;
     }
 }
