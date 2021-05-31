@@ -3,16 +3,21 @@ package com.palonskiy.controllers;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
+import com.palonskiy.model.Book;
 import com.palonskiy.serice.BookService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
-@RestController
+@Controller
 public class BookController {
 
     private BookService bookService;
@@ -22,6 +27,14 @@ public class BookController {
     }
 
     @GetMapping("/book")
+    public String getAll(Model model) {
+        List<BookDto> books = bookService.getAll();
+        model.addAttribute("books", bookService.getAll());
+        return "index";
+    }
+
+
+    /*@GetMapping("/book")
     public ResponseEntity<List<BookDto>> getAll() {
         return new ResponseEntity<>(bookService.getAll(), HttpStatus.OK);
     }
@@ -68,6 +81,6 @@ public class BookController {
     @GetMapping("/bookByPublisher")
     public ResponseEntity<List<BookDto>> getBookByPublisher(@RequestParam String publisher) {
         return new ResponseEntity<>(bookService.getByField(publisher, "publisher"), HttpStatus.OK);
-    }
+    }*/
 
 }
