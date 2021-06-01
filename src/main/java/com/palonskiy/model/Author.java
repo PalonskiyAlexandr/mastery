@@ -27,15 +27,15 @@ public class Author {
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
-    @Pattern(regexp = "^[А-Я][а-я]+", message = PATTERN_MESSAGE)
+/*    @Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String firstName;
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
-    @Pattern(regexp = "^[А-Я][а-я]+", message = PATTERN_MESSAGE)
+/*    @Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String secondName;
 
-    @NotNull(message = NULL_MESSAGE)
+/*    @NotNull(message = NULL_MESSAGE)*/
     private LocalDate birthday;
 
     @Enumerated(EnumType.STRING)

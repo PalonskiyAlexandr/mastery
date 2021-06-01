@@ -40,20 +40,20 @@ class BookDaoImplTest {
 
 
     @Test
-    void getBookAuthors() {
+    void getBookAuthor() {
         Long id = 13L;
-        List<Object> list = new ArrayList<>();
+        Author author = mock(Author.class);
         String hql = "SELECT a FROM Author a INNER JOIN a.books b WHERE b.id = :bookId";
         String parameter = "bookId";
 
         when(sessionFactory.getCurrentSession()).thenReturn(session);
         when(session.createQuery(hql, Author.class)).thenReturn(query);
         when(query.setParameter(parameter, id)).thenReturn(query);
-        when(query.getResultList()).thenReturn(list);
+        when(query.getSingleResult()).thenReturn(author);
 
-        bookDao.getBookAuthors(id);
+        bookDao.getBookAuthor(id);
 
-        verify(query).getResultList();
+        verify(query).getSingleResult();
     }
 
     @Test

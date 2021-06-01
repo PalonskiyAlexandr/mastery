@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface BookDao extends CrudDao<Book>{
 
-    List<Author> getBookAuthors(Long BookId);
+    Author getBookAuthor(Long BookId);
 
     boolean checkIfExist(String name);
 

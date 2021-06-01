@@ -12,12 +12,15 @@
 .full-height {
   height: 100%;
 }
+.myBtn{
+padding: 10px;
+}
+
 
 
     </style>
 </head>
-<body>
-
+<body class="text-center">
 <div class="container full-height d-flex align-items-center justify-content-center">
     <div class="container" style="width: 85%">
 
@@ -34,7 +37,7 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                    <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link active" aria-current="page" th:href="@{newBook}">New book</a>
@@ -51,41 +54,37 @@
             </div>
         </div>
 
-        <div class="container d-flex justify-content-center" style="width: 85%">
-            <table class="table table-hover table-striped  ">
-                <thead>
-                <tr>
-                    <th>Name</th>
-                    <th>Publisher</th>
-                    <th>Year</th>
-                    <th>Author</th>
-                    <th></th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr th:each="book : ${books}">
-
-                    <form action="#" th:action="@{/updateBook/__${book.book.id}__}" th:object="${book.book}"
-                          method="get">
-                        <td>
-                            <button type="submit" class="btn btn-link" th:text="${book.book.name}">Name</button>
-                        </td>
-                    </form>
-                    <td th:text="${book.book.publisher}">Publisher</td>
-                    <td th:text="${book.book.year}">Year</td>
-                    <td th:text="${book.author.firstName + ' ' + book.author.secondName}">
-                        Author
-                    </td>
-                    <form action="#" th:action="@{/deleteBook/__${book.book.id}__}" th:object="${book.book}"
-                          method="post">
-                        <td>
-                            <button type="submit" class="btn btn-primary">Delete</button>
-                        </td>
-                    </form>
-                </tr>
-                </tbody>
-            </table>
-
+        <div class="container d-flex justify-content-center" >
+            <form action="#" th:action="@{/newBook}" th:object="${bookAuthorDto}" method="post" style="width: 65%">
+                <div class="form-group myBtn">
+                    <label for="inputName">Name of the book</label>
+                    <input type="text" class="form-control" id="inputName" placeholder="Enter name of the book"
+                           th:field="${bookAuthorDto.book.name}">
+                </div>
+                <div class="form-group myBtn">
+                    <label for="inputPublisher">Publisher</label>
+                    <input type="text" class="form-control" id="inputPublisher" placeholder="Enter publisher"
+                           th:field="${bookAuthorDto.book.publisher}">
+                </div>
+                <div class="form-group myBtn">
+                    <label for="inputFirstName">Authors name</label>
+                    <input type="text" class="form-control" id="inputFirstName" placeholder="Enter authors name"
+                           th:field="${bookAuthorDto.author.firstName}">
+                </div>
+                <div class="form-group myBtn">
+                    <label for="inputSecondName">Authors second name</label>
+                    <input type="text" class="form-control" id="inputSecondName" placeholder="Enter authors second name"
+                           th:field="${bookAuthorDto.author.secondName}">
+                </div>
+                <div class="form-group myBtn">
+                    <label for="inputGender">Authors gender</label>
+                    <input type="text" class="form-control" id="inputGender" placeholder="Enter authors gender"
+                           th:field="${bookAuthorDto.author.gender}">
+                </div>
+                <div class="myBtn">
+                    <button type="submit" class="btn btn-primary ">Submit</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

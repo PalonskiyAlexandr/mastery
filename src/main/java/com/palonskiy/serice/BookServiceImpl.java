@@ -1,5 +1,6 @@
 package com.palonskiy.serice;
 
+import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.palonskiy.converters.AuthorConverter;
 import com.palonskiy.converters.BookConverter;
 import com.palonskiy.dao.BookDao;
@@ -12,9 +13,12 @@ import com.palonskiy.exceptions.NullAuthorException;
 import com.palonskiy.exceptions.NullBookException;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
+import org.springframework.beans.BeanUtils;
+import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -42,12 +46,27 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void update(BookDto bookDto) {
-        bookDao.update(BookConverter.toBook(bookDto));
+        Book book = bookDao.getById(bookDto.getId());
+        BeanUtils.copyProperties(bookDto, book);
+        bookDao.update(book);
     }
 
     @Override
-    public List<AuthorDto> getBookAuthors(int id) {
-        return AuthorConverter.toDtoList(bookDao.getBookAuthors(Long.valueOf(id)));
+    public AuthorDto getBookAuthor(int id) {
+        return AuthorConverter.toAuthorDto(bookDao.getBookAuthor(Long.valueOf(id)));
+    }
+
+
+    public List<BookAuthorDto> getBookAuthorList(){
+        List<BookAuthorDto> list = new ArrayList<>();
+        for (BookDto book:getAll()) {
+            BookAuthorDto bookAuthorDto = new BookAuthorDto();
+            bookAuthorDto.setBook(book);
+            int id = (book.getId()).intValue();
+            bookAuthorDto.setAuthor(getBookAuthor(id));
+            list.add(bookAuthorDto);
+        }
+        return list;
     }
 
     @Override

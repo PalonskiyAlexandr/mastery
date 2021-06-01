@@ -25,7 +25,7 @@ public class Book {
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
-    @Pattern(regexp = "^[А-ЯA-Z][a-zA-Zа-яА-Я ]+", message = PATTERN_MESSAGE)
+    /*@Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String name;
 
     @ManyToMany(cascade = CascadeType.ALL)
@@ -36,12 +36,12 @@ public class Book {
     )
     private List<Author> authors = new ArrayList<>();
 
-    @NotNull(message = NULL_MESSAGE)
+   /* @NotNull(message = NULL_MESSAGE)*/
     private LocalDate year;
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
-    @Pattern(regexp = "^[А-ЯA-Z][a-zA-Zа-яА-Я ]+", message = PATTERN_MESSAGE)
+ /*   @Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String publisher;
 
     public Book() {

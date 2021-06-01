@@ -1,21 +1,13 @@
 package com.palonskiy.controllers;
 
-import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
-import com.palonskiy.model.Book;
 import com.palonskiy.serice.BookService;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 public class BookController {
@@ -26,13 +18,43 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping("/book")
+    @GetMapping("/")
     public String getAll(Model model) {
-        List<BookDto> books = bookService.getAll();
-        model.addAttribute("books", bookService.getAll());
+        model.addAttribute("books", bookService.getBookAuthorList());
         return "index";
     }
 
+    @GetMapping("/newBook")
+    public String newBookPage(Model model) {
+        model.addAttribute("bookAuthorDto", new BookAuthorDto());
+        return "newBook";
+    }
+
+    @PostMapping("/newBook")
+    public String newBook(@ModelAttribute BookAuthorDto bookAuthorDto) {
+        bookAuthorDto.getBook().setId(1l);
+        bookAuthorDto.getAuthor().setId(1l);
+        bookService.add(bookAuthorDto);
+        return "redirect:/";
+    }
+
+    @PostMapping("/deleteBook/{id}")
+    public String deleteBook(@PathVariable String id) {
+        bookService.delete(Integer.parseInt(id));
+        return "redirect:/";
+    }
+
+    @GetMapping("/updateBook/{id}")
+    public String updateBookPage(@PathVariable String id, Model model) {
+        model.addAttribute(bookService.getById(Integer.parseInt(id)));
+        return "updateBook";
+    }
+
+    @PostMapping("/updateBook")
+    public String updateBook(@ModelAttribute BookDto bookDto) {
+        bookService.update(bookDto);
+        return "redirect:/";
+    }
 
     /*@GetMapping("/book")
     public ResponseEntity<List<BookDto>> getAll() {
