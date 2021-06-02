@@ -1,6 +1,5 @@
 package com.palonskiy.serice;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
 import com.palonskiy.converters.AuthorConverter;
 import com.palonskiy.converters.BookConverter;
 import com.palonskiy.dao.BookDao;
@@ -8,13 +7,11 @@ import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.exceptions.ExistingEntityException;
-import com.palonskiy.exceptions.NoResultException;
 import com.palonskiy.exceptions.NullAuthorException;
 import com.palonskiy.exceptions.NullBookException;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
 import org.springframework.beans.BeanUtils;
-import org.springframework.context.annotation.Bean;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -40,8 +37,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getById(int id) {
-        return BookConverter.toBookDto(bookDao.getById(Long.valueOf(id)));
+    public BookDto getById(long id) {
+        return BookConverter.toBookDto(bookDao.getById(id));
     }
 
     @Override
@@ -52,8 +49,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public AuthorDto getBookAuthor(int id) {
-        return AuthorConverter.toAuthorDto(bookDao.getBookAuthor(Long.valueOf(id)));
+    public AuthorDto getBookAuthor(long id) {
+        return AuthorConverter.toAuthorDto(bookDao.getBookAuthor(id));
     }
 
 
@@ -86,21 +83,18 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void delete(int id) {
-        bookDao.delete(bookDao.getById(Long.valueOf(id)));
+    public void delete(long id) {
+        bookDao.delete(bookDao.getById(id));
     }
 
     @Override
-    public Boolean checkIfExist(String name) {
+    public boolean checkIfExist(String name) {
         return bookDao.checkIfExist(name);
     }
 
     @Override
     public List<BookDto> getByField(Object obj, String fieldName) {
         List<BookDto> list = BookConverter.toDtoList(bookDao.getByField(obj, fieldName));
-        if(list.isEmpty()){
-            throw new NoResultException();
-        }
         return list;
     }
 }

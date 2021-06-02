@@ -4,8 +4,6 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Repository;
 
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
@@ -47,7 +45,8 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
     @Override
     public T add(T obj) {
         logger.debug("adding {}", obj);
-        return getById((Long) currentSession().save(obj));
+        //TODO can't pass the test with primitive type
+        return getById(((Long)currentSession().save(obj)) );
     }
 
     @Override
@@ -57,6 +56,7 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
     }
 
     @Override
+    //TODO change Long to primitive type
     public T getById(Long id) {
         logger.debug("getting by id {}", id);
         CriteriaBuilder cb = currentSession().getCriteriaBuilder();

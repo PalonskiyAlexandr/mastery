@@ -28,7 +28,7 @@ public class Book {
     /*@Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String name;
 
-    @ManyToMany(cascade = CascadeType.ALL)
+    @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
             name = "book_author",
             joinColumns = @JoinColumn(name = "book_id"),

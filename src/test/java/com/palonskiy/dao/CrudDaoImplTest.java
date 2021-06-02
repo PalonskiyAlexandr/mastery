@@ -73,8 +73,9 @@ class CrudDaoImplTest {
     }
 
     @Test
+        //TODO can't pass the test with primitive type
     void add() {
-       // given
+        // given
         Object savedObject = new Object();
         Object entity = new Object();
 
@@ -108,6 +109,7 @@ class CrudDaoImplTest {
     }
 
     @Test
+
     void getById() {
         // given
         Object obj = new Object();

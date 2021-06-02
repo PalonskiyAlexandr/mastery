@@ -42,7 +42,7 @@ class AuthorDaoImplTest {
 
     @Test
     void getAuthorBooks() {
-        Long id = 13L;
+        long id = 13L;
         List<Object> list = new ArrayList<>();
         String hql = "SELECT b FROM Book b INNER JOIN b.authors a WHERE a.id = :authorId";
         String parameter = "authorId";

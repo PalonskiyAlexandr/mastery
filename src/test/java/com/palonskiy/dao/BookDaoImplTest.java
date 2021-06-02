@@ -41,7 +41,7 @@ class BookDaoImplTest {
 
     @Test
     void getBookAuthor() {
-        Long id = 13L;
+        long id = 13L;
         Author author = mock(Author.class);
         String hql = "SELECT a FROM Author a INNER JOIN a.books b WHERE b.id = :bookId";
         String parameter = "bookId";

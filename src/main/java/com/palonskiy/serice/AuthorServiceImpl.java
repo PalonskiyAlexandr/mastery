@@ -5,7 +5,6 @@ import com.palonskiy.converters.BookConverter;
 import com.palonskiy.dao.AuthorDao;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookDto;
-import com.palonskiy.exceptions.NoResultException;
 import com.palonskiy.model.Author;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -28,8 +27,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto getById(int id) {
-        return AuthorConverter.toAuthorDto(authorDao.getById(Long.valueOf(id)));
+    public AuthorDto getById(long id) {
+        return AuthorConverter.toAuthorDto(authorDao.getById(id));
     }
 
     @Override
@@ -38,8 +37,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<BookDto> getAuthorBooks(int id) {
-        return BookConverter.toDtoList(authorDao.getAuthorBooks(Long.valueOf(id)));
+    public List<BookDto> getAuthorBooks(long id) {
+        return BookConverter.toDtoList(authorDao.getAuthorBooks(id));
     }
 
     @Override
@@ -48,16 +47,13 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void delete(int id) {
-        authorDao.delete(authorDao.getById(Long.valueOf(id)));
+    public void delete(long id) {
+        authorDao.delete(authorDao.getById(id));
     }
 
     @Override
     public List<BookDto> getByJoinField(Object obj, String fieldName) {
         List<BookDto> list = BookConverter.toDtoList(authorDao.getByJoinField(obj, fieldName));
-        if (list.isEmpty()) {
-            throw new NoResultException();
-        }
         return list;
     }
 

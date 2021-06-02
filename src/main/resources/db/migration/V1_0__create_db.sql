@@ -15,7 +15,7 @@ CREATE TABLE IF NOT EXISTS book_author (
            book_id bigint references book(id),
            author_id bigint references author(id),
            PRIMARY KEY(book_id, author_id)
-        )
+    );
 
 
 

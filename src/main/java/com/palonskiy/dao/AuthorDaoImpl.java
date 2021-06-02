@@ -25,7 +25,7 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
     }
 
     @Override
-    public List<Book> getAuthorBooks(Long authorId) {
+    public List<Book> getAuthorBooks(long authorId) {
         logger.debug("getting books of author with id {}", authorId);
         String hql = "SELECT b FROM Book b INNER JOIN b.authors a WHERE a.id = :authorId";
         Query query = currentSession().createQuery(hql, Book.class);
