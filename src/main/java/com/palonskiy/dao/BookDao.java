@@ -1,25 +1,13 @@
 package com.palonskiy.dao;
 
+import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
-import com.palonskiy.model.BookAuthor;
 
-import java.util.List;
+public interface BookDao extends CrudDao<Book>{
 
-public interface BookDao {
-    List<Book> get();
+    Author getBookAuthor(long BookId);
 
-    List<BookAuthor> getBookAuthors();
+    boolean checkIfExist(String name);
 
-    Book getById(Long id);
-
-    void add(Book book);
-
-    Long getId();
-
-    void delete(Long id);
-
-    Book checkIfExist(String name);
-
-    void update(Book book);
 
 }

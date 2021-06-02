@@ -3,32 +3,25 @@ package com.palonskiy.serice;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
-import com.palonskiy.model.Book;
 
 import java.util.List;
 
 public interface BookService {
-    List<BookDto> get();
+    List<BookDto> getAll();
 
-    List<AuthorDto> getBookAuthors(int id);
-
-    void addOnlyBook(BookDto bookDto);
-
-    Long getId();
+    AuthorDto getBookAuthor(long id);
 
     void add(BookAuthorDto bookAuthorDto);
 
-    void delete(int id);
+    void delete(long id);
 
-    Book checkIfExist(String name);
+    boolean checkIfExist(String name);
 
-    BookDto getById(int id);
+    BookDto getById(long id);
 
     void update(BookDto bookDto);
 
-    List<BookAuthorDto> sortByYear(int year);
+    List<BookDto> getByField(Object obj, String fieldName);
 
-    List<BookAuthorDto> sortByName(String name);
-
-    List<BookAuthorDto> sortByPublisher(String name);
+    List<BookAuthorDto> getBookAuthorList();
 }

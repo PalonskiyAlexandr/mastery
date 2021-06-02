@@ -1,78 +1,65 @@
 package com.palonskiy.dao;
 
+import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.model.Author;
-import com.palonskiy.model.BookAuthor;
-import org.hibernate.Session;
+import com.palonskiy.model.Book;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
+import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 import java.util.List;
 
 @Repository
-public class AuthorDaoImpl implements AuthorDao {
+public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
 
-    private Long id;
-
-    private SessionFactory sessionFactory;
+    private static final Logger logger = LoggerFactory.getLogger(CrudDaoImpl.class);
 
     public AuthorDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    private Session currentSession() {
-        return sessionFactory.getCurrentSession();
+        super(sessionFactory, Author.class);
     }
 
     @Override
-    public List<Author> get() {
-        return currentSession().createQuery("from Author").list();
+    public List<Book> getAuthorBooks(long authorId) {
+        logger.debug("getting books of author with id {}", authorId);
+        String hql = "SELECT b FROM Book b INNER JOIN b.authors a WHERE a.id = :authorId";
+        Query query = currentSession().createQuery(hql, Book.class);
+        query = query.setParameter("authorId", authorId);
+        List<Book> list = query.getResultList();
+
+        return list;
+
     }
 
     @Override
-    public List<BookAuthor> getAuthorBooks() {
-        return currentSession().createQuery("from BookAuthor").list();
+    //TODO refactor joinField method
+    public List<Book> getByJoinField(Object obj, String fieldName) {
+        String hql = "SELECT b FROM book b INNER JOIN b.authors a WHERE :fieldName = :obj";
+        return currentSession().createQuery(hql, Book.class)
+                .setParameter("obj", obj)
+                .setParameter("fieldName", fieldName)
+                .getResultList();
     }
 
     @Override
-    public Author getById(Long id) {
-        String hql = "from Author b where b.id = :id";
-        return currentSession().createQuery(hql, Author.class)
-                .setParameter("id", id)
-                .getSingleResult();
-    }
-
-    @Override
-    public void add(Author author) {
-        currentSession().save(author);
-        id = author.getId();
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void delete(Long id) {
-        currentSession().delete(getById(id));
-    }
-
-    @Override
-    public Author checkIfExist(String secondName) {
+    public boolean checkIfExist(AuthorDto authorDto) {
+        logger.debug("finding existing author {}", authorDto);
         try {
-            String hql = "from Author b where b.secondName = :secondName";
-            return currentSession().createQuery(hql, Author.class)
-                    .setParameter("secondName", secondName)
-                    .getSingleResult();
+            CriteriaBuilder cb = currentSession().getCriteriaBuilder();
+            CriteriaQuery<Author> query = cb.createQuery(Author.class);
+            Root<Author> tRoot = query.from(Author.class);
+            query.where(cb.equal(tRoot.get("secondName"), authorDto.getSecondName()), cb.equal(tRoot.get("firstName"), authorDto.getFirstName()));
+            currentSession().createQuery(query).getSingleResult();
+            return true;
         } catch (NoResultException e) {
-            return null;
+            logger.warn("can not find the same already existing entity: {0}", e);
+            return false;
         }
-    }
-
-    @Override
-    public void update(Author author) {
-        currentSession().update(author);
     }
 
 }

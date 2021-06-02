@@ -1,80 +1,50 @@
 package com.palonskiy.dao;
 
+import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
-import com.palonskiy.model.BookAuthor;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.NoResultException;
-import java.util.List;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 @Repository
-public class BookDaoImpl implements BookDao {
+public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
 
-    private Long id;
-
-    private SessionFactory sessionFactory;
+    private static final Logger logger = LoggerFactory.getLogger(CrudDaoImpl.class);
 
     public BookDaoImpl(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    private Session currentSession() {
-        return sessionFactory.getCurrentSession();
-    }
-
-
-    @Override
-    public List<Book> get() {
-        return currentSession().createQuery("from Book").list();
+        super(sessionFactory, Book.class);
     }
 
     @Override
-    public List<BookAuthor> getBookAuthors() {
-        return currentSession().createQuery("from BookAuthor").list();
-    }
-
-    @Override
-    public Book getById(Long id) {
-        String hql = "from Book b where b.id = :id";
-        return currentSession().createQuery(hql, Book.class)
-                .setParameter("id", id)
+    public Author getBookAuthor(long bookId) {
+        logger.debug("getting authors of book with id {}", bookId);
+        String hql = "SELECT a FROM Author a INNER JOIN a.books b WHERE b.id = :bookId";
+        logger.debug("getting authors of book with id:{}", bookId);
+        return currentSession().createQuery(hql, Author.class)
+                .setParameter("bookId", bookId)
                 .getSingleResult();
     }
 
     @Override
-    public void add(Book book) {
-        currentSession().save(book);
-        id = book.getId();
-    }
-
-    @Override
-    public Long getId() {
-        return id;
-    }
-
-    @Override
-    public void delete(Long id) {
-        currentSession().delete(getById(id));
-    }
-
-    @Override
-    public Book checkIfExist(String name) {
+    public boolean checkIfExist(String name) {
+        logger.debug("finding existing book by name {}", name);
         try {
-            String hql = "from Book b where b.name = :name";
-            return currentSession().createQuery(hql, Book.class)
-                    .setParameter("name", name)
-                    .getSingleResult();
+            CriteriaBuilder cb = currentSession().getCriteriaBuilder();
+            CriteriaQuery<Book> query = cb.createQuery(Book.class);
+            Root<Book> tRoot = query.from(Book.class);
+            query.where(cb.equal(tRoot.get("name"), name));
+            currentSession().createQuery(query).getSingleResult();
+            return true;
         } catch (NoResultException e) {
-            return null;
+            logger.warn("can not find the same already existing entity: {0}", e);
+            return false;
         }
 
     }
-
-    @Override
-    public void update(Book book) {
-        currentSession().update(book);
-    }
-
 }

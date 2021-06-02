@@ -27,23 +27,23 @@ public class Author {
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
-    @Pattern(regexp = "^[А-Я][а-я]+", message = PATTERN_MESSAGE)
+/*    @Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String firstName;
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
-    @Pattern(regexp = "^[А-Я][а-я]+", message = PATTERN_MESSAGE)
+/*    @Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String secondName;
 
-    @NotNull(message = NULL_MESSAGE)
+/*    @NotNull(message = NULL_MESSAGE)*/
     private LocalDate birthday;
 
     @Enumerated(EnumType.STRING)
-    private Sex sex;
+    private Gender gender;
 
-
-    @OneToMany(mappedBy = "author", cascade = CascadeType.ALL)
-    private List<BookAuthor> books = new ArrayList<>();
+    @ManyToMany(mappedBy = "authors",
+            cascade = CascadeType.ALL)
+    private List<Book> books = new ArrayList<>();
 
     public Author() {
     }
@@ -80,19 +80,19 @@ public class Author {
         this.birthday = birthday;
     }
 
-    public Sex getSex() {
-        return sex;
+    public Gender getGender() {
+        return gender;
     }
 
-    public void setSex(Sex sex) {
-        this.sex = sex;
+    public void setGender(Gender gender) {
+        this.gender = gender;
     }
 
-    public List<BookAuthor> getBooks() {
+    public List<Book> getBooks() {
         return books;
     }
 
-    public void setBooks(List<BookAuthor> books) {
+    public void setBooks(List<Book> books) {
         this.books = books;
     }
 
@@ -105,13 +105,13 @@ public class Author {
                 Objects.equals(firstName, author.firstName) &&
                 Objects.equals(secondName, author.secondName) &&
                 Objects.equals(birthday, author.birthday) &&
-                sex == author.sex &&
+                gender == author.gender &&
                 Objects.equals(books, author.books);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, firstName, secondName, birthday, sex, books);
+        return Objects.hash(id, firstName, secondName, birthday, gender, books);
     }
 
     @Override
@@ -121,7 +121,7 @@ public class Author {
                 ", firstName='" + firstName + '\'' +
                 ", secondName='" + secondName + '\'' +
                 ", birthday=" + birthday +
-                ", sex=" + sex +
+                ", sex=" + gender +
                 ", books=" + books +
                 '}';
     }

@@ -25,18 +25,23 @@ public class Book {
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
-    @Pattern(regexp = "^[А-ЯA-Z][a-zA-Zа-яА-Я ]+", message = PATTERN_MESSAGE)
+    /*@Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String name;
 
-    @OneToMany(mappedBy = "book", cascade = CascadeType.ALL)
-    private List<BookAuthor> authors = new ArrayList<>();
+    @ManyToMany(cascade = CascadeType.PERSIST)
+    @JoinTable(
+            name = "book_author",
+            joinColumns = @JoinColumn(name = "book_id"),
+            inverseJoinColumns = @JoinColumn(name = "author_id")
+    )
+    private List<Author> authors = new ArrayList<>();
 
-    @NotNull(message = NULL_MESSAGE)
+   /* @NotNull(message = NULL_MESSAGE)*/
     private LocalDate year;
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
-    @Pattern(regexp = "^[А-ЯA-Z][a-zA-Zа-яА-Я ]+", message = PATTERN_MESSAGE)
+ /*   @Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String publisher;
 
     public Book() {
@@ -58,11 +63,11 @@ public class Book {
         this.name = name;
     }
 
-    public List<BookAuthor> getAuthors() {
+    public List<Author> getAuthors() {
         return authors;
     }
 
-    public void setAuthors(List<BookAuthor> authors) {
+    public void setAuthors(List<Author> authors) {
         this.authors = authors;
     }
 
