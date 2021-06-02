@@ -14,6 +14,8 @@
 }
 
 
+
+
     </style>
 </head>
 <body>
@@ -25,21 +27,17 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
                     <div class="container-fluid">
-                        <a class="navbar-brand" href="#">Navbar</a>
-                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                                aria-expanded="false" aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                                    <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link active" aria-current="page" th:href="@{newBook}">New book</a>
                                 </li>
-
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" th:href="@{/authors}">Authors list</a>
+                                </li>
                             </ul>
                             <form class="d-flex">
                                 <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
@@ -73,9 +71,14 @@
                     </form>
                     <td th:text="${book.book.publisher}">Publisher</td>
                     <td th:text="${book.book.year}">Year</td>
-                    <td th:text="${book.author.firstName + ' ' + book.author.secondName}">
-                        Author
-                    </td>
+                    <form action="#" th:action="@{/updateAuthor/__${book.author.id}__}" th:object="${book.author}"
+                          method="get">
+                        <td>
+                            <button type="submit" class="btn btn-link"
+                                    th:text="${book.author.firstName + ' ' + book.author.secondName}">Author
+                            </button>
+                        </td>
+                    </form>
                     <form action="#" th:action="@{/deleteBook/__${book.book.id}__}" th:object="${book.book}"
                           method="post">
                         <td>

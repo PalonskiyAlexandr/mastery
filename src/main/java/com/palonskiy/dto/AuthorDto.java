@@ -1,16 +1,19 @@
 package com.palonskiy.dto;
 
 import com.palonskiy.model.Gender;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDate;
+import java.time.Year;
 
 public class AuthorDto {
 
     private Long id;
     private String firstName;
     private String secondName;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private LocalDate birthday;
     @Enumerated(EnumType.STRING)
     private Gender gender;

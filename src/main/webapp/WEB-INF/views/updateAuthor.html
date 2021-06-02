@@ -51,26 +51,34 @@ padding: 10px;
         </div>
 
         <div class="container d-flex justify-content-center" >
-            <form action="#" th:action="@{/updateBook}" th:object="${bookDto}" method="post" style="width: 65%">
+            <form action="#" th:action="@{/updateAuthor}" th:object="${authorDto}" method="post" style="width: 65%">
                 <div class="form-group myBtn">
-                    <label for="inputId">Id of the book</label>
-                    <input type="text" class="form-control" id="inputId" th:value = "${bookDto.id}"
-                           th:field="${bookDto.id}" readonly>
+                    <label for="inputId">Id of the author</label>
+                    <input type="text" class="form-control" id="inputId" th:value = "${authorDto.id}"
+                           th:field="${authorDto.id}" readonly>
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputName">Name of the book</label>
-                    <input type="text" class="form-control" id="inputName" th:value = "${bookDto.name}"
-                           th:field="${bookDto.name}">
+                    <label for="inputName">First name</label>
+                    <input type="text" class="form-control" id="inputName" th:value = "${authorDto.firstName}"
+                           th:field="${authorDto.firstName}">
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputPublisher">Publisher</label>
-                    <input type="text" class="form-control" id="inputPublisher" th:value = "${bookDto.publisher}"
-                           th:field="${bookDto.publisher}">
+                    <label for="inputSecondName">Second name</label>
+                    <input type="text" class="form-control" id="inputSecondName" th:value = "${authorDto.secondName}"
+                           th:field="${authorDto.secondName}">
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputDate">Date of publishing</label>
-                    <input type="date" class="form-control" id="inputDate" th:value = "${bookDto.year}"
-                           th:field="${bookDto.year}">
+                    <label for="inputDate">Birthday</label>
+                    <input type="date" class="form-control" id="inputDate" th:value = "${authorDto.birthday}"
+                           th:field="${authorDto.birthday}">
+                </div>
+                <div class="form-group myBtn">
+                    <label for="inputGender">Authors gender</label>
+                    <select class="form-control" id="inputGender" th:field="${authorDto.gender}">
+                        <option selected = "selected" value="MALE">Male</option>
+                        <option value="FEMALE">Female</option>
+                        <option value="UNDEFINED">Undefined</option>
+                    </select>
                 </div>
                 <div class="myBtn">
                     <button type="submit" class="btn btn-primary ">Update</button>

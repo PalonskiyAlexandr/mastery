@@ -46,7 +46,7 @@ public class BookController {
 
     @GetMapping("/updateBook/{id}")
     public String updateBookPage(@PathVariable String id, Model model) {
-        model.addAttribute(bookService.getById(Integer.parseInt(id)));
+        model.addAttribute(bookService.getById(Long.valueOf(id)));
         return "updateBook";
     }
 

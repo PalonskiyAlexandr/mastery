@@ -12,15 +12,16 @@
 .full-height {
   height: 100%;
 }
-.myBtn{
-padding: 10px;
-}
+
+
+
 
 
 
     </style>
 </head>
-<body class="text-center">
+<body>
+
 <div class="container full-height d-flex align-items-center justify-content-center">
     <div class="container" style="width: 85%">
 
@@ -50,32 +51,36 @@ padding: 10px;
             </div>
         </div>
 
-        <div class="container d-flex justify-content-center" >
-            <form action="#" th:action="@{/updateBook}" th:object="${bookDto}" method="post" style="width: 65%">
-                <div class="form-group myBtn">
-                    <label for="inputId">Id of the book</label>
-                    <input type="text" class="form-control" id="inputId" th:value = "${bookDto.id}"
-                           th:field="${bookDto.id}" readonly>
-                </div>
-                <div class="form-group myBtn">
-                    <label for="inputName">Name of the book</label>
-                    <input type="text" class="form-control" id="inputName" th:value = "${bookDto.name}"
-                           th:field="${bookDto.name}">
-                </div>
-                <div class="form-group myBtn">
-                    <label for="inputPublisher">Publisher</label>
-                    <input type="text" class="form-control" id="inputPublisher" th:value = "${bookDto.publisher}"
-                           th:field="${bookDto.publisher}">
-                </div>
-                <div class="form-group myBtn">
-                    <label for="inputDate">Date of publishing</label>
-                    <input type="date" class="form-control" id="inputDate" th:value = "${bookDto.year}"
-                           th:field="${bookDto.year}">
-                </div>
-                <div class="myBtn">
-                    <button type="submit" class="btn btn-primary ">Update</button>
-                </div>
-            </form>
+        <div class="container d-flex justify-content-center" style="width: 85%">
+            <table class="table table-hover table-striped  ">
+                <thead>
+                <tr>
+                    <th>First name</th>
+                    <th>Second name</th>
+                    <th>Birthday</th>
+                    <th>Gender</th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="author : ${authors}">
+                    <form action="#" th:action="@{/updateAuthor/__${author.id}__}" th:object="${author}"
+                          method="get">
+                        <td>
+                            <button type="submit" class="btn btn-link"
+                                    th:text="${author.firstName}">First name
+                            </button>
+                        </td>
+                        <td th:text="${author.secondName}">Second name</td>
+                        <td th:text="${author.birthday}">Birthday</td>
+                        <td th:text="${author.gender}">Gender</td>
+                    </form>
+                </tr>
+
+                </tbody>
+            </table>
+
         </div>
     </div>
 </div>

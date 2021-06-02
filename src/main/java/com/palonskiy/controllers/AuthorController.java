@@ -9,11 +9,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
+@Controller
 public class AuthorController {
 
     private AuthorService authorService;
@@ -22,7 +24,25 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping("/author")
+    @GetMapping("/updateAuthor/{id}")
+    public String updateAuthorPage(@PathVariable String id, Model model) {
+        model.addAttribute(authorService.getById(Long.valueOf(id)));
+        return "updateAuthor";
+    }
+
+    @PostMapping("/updateAuthor")
+    public String updateAuthor(@ModelAttribute AuthorDto authorDto) {
+        authorService.update(authorDto);
+        return "redirect:/";
+    }
+
+    @GetMapping("/authors")
+    public String getAll(Model model) {
+        model.addAttribute("authors", authorService.getAll());
+        return "authors";
+    }
+
+    /*@GetMapping("/author")
     public ResponseEntity<List<AuthorDto>> getAll() {
         return new ResponseEntity<>(authorService.getAll(), HttpStatus.OK);
     }
@@ -53,7 +73,7 @@ public class AuthorController {
     public ResponseEntity<?> deleteAuthor(@RequestParam int id) {
         authorService.delete(id);
         return new ResponseEntity<>(HttpStatus.OK);
-    }
+    }*/
 
 /*    @GetMapping("/bookByAuthorName")
     public ResponseEntity<List<BookDto>> getBookByAuthorName(@RequestParam String name) {

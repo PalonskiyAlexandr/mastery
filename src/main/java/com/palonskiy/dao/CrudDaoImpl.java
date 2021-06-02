@@ -5,6 +5,7 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -33,6 +34,8 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
         CriteriaQuery<T> query = currentSession().getCriteriaBuilder().createQuery(clazz);
         Root<T> tRoot = query.from(clazz);
         query.select(tRoot);
+        Query query1 = currentSession().createQuery(query);
+        List<T> list= query1.getResultList();
         return currentSession().createQuery(query).getResultList();
     }
 
