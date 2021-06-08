@@ -1,6 +1,7 @@
 package com.palonskiy.controllers;
 
 import com.palonskiy.dto.AuthorDto;
+import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.serice.AuthorService;
 
@@ -40,6 +41,25 @@ public class AuthorController {
     public String getAll(Model model) {
         model.addAttribute("authors", authorService.getAll());
         return "authors";
+    }
+
+    @PostMapping("/deleteAuthor/{id}")
+    public String deleteAuthor(@PathVariable String id) {
+        authorService.delete(Long.valueOf(id));
+        return "redirect:/authors";
+    }
+
+    @PostMapping("/newAuthor")
+    public String newAuthor(@ModelAttribute AuthorDto author) {
+        author.setId(1L);
+        authorService.add(author);
+        return "redirect:/authors";
+    }
+
+    @GetMapping("/newAuthor")
+    public String newAuthorPage(Model model) {
+        model.addAttribute("author", new AuthorDto());
+        return "newAuthor";
     }
 
     /*@GetMapping("/author")

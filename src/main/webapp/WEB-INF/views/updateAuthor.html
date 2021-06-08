@@ -31,18 +31,18 @@ padding: 10px;
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                                    <a class="nav-link active" aria-current="page" th:href="@{/}"
+                                       th:text="#{nav.home}"></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" th:href="@{newBook}">New book</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" th:href="@{/authors}">Authors list</a>
+                                    <a class="nav-link active" aria-current="page" th:href="@{/authors}"
+                                       th:text="#{nav.authorList}"></a>
                                 </li>
                             </ul>
                             <form class="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                <input class="form-control me-2" type="search" th:placeholder="#{nav.search}"
+                                       aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit" th:text="#{nav.search}"></button>
                             </form>
                         </div>
                     </div>
@@ -53,27 +53,27 @@ padding: 10px;
         <div class="container d-flex justify-content-center" >
             <form action="#" th:action="@{/updateAuthor}" th:object="${authorDto}" method="post" style="width: 65%">
                 <div class="form-group myBtn">
-                    <label for="inputId">Id of the author</label>
+                    <label for="inputId" th:text="#{label.authorId}"></label>
                     <input type="text" class="form-control" id="inputId" th:value = "${authorDto.id}"
                            th:field="${authorDto.id}" readonly>
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputName">First name</label>
+                    <label for="inputName" th:text="#{authorFirstName}"></label>
                     <input type="text" class="form-control" id="inputName" th:value = "${authorDto.firstName}"
                            th:field="${authorDto.firstName}">
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputSecondName">Second name</label>
+                    <label for="inputSecondName" th:text="#{authorSecondName}"></label>
                     <input type="text" class="form-control" id="inputSecondName" th:value = "${authorDto.secondName}"
                            th:field="${authorDto.secondName}">
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputDate">Birthday</label>
+                    <label for="inputDate" th:text="#{authorBirthday}"></label>
                     <input type="date" class="form-control" id="inputDate" th:value = "${authorDto.birthday}"
                            th:field="${authorDto.birthday}">
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputGender">Authors gender</label>
+                    <label for="inputGender" th:text="#{authorGender}"></label>
                     <select class="form-control" id="inputGender" th:field="${authorDto.gender}">
                         <option selected = "selected" value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
@@ -81,7 +81,7 @@ padding: 10px;
                     </select>
                 </div>
                 <div class="myBtn">
-                    <button type="submit" class="btn btn-primary ">Update</button>
+                    <button type="submit" class="btn btn-primary " th:text="#{button.update}"></button>
                 </div>
             </form>
         </div>

@@ -31,18 +31,18 @@ padding: 10px;
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                                    <a class="nav-link active" aria-current="page" th:href="@{/}"
+                                       th:text="#{nav.home}"></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" th:href="@{newBook}">New book</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" th:href="@{/authors}">Authors list</a>
+                                    <a class="nav-link active" aria-current="page" th:href="@{/authors}"
+                                       th:text="#{nav.authorList}"></a>
                                 </li>
                             </ul>
                             <form class="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                <input class="form-control me-2" type="search" th:placeholder="#{nav.search}"
+                                       aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit" th:text="#{nav.search}"></button>
                             </form>
                         </div>
                     </div>
@@ -53,27 +53,27 @@ padding: 10px;
         <div class="container d-flex justify-content-center" >
             <form action="#" th:action="@{/updateBook}" th:object="${bookDto}" method="post" style="width: 65%">
                 <div class="form-group myBtn">
-                    <label for="inputId">Id of the book</label>
+                    <label for="inputId" th:text="#{label.bookId}"></label>
                     <input type="text" class="form-control" id="inputId" th:value = "${bookDto.id}"
                            th:field="${bookDto.id}" readonly>
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputName">Name of the book</label>
+                    <label for="inputName" th:text="#{bookName}"></label>
                     <input type="text" class="form-control" id="inputName" th:value = "${bookDto.name}"
                            th:field="${bookDto.name}">
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputPublisher">Publisher</label>
+                    <label for="inputPublisher" th:text="#{bookPublisher}"></label>
                     <input type="text" class="form-control" id="inputPublisher" th:value = "${bookDto.publisher}"
                            th:field="${bookDto.publisher}">
                 </div>
                 <div class="form-group myBtn">
-                    <label for="inputDate">Date of publishing</label>
+                    <label for="inputDate" th:text="#{bookDate}"></label>
                     <input type="date" class="form-control" id="inputDate" th:value = "${bookDto.year}"
                            th:field="${bookDto.year}">
                 </div>
                 <div class="myBtn">
-                    <button type="submit" class="btn btn-primary ">Update</button>
+                    <button type="submit" class="btn btn-primary " th:text="#{button.update}"></button>
                 </div>
             </form>
         </div>

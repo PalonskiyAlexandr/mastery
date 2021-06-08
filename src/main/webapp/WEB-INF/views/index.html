@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
     <style>
@@ -12,9 +13,6 @@
 .full-height {
   height: 100%;
 }
-
-
-
 
     </style>
 </head>
@@ -30,18 +28,26 @@
                         <div class="collapse navbar-collapse" id="navbarSupportedContent">
                             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" th:href="@{/}">Home</a>
+                                    <a class="nav-link active" aria-current="page" th:href="@{/}"
+                                       th:text="#{nav.home}"></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" th:href="@{newBook}">New book</a>
+                                    <a class="nav-link active" aria-current="page" th:href="@{newBook}"
+                                       th:text="#{nav.newBook}"></a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link active" aria-current="page" th:href="@{/authors}">Authors list</a>
+                                    <a class="nav-link active" aria-current="page" th:href="@{authors}"
+                                       th:text="#{nav.authorList}"></a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link active" aria-current="page" th:href="@{newAuthor}"
+                                       th:text="#{nav.newAuthor}"></a>
                                 </li>
                             </ul>
                             <form class="d-flex">
-                                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                                <button class="btn btn-outline-success" type="submit">Search</button>
+                                <input class="form-control me-2" type="search" th:placeholder="#{nav.search}"
+                                       aria-label="Search">
+                                <button class="btn btn-outline-success" type="submit" th:text="#{nav.search}"></button>
                             </form>
                         </div>
                     </div>
@@ -53,10 +59,10 @@
             <table class="table table-hover table-striped  ">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Publisher</th>
-                    <th>Year</th>
-                    <th>Author</th>
+                    <th th:text="#{bookName}"></th>
+                    <th th:text="#{bookPublisher}"></th>
+                    <th th:text="#{bookDate}"></th>
+                    <th th:text="#{table.Author}"></th>
                     <th></th>
                 </tr>
                 </thead>
@@ -66,23 +72,19 @@
                     <form action="#" th:action="@{/updateBook/__${book.book.id}__}" th:object="${book.book}"
                           method="get">
                         <td>
-                            <button type="submit" class="btn btn-link" th:text="${book.book.name}">Name</button>
+                            <button type="submit" class="btn btn-link" th:text="${book.book.name}"></button>
                         </td>
                     </form>
-                    <td th:text="${book.book.publisher}">Publisher</td>
-                    <td th:text="${book.book.year}">Year</td>
-                    <form action="#" th:action="@{/updateAuthor/__${book.author.id}__}" th:object="${book.author}"
-                          method="get">
-                        <td>
-                            <button type="submit" class="btn btn-link"
-                                    th:text="${book.author.firstName + ' ' + book.author.secondName}">Author
-                            </button>
-                        </td>
-                    </form>
+                    <td th:text="${book.book.publisher}"></td>
+                    <td th:text="${book.book.year}"></td>
+                    <td>
+                        <span th:each="author : ${book.authors}"
+                        th:utext="${author.firstName + ' ' + author.secondName +'</br>' }"><br></span>
+                    </td>
                     <form action="#" th:action="@{/deleteBook/__${book.book.id}__}" th:object="${book.book}"
                           method="post">
                         <td>
-                            <button type="submit" class="btn btn-primary">Delete</button>
+                            <button type="submit" class="btn btn-primary" th:text="#{button.delete}"></button>
                         </td>
                     </form>
                 </tr>
@@ -91,6 +93,8 @@
 
         </div>
     </div>
+
 </div>
+
 </body>
 </html>

@@ -51,50 +51,33 @@ padding: 10px;
         </div>
 
         <div class="container d-flex justify-content-center" >
-            <form action="#" th:action="@{/newBook}" th:object="${bookAuthorDto}" method="post" style="width: 65%">
+            <form action="#" th:action="@{/newAuthor}" th:object="${author}" method="post" style="width: 65%">
                 <div class="form-group myBtn">
-                    <label th:text="#{bookName}" for="inputName" ></label>
-                    <input type="text" class="form-control" id="inputName" th:placeholder="#{placeholder.name}"
-                           th:field="${bookAuthorDto.book.name}">
-                </div>
-                <div class="form-group myBtn">
-                    <label for="inputPublisher" th:text="#{bookPublisher}"></label>
-                    <input type="text" class="form-control" id="inputPublisher" th:placeholder="#{placeholder.publisher}"
-                           th:field="${bookAuthorDto.book.publisher}">
-                </div>
-                <div class="form-group myBtn">
-                    <label for="inputYear" th:text="#{bookDate}"></label>
-                    <input type="date" class="form-control" id="inputYear"
-                           th:field="${bookAuthorDto.book.year}">
-                </div>
-                <!--<div class="form-group myBtn">
                     <label for="inputFirstName" th:text="#{authorFirstName}"></label>
                     <input type="text" class="form-control" id="inputFirstName" th:placeholder="#{placeholder.firstName}"
-                           th:field="${bookAuthorDto.author.get(0).firstName}">
+                           th:field="${author.firstName}">
                 </div>
                 <div class="form-group myBtn">
                     <label for="inputSecondName" th:text="#{authorSecondName}"></label>
                     <input type="text" class="form-control" id="inputSecondName" th:placeholder="#{placeholder.secondName}"
-                           th:field="${bookAuthorDto.author..get(0).secondName}">
+                           th:field="${author.secondName}">
                 </div>
                 <div class="form-group myBtn">
                     <label for="inputBirthday" th:text="#{authorBirthday}"></label>
                     <input type="date" class="form-control" id="inputBirthday"
-                           th:field="${bookAuthorDto.author.birthday}">
+                           th:field="${author.birthday}">
                 </div>
                 <div class="form-group myBtn">
                     <label for="inputGender" th:text="#{authorGender}"></label>
-                    <select class="form-control" id="inputGender" th:field="${bookAuthorDto.author.gender}">
+                    <select class="form-control" id="inputGender" th:field="${author.gender}">
                         <option selected = "selected" value="MALE">Male</option>
                         <option value="FEMALE">Female</option>
                         <option value="UNDEFINED">Undefined</option>
                     </select>
-                </div>-->
-                <div class="myBtn">
-                    <button type="submit" class="btn btn-primary " th:text="#{button.addAuthor}"></button>
-                    <button type="submit" class="btn btn-primary " th:text="#{button.assignAuthor}"></button>
                 </div>
-
+                <div class="myBtn">
+                    <button type="submit" class="btn btn-primary " th:text="#{button.submit}"></button>
+                </div>
             </form>
         </div>
     </div>

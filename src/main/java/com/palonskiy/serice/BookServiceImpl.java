@@ -49,8 +49,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public AuthorDto getBookAuthor(long id) {
-        return AuthorConverter.toAuthorDto(bookDao.getBookAuthor(id));
+    public List<AuthorDto> getBookAuthors(long id) {
+        return AuthorConverter.toDtoList(bookDao.getBookAuthors(id));
     }
 
 
@@ -59,8 +59,8 @@ public class BookServiceImpl implements BookService {
         for (BookDto book:getAll()) {
             BookAuthorDto bookAuthorDto = new BookAuthorDto();
             bookAuthorDto.setBook(book);
-            int id = (book.getId()).intValue();
-            bookAuthorDto.setAuthor(getBookAuthor(id));
+            long id = book.getId();
+            bookAuthorDto.setAuthor(getBookAuthors(id));
             list.add(bookAuthorDto);
         }
         return list;
@@ -71,13 +71,16 @@ public class BookServiceImpl implements BookService {
         if (bookAuthorDto.getBook() == null) {
             throw new NullBookException();
         }
-        if (bookAuthorDto.getAuthor() == null) {
+        if (bookAuthorDto.getAuthors() == null) {
             new NullAuthorException();
         }
         if (!bookDao.checkIfExist(bookAuthorDto.getBook().getName())) {
             Book book = bookDao.add(BookConverter.toBook(bookAuthorDto.getBook()));
-            Author author = authorService.add(bookAuthorDto.getAuthor());
-            book.setAuthors(Arrays.asList(author));
+            List<Author> authors = new ArrayList<>();
+            for (AuthorDto author:bookAuthorDto.getAuthors()) {
+                authors.add(authorService.add(author));
+            }
+            book.setAuthors(authors);
             bookDao.update(book);
         } else throw new ExistingEntityException();
     }

@@ -43,7 +43,7 @@ public class Author {
     private Gender gender;
 
     @ManyToMany(mappedBy = "authors",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.PERSIST)
     private List<Book> books = new ArrayList<>();
 
     public Author() {

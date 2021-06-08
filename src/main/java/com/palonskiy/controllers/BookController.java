@@ -1,13 +1,19 @@
 package com.palonskiy.controllers;
 
+import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.serice.BookService;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+
+import java.sql.Array;
+import java.util.Arrays;
+import java.util.Locale;
 
 @Controller
 public class BookController {
@@ -19,21 +25,31 @@ public class BookController {
     }
 
     @GetMapping("/")
-    public String getAll(Model model) {
+    public String getAll(Model model, Locale locale) {
         model.addAttribute("books", bookService.getBookAuthorList());
+        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "index";
     }
 
     @GetMapping("/newBook")
     public String newBookPage(Model model) {
-        model.addAttribute("bookAuthorDto", new BookAuthorDto());
+        model.addAttribute("bookAuthorDto", new BookDto());
         return "newBook";
     }
 
     @PostMapping("/newBook")
-    public String newBook(@ModelAttribute BookAuthorDto bookAuthorDto) {
-        bookAuthorDto.getBook().setId(1l);
-        bookAuthorDto.getAuthor().setId(1l);
+    public String newBook(Model model, @ModelAttribute BookDto bookDto) {
+        bookDto.setId(1l);
+        model.addAttribute("author", new AuthorDto());
+        return "newBookAuthor";
+    }
+
+    @PostMapping("/newBookAuthor")
+    public String newBookAuthor(@ModelAttribute BookDto bookDto, @ModelAttribute AuthorDto authorDto) {
+        authorDto.setId(1l);
+        BookAuthorDto bookAuthorDto = new BookAuthorDto();
+        bookAuthorDto.setBook(bookDto);
+        bookAuthorDto.setAuthor(Arrays.asList(authorDto));
         bookService.add(bookAuthorDto);
         return "redirect:/";
     }

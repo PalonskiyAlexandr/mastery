@@ -9,7 +9,7 @@ import java.util.List;
 public interface BookService {
     List<BookDto> getAll();
 
-    AuthorDto getBookAuthor(long id);
+    List<AuthorDto> getBookAuthors(long id);
 
     void add(BookAuthorDto bookAuthorDto);
 
