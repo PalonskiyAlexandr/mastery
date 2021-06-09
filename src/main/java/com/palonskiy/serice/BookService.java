@@ -13,6 +13,8 @@ public interface BookService {
 
     void add(BookAuthorDto bookAuthorDto);
 
+    void updateWithAuthor(BookAuthorDto bookAuthorDto);
+
     void delete(long id);
 
     boolean checkIfExist(String name);

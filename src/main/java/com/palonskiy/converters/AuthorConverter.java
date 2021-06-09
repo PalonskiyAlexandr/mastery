@@ -18,6 +18,16 @@ public class AuthorConverter {
         return authorsDto;
     }
 
+    public static List<Author> toList(List<AuthorDto> authorsDto) {
+        List<Author> authors = new ArrayList<>();
+        for (AuthorDto authorDto : authorsDto) {
+            Author author = new Author();
+            BeanUtils.copyProperties(authorDto, author);
+            authors.add(author);
+        }
+        return authors;
+    }
+
     public static Author toAuthor(AuthorDto authorDto) {
         Author author = new Author();
         BeanUtils.copyProperties(authorDto, author);

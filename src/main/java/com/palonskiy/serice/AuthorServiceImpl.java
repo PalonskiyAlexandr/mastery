@@ -75,4 +75,8 @@ public class AuthorServiceImpl implements AuthorService {
         return list;
     }
 
+    @Override
+    public boolean checkIfExist(AuthorDto authorDto) {
+        return authorDao.checkIfExist(authorDto);
+    }
 }

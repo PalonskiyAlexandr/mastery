@@ -20,4 +20,6 @@ public interface AuthorService {
     void update(AuthorDto authorDto);
 
     List<BookDto> getByJoinField(Object obj, String fieldName);
+
+    boolean checkIfExist(AuthorDto authorDto);
 }
