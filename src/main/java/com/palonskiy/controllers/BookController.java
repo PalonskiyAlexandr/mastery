@@ -35,7 +35,6 @@ public class BookController {
     @GetMapping("/")
     public String getAll(Model model, Locale locale) {
         model.addAttribute("books", bookService.getBookAuthorList());
-        model.addAttribute("locale", LocaleContextHolder.getLocale());
         return "index";
     }
 

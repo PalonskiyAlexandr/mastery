@@ -26,8 +26,9 @@ public class AuthorController {
     }
 
     @GetMapping("/updateAuthor/{id}")
-    public String updateAuthorPage(@PathVariable String id, Model model) {
-        model.addAttribute(authorService.getById(Long.valueOf(id)));
+    public String updateAuthorPage(@PathVariable Long id, Model model) {
+        AuthorDto authorDto = authorService.getById(id);
+        model.addAttribute("authorDto", authorService.getById(id));
         return "updateAuthor";
     }
 
