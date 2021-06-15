@@ -1,4 +1,4 @@
-package com.palonskiy.serice;
+package com.palonskiy.service;
 
 import com.palonskiy.converters.AuthorConverter;
 import com.palonskiy.converters.BookConverter;
@@ -11,7 +11,6 @@ import com.palonskiy.model.Book;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Service

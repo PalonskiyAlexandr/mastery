@@ -25,8 +25,8 @@ public class HibernateConfig {
     private String login;
     @Value("${db.password}")
     private String password;
-    @Value("${db.driver}")
-    private String driver;
+    @Value("${db.driverClassName}")
+    private String driverClassName;
     @Value("${db.schema}")
     private String schema;
 
@@ -36,8 +36,7 @@ public class HibernateConfig {
         dataSource.setJdbcUrl(url);
         dataSource.setUsername(login);
         dataSource.setPassword(password);
-        dataSource.setDriverClassName(driver);
-        dataSource.setSchema(schema);
+        dataSource.setDriverClassName(driverClassName);
         return dataSource;
     }
 
@@ -53,8 +52,7 @@ public class HibernateConfig {
     private Properties hibernateProperties() {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "none");/*none create-drop*/
-        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.H2Dialect");
-        hibernateProperties.setProperty("hibernate.hbm2ddl.import_files", "/script.sql");
+        hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
         hibernateProperties.setProperty("hibernate.show_sql", "true");
         hibernateProperties.setProperty("hibernate.format_sql", "true");
         hibernateProperties.setProperty("use_sql_comments", "true");

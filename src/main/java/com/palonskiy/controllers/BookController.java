@@ -3,20 +3,13 @@ package com.palonskiy.controllers;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
-import com.palonskiy.model.Author;
-import com.palonskiy.model.Book;
-import com.palonskiy.serice.AuthorService;
-import com.palonskiy.serice.BookService;
-import org.springframework.context.i18n.LocaleContextHolder;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import com.palonskiy.service.AuthorService;
+import com.palonskiy.service.BookService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.context.Context;
 
 import javax.servlet.http.HttpSession;
-import java.sql.Array;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
@@ -48,7 +41,7 @@ public class BookController {
 
     @PostMapping("/newBook")
     public String newBook(Model model, HttpSession session, @ModelAttribute BookDto bookDto, @RequestParam(value = "action", required = true) String action) {
-            bookDto.setId(1l);
+            /*bookDto.setId(1l);*/
             session.setAttribute("bookDto", bookDto);
         if (action.equals("1")) {
             model.addAttribute("author", new AuthorDto());
@@ -61,7 +54,7 @@ public class BookController {
 
     @PostMapping("/newBookAuthor")
     public String newBookAuthor(HttpSession session, @ModelAttribute AuthorDto authorDto) {
-        authorDto.setId(1l);
+        /*authorDto.setId(1l);*/
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
         BookAuthorDto bookAuthorDto = new BookAuthorDto();
         bookAuthorDto.setBook(bookDto);

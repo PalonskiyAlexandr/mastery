@@ -1,4 +1,4 @@
-package com.palonskiy.serice;
+package com.palonskiy.service;
 
 import com.palonskiy.converters.AuthorConverter;
 import com.palonskiy.converters.BookConverter;
@@ -16,7 +16,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -86,9 +85,11 @@ public class BookServiceImpl implements BookService {
             Book book = bookDao.add(BookConverter.toBook(bookAuthorDto.getBook()));
             List<Author> authors = new ArrayList<>();
             for (AuthorDto author : bookAuthorDto.getAuthors()) {
-                long id = author.getId();
+                long id;
                 if (!authorService.checkIfExist(author)) {
                     id = authorService.add(author).getId();
+                }else {
+                    id = author.getId();
                 }
                 authors.add(AuthorConverter.toAuthor(authorService.getById(id)));
             }

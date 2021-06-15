@@ -1,20 +1,12 @@
 package com.palonskiy.controllers;
 
 import com.palonskiy.dto.AuthorDto;
-import com.palonskiy.dto.BookAuthorDto;
-import com.palonskiy.dto.BookDto;
-import com.palonskiy.serice.AuthorService;
+import com.palonskiy.service.AuthorService;
 
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Controller
 public class AuthorController {
@@ -52,7 +44,7 @@ public class AuthorController {
 
     @PostMapping("/newAuthor")
     public String newAuthor(@ModelAttribute AuthorDto author) {
-        author.setId(1L);
+        /*author.setId(10L);*/
         authorService.add(author);
         return "redirect:/authors";
     }

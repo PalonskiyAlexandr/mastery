@@ -1,4 +1,4 @@
-package com.palonskiy.serice;
+package com.palonskiy.service;
 
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookAuthorDto;

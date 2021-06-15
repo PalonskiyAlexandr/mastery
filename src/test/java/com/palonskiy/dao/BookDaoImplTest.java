@@ -51,7 +51,7 @@ class BookDaoImplTest {
         when(query.setParameter(parameter, id)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(author);
 
-        bookDao.getBookAuthor(id);
+        bookDao.getBookAuthors(id);
 
         verify(query).getSingleResult();
     }
