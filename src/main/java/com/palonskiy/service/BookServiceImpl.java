@@ -25,19 +25,26 @@ public class BookServiceImpl implements BookService {
     private BookDao bookDao;
     private AuthorService authorService;
 
-    public BookServiceImpl(BookDao bookDao, AuthorService authorService) {
+    private AuthorConverter authorConverter;
+    private BookConverter bookConverter;
+
+
+    public BookServiceImpl(BookDao bookDao, AuthorService authorService, AuthorConverter authorConverter, BookConverter bookConverter) {
         this.bookDao = bookDao;
         this.authorService = authorService;
+
+        this.authorConverter = authorConverter;
+        this.bookConverter = bookConverter;
     }
 
     @Override
     public List<BookDto> getAll() {
-        return BookConverter.toDtoList(bookDao.getAll());
+        return bookConverter.toDtoList(bookDao.getAll());
     }
 
     @Override
     public BookDto getById(long id) {
-        return BookConverter.toBookDto(bookDao.getById(id));
+        return bookConverter.toBookDto(bookDao.getById(id));
     }
 
     @Override
@@ -51,13 +58,13 @@ public class BookServiceImpl implements BookService {
     public void updateWithAuthor(BookAuthorDto bookAuthorDto) {
         Book book = bookDao.getById(bookAuthorDto.getBook().getId());
         BeanUtils.copyProperties(bookAuthorDto.getBook(), book);
-        book.setAuthors(AuthorConverter.toList(bookAuthorDto.getAuthors()));
+        book.setAuthors(authorConverter.toList(bookAuthorDto.getAuthors()));
         bookDao.update(book);
     }
 
     @Override
     public List<AuthorDto> getBookAuthors(long id) {
-        return AuthorConverter.toDtoList(bookDao.getBookAuthors(id));
+        return authorConverter.toDtoList(bookDao.getBookAuthors(id));
     }
 
 
@@ -82,7 +89,7 @@ public class BookServiceImpl implements BookService {
             new NullAuthorException();
         }
         if (!bookDao.checkIfExist(bookAuthorDto.getBook().getName())) {
-            Book book = bookDao.add(BookConverter.toBook(bookAuthorDto.getBook()));
+            Book book = bookDao.add(bookConverter.toBook(bookAuthorDto.getBook()));
             List<Author> authors = new ArrayList<>();
             for (AuthorDto author : bookAuthorDto.getAuthors()) {
                 long id;
@@ -91,7 +98,7 @@ public class BookServiceImpl implements BookService {
                 }else {
                     id = author.getId();
                 }
-                authors.add(AuthorConverter.toAuthor(authorService.getById(id)));
+                authors.add(authorConverter.toAuthor(authorService.getById(id)));
             }
             book.setAuthors(authors);
             bookDao.update(book);
@@ -110,7 +117,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookDto> getByField(Object obj, String fieldName) {
-        List<BookDto> list = BookConverter.toDtoList(bookDao.getByField(obj, fieldName));
+        List<BookDto> list = bookConverter.toDtoList(bookDao.getByField(obj, fieldName));
         return list;
     }
 }

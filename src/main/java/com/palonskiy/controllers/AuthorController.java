@@ -17,14 +17,14 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping("/updateAuthor/{id}")
+    @GetMapping("/update-author/{id}")
     public String updateAuthorPage(@PathVariable Long id, Model model) {
         AuthorDto authorDto = authorService.getById(id);
         model.addAttribute("authorDto", authorService.getById(id));
-        return "updateAuthor";
+        return "update-author";
     }
 
-    @PostMapping("/updateAuthor")
+    @PostMapping("/update-author")
     public String updateAuthor(@ModelAttribute AuthorDto authorDto) {
         authorService.update(authorDto);
         return "redirect:/";
@@ -36,23 +36,23 @@ public class AuthorController {
         return "authors";
     }
 
-    @PostMapping("/deleteAuthor/{id}")
+    @PostMapping("/delete-author/{id}")
     public String deleteAuthor(@PathVariable String id) {
         authorService.delete(Long.valueOf(id));
         return "redirect:/authors";
     }
 
-    @PostMapping("/newAuthor")
+    @PostMapping("/new-author")
     public String newAuthor(@ModelAttribute AuthorDto author) {
         /*author.setId(10L);*/
         authorService.add(author);
         return "redirect:/authors";
     }
 
-    @GetMapping("/newAuthor")
+    @GetMapping("/new-author")
     public String newAuthorPage(Model model) {
         model.addAttribute("author", new AuthorDto());
-        return "newAuthor";
+        return "new-author";
     }
 
     /*@GetMapping("/author")

@@ -3,12 +3,15 @@ package com.palonskiy.converters;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.model.Author;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Component
 public class AuthorConverter {
-    public static List<AuthorDto> toDtoList(List<Author> authors) {
+
+    public List<AuthorDto> toDtoList(List<Author> authors) {
         List<AuthorDto> authorsDto = new ArrayList<>();
         for (Author author : authors) {
             AuthorDto authorDto = new AuthorDto();
@@ -18,7 +21,7 @@ public class AuthorConverter {
         return authorsDto;
     }
 
-    public static List<Author> toList(List<AuthorDto> authorsDto) {
+    public List<Author> toList(List<AuthorDto> authorsDto) {
         List<Author> authors = new ArrayList<>();
         for (AuthorDto authorDto : authorsDto) {
             Author author = new Author();
@@ -28,13 +31,13 @@ public class AuthorConverter {
         return authors;
     }
 
-    public static Author toAuthor(AuthorDto authorDto) {
+    public Author toAuthor(AuthorDto authorDto) {
         Author author = new Author();
         BeanUtils.copyProperties(authorDto, author);
         return author;
     }
 
-    public static AuthorDto toAuthorDto(Author author) {
+    public AuthorDto toAuthorDto(Author author) {
         AuthorDto authorDto = new AuthorDto();
         BeanUtils.copyProperties(author, authorDto);
         return authorDto;

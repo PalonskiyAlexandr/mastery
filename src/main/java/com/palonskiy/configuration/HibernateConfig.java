@@ -2,10 +2,13 @@ package com.palonskiy.configuration;
 
 import com.zaxxer.hikari.HikariDataSource;
 import org.flywaydb.core.Flyway;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.core.env.Environment;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.transaction.PlatformTransactionManager;
@@ -17,7 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:bd.properties")
+@PropertySource("classpath:application.properties")
 public class HibernateConfig {
     @Value("${db.url}")
     private String url;
@@ -27,8 +30,19 @@ public class HibernateConfig {
     private String password;
     @Value("${db.driverClassName}")
     private String driverClassName;
-    @Value("${db.schema}")
-    private String schema;
+    @Value("${showSql}")
+    private String showSql;
+    @Value("${formatSql}")
+    private String formatSql;
+    @Value("${sqlComments}")
+    private String sqlComments;
+
+
+
+
+    @Autowired
+    private Environment environment;
+
 
     @Bean
     public DataSource dataSource() {
@@ -53,9 +67,9 @@ public class HibernateConfig {
         Properties hibernateProperties = new Properties();
         hibernateProperties.setProperty("hibernate.hbm2ddl.auto", "none");/*none create-drop*/
         hibernateProperties.setProperty("hibernate.dialect", "org.hibernate.dialect.PostgreSQLDialect");
-        hibernateProperties.setProperty("hibernate.show_sql", "true");
-        hibernateProperties.setProperty("hibernate.format_sql", "true");
-        hibernateProperties.setProperty("use_sql_comments", "true");
+        hibernateProperties.setProperty("hibernate.show_sql", showSql);
+        hibernateProperties.setProperty("hibernate.format_sql", formatSql);
+        hibernateProperties.setProperty("use_sql_comments", sqlComments);
         return hibernateProperties;
     }
 

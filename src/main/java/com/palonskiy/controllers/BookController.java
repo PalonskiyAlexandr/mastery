@@ -31,28 +31,28 @@ public class BookController {
         return "index";
     }
 
-    @GetMapping("/newBook")
+    @GetMapping("/new-book")
     public String newBookPage(Model model) {
         model.addAttribute("bookDto", new BookDto());
         model.addAttribute("index", new String());
-        return "newBook";
+        return "new-book";
     }
 
 
-    @PostMapping("/newBook")
+    @PostMapping("/new-book")
     public String newBook(Model model, HttpSession session, @ModelAttribute BookDto bookDto, @RequestParam(value = "action", required = true) String action) {
             /*bookDto.setId(1l);*/
             session.setAttribute("bookDto", bookDto);
         if (action.equals("1")) {
             model.addAttribute("author", new AuthorDto());
-            return "newBookAuthor";
+            return "new-book-author";
         } else  {
             model.addAttribute("authors", authorService.getAll());
-            return "newBookAuthorAssign";
+            return "new-book-author-assign";
         }
     }
 
-    @PostMapping("/newBookAuthor")
+    @PostMapping("/new-book-author")
     public String newBookAuthor(HttpSession session, @ModelAttribute AuthorDto authorDto) {
         /*authorDto.setId(1l);*/
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
@@ -63,7 +63,7 @@ public class BookController {
         return "redirect:/";
     }
 
-    @PostMapping("/assignAuthor/{id}")
+    @PostMapping("/assign-author/{id}")
     public String assignAuthor (HttpSession session, @PathVariable String id) {
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
         BookAuthorDto bookAuthorDto = new BookAuthorDto();
@@ -74,7 +74,7 @@ public class BookController {
     }
 
 
-    @PostMapping("/oldAssignAuthor/{authorId}")
+    @PostMapping("/old-assign-author/{authorId}")
     public String oldAssignAuthor (HttpSession session, @PathVariable String authorId) {
         String bookId = session.getAttribute("bookId").toString();
         List<AuthorDto> authors = bookService.getBookAuthors(Long.valueOf(bookId));
@@ -86,20 +86,20 @@ public class BookController {
         return "redirect:/";
     }
 
-    @PostMapping("/deleteBook/{id}")
+    @PostMapping("/delete-book/{id}")
     public String deleteBook(@PathVariable String id) {
         bookService.delete(Long.valueOf(id));
         return "redirect:/";
     }
 
-    @GetMapping("/updateBook/{id}")
+    @GetMapping("/update-book/{id}")
     public String updateBookPage(@PathVariable String id, Model model, HttpSession session) {
         model.addAttribute(bookService.getById(Long.valueOf(id)));
         session.setAttribute("bookId", id);
-        return "updateBook";
+        return "update-book";
     }
 
-    @PostMapping("/updateBook")
+    @PostMapping("/update-book")
     public String updateBook(Model model, @ModelAttribute BookDto bookDto, @RequestParam(value = "action", required = true) String action) {
         if (action.equals("1")) {
             bookService.update(bookDto);
@@ -116,7 +116,7 @@ public class BookController {
             }
             authors.remove(exAuthors);
             model.addAttribute("authors", authors);
-            return "oldBookAuthorAssign";
+            return "old-book-author-assign";
         }
 
     }

@@ -20,34 +20,40 @@ public class AuthorServiceImpl implements AuthorService {
     private AuthorDao authorDao;
     private BookDao bookDao;
 
-    public AuthorServiceImpl(AuthorDao authorDao, BookDao bookDao) {
+    private AuthorConverter authorConverter;
+    private BookConverter bookConverter;
+
+    public AuthorServiceImpl(AuthorDao authorDao, BookDao bookDao, AuthorConverter authorConverter, BookConverter bookConverter) {
         this.authorDao = authorDao;
         this.bookDao = bookDao;
+
+        this.authorConverter = authorConverter;
+        this.bookConverter = bookConverter;
     }
 
     @Override
     public List<AuthorDto> getAll() {
-        return AuthorConverter.toDtoList(authorDao.getAll());
+        return authorConverter.toDtoList(authorDao.getAll());
     }
 
     @Override
     public AuthorDto getById(long id) {
-        return AuthorConverter.toAuthorDto(authorDao.getById(id));
+        return authorConverter.toAuthorDto(authorDao.getById(id));
     }
 
     @Override
     public void update(AuthorDto authorDto) {
-        authorDao.update(AuthorConverter.toAuthor(authorDto));
+        authorDao.update(authorConverter.toAuthor(authorDto));
     }
 
     @Override
     public List<BookDto> getAuthorBooks(long id) {
-        return BookConverter.toDtoList(authorDao.getAuthorBooks(id));
+        return bookConverter.toDtoList(authorDao.getAuthorBooks(id));
     }
 
     @Override
     public Author add(AuthorDto authorDto) {
-        return authorDao.add(AuthorConverter.toAuthor(authorDto));
+        return authorDao.add(authorConverter.toAuthor(authorDto));
     }
 
     @Override
@@ -70,7 +76,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<BookDto> getByJoinField(Object obj, String fieldName) {
-        List<BookDto> list = BookConverter.toDtoList(authorDao.getByJoinField(obj, fieldName));
+        List<BookDto> list = bookConverter.toDtoList(authorDao.getByJoinField(obj, fieldName));
         return list;
     }
 

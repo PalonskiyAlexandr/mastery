@@ -38,13 +38,13 @@
             </div>
             <div class="d-flex justify-content-end">
                 <div class=" p-2">
-                    <img src="images/addAuthor.png" class="img-fluid MyiIg">
-                    <a class="p-2 link-secondary fst-italic" th:href="@{newBook}"
+                    <img src="images/add-author.png" class="img-fluid MyiIg">
+                    <a class="p-2 link-secondary fst-italic" th:href="@{new-book}"
                        th:text="#{nav.newBook}"></a>
                 </div>
                 <div class=" p-2">
-                    <img src="images/addBook.png" class="img-fluid MyiIg">
-                    <a class="p-2 link-secondary fst-italic" th:href="@{newAuthor}"
+                    <img src="images/add-book.png" class="img-fluid MyiIg">
+                    <a class="p-2 link-secondary fst-italic" th:href="@{new-author}"
                        th:text="#{nav.newAuthor}"></a>
                 </div>
             </div>
@@ -69,7 +69,7 @@
                 <tbody>
 
                 <tr th:each="author : ${authors}">
-                    <form action="#" th:action="@{/updateAuthor/__${author.id}__}" th:object="${author}"
+                    <form action="#" th:action="@{/update-author/__${author.id}__}" th:object="${author}"
                           method="get">
                         <td>
                             <button type="submit" class="btn btn-link text-white"
@@ -80,7 +80,7 @@
                         <td th:text="${author.birthday}"></td>
                         <td th:text="${author.gender}"></td>
                     </form>
-                    <form action="#" th:action="@{/deleteAuthor/__${author.id}__}" th:object="${author}"
+                    <form action="#" th:action="@{/delete-author/__${author.id}__}" th:object="${author}"
                           method="post">
                         <td>
                             <button type="submit" class="btn btn-secondary" th:text="#{button.delete}"></button>

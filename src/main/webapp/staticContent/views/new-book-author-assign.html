@@ -36,54 +36,54 @@
                        th:text="#{nav.authorList}"></a>
                 </div>
             </div>
+            <div class="d-flex justify-content-end">
+                <div class=" p-2">
+                    <img src="images/add-author.png" class="img-fluid MyiIg">
+                    <a class="p-2 link-secondary fst-italic" th:href="@{new-book}"
+                       th:text="#{nav.newBook}"></a>
+                </div>
+                <div class=" p-2">
+                    <img src="images/add-book.png" class="img-fluid MyiIg">
+                    <a class="p-2 link-secondary fst-italic" th:href="@{new-author}"
+                       th:text="#{nav.newAuthor}"></a>
+                </div>
+            </div>
         </nav>
     </div>
 </div>
 
 <main class="container">
-    <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
-        <div class="col-md-6 px-0">
-            <h1 class="display-4 fst-italic" th:text="#{h1.createAuthor}">Books</h1>
-            <form action="#" th:action="@{/newBookAuthor}" th:object="${author}" method="post">
-                <div class="form-row p-2">
-                    <label for="inputFirstName" th:text="#{authorFirstName}"></label>
-                    <div class="">
-                        <input type="text" class="form-control" id="inputFirstName"
-                               th:placeholder="#{placeholder.firstName}"
-                               th:field="${author.firstName}">
-                    </div>
-                </div>
-                <div class="form-group row p-2">
-                    <label for="inputSecondName" th:text="#{authorSecondName}"></label>
-                    <div class="">
-                        <input type="text" class="form-control" id="inputSecondName"
-                               th:placeholder="#{placeholder.secondName}"
-                               th:field="${author.secondName}">
-                    </div>
-                </div>
-                <div class="form-group row p-2">
-                    <label for="inputBirthday" th:text="#{authorBirthday}"></label>
-                    <div class="">
-                        <input type="date" class="form-control" id="inputBirthday"
-                               th:field="${author.birthday}">
-                    </div>
-                </div>
-                <div class="form-group row p-2">
-                    <label for="inputGender" th:text="#{authorGender}"></label>
-                    <div class="">
-                        <select class="form-control" id="inputGender" th:field="${author.gender}">
-                            <option selected="selected" value="MALE" th:text="#{select.male}"></option>
-                            <option value="FEMALE" th:text="#{select.female}"></option>
-                            <option value="UNDEFINED" th:text="#{select.undefined}"></option>
-                        </select>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <div class=" d-flex justify-content-center">
-                        <button type="submit" class="btn btn-secondary " th:text="#{button.submit}"></button>
-                    </div>
-                </div>
-            </form>
+    <div class="p-2 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
+        <div class="">
+            <h1 class="display-4 fst-italic" th:text="#{h1.authors}"></h1>
+            <table class="table table-hover table-dark">
+                <thead>
+                <tr>
+                    <th th:text="#{authorFirstName}"></th>
+                    <th th:text="#{authorSecondName}"></th>
+                    <th th:text="#{authorBirthday}"></th>
+                    <th th:text="#{authorGender}"></th>
+                    <th></th>
+                </tr>
+                </thead>
+                <tbody>
+
+                <tr th:each="author : ${authors}">
+                    <td th:text="${author.firstName}"></td>
+                    <td th:text="${author.secondName}"></td>
+                    <td th:text="${author.birthday}"></td>
+                    <td th:text="${author.gender}"></td>
+                    </form>
+                    <form action="#" th:action="@{/assign-author/__${author.id}__}" th:object="${author}"
+                          method="post">
+                        <td>
+                            <button type="submit" class="btn btn-secondary" th:text="#{button.assignAuthor}"></button>
+                        </td>
+                    </form>
+                </tr>
+
+                </tbody>
+            </table>
         </div>
     </div>
 

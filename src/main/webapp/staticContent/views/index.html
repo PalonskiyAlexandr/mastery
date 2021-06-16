@@ -38,13 +38,13 @@
             </div>
             <div class="d-flex justify-content-end">
                 <div class=" p-2">
-                    <img src="images/addAuthor.png" class="img-fluid MyiIg">
-                    <a class="p-2 link-secondary fst-italic" th:href="@{newBook}"
+                    <img src="images/add-author.png" class="img-fluid MyiIg">
+                    <a class="p-2 link-secondary fst-italic" th:href="@{new-book}"
                        th:text="#{nav.newBook}"></a>
                 </div>
                 <div class=" p-2">
-                    <img src="images/addBook.png" class="img-fluid MyiIg">
-                    <a class="p-2 link-secondary fst-italic" th:href="@{newAuthor}"
+                    <img src="images/add-book.png" class="img-fluid MyiIg">
+                    <a class="p-2 link-secondary fst-italic" th:href="@{new-author}"
                        th:text="#{nav.newAuthor}"></a>
                 </div>
             </div>
@@ -67,7 +67,7 @@
                 </thead>
                 <tbody>
                 <tr th:each="book : ${books}">
-                    <form action="#" th:action="@{/updateBook/__${book.book.id}__}" th:object="${book.book}"
+                    <form action="#" th:action="@{/update-book/__${book.book.id}__}" th:object="${book.book}"
                           method="get">
                         <td>
                             <button type="submit" class="btn btn-link text-white" th:text="${book.book.name}"></button>
@@ -79,7 +79,7 @@
                         <span th:each="author : ${book.authors}"
                               th:utext="${author.firstName + ' ' + author.secondName +'</br>' }"><br></span>
                     </td>
-                    <form action="#" th:action="@{/deleteBook/__${book.book.id}__}" th:object="${book.book}"
+                    <form action="#" th:action="@{/delete-book/__${book.book.id}__}" th:object="${book.book}"
                           method="post">
                         <td>
                             <button type="submit" class="btn btn-secondary" th:text="#{button.delete}"></button>

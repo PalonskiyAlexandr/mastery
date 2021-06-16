@@ -16,7 +16,7 @@
     <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-center align-items-center">
             <div class="col-4 text-center p-2">
-                <img src="images/logoBook.png" class=" MyiIg" style="height: 50px; width: 100px;">
+                <img src="images/logo-book.png" class=" MyiIg" style="height: 50px; width: 100px;">
                 <h1 class="blog-header-logo text-dark p-2" href="#">Black Books</h1>
             </div>
         </div>
@@ -38,13 +38,13 @@
             </div>
             <div class="d-flex justify-content-end">
                 <div class=" p-2">
-                    <img src="images/addAuthor.png" class="img-fluid MyiIg">
-                    <a class="p-2 link-secondary fst-italic" th:href="@{newBook}"
+                    <img src="images/add-author.png" class="img-fluid MyiIg">
+                    <a class="p-2 link-secondary fst-italic" th:href="@{new-book}"
                        th:text="#{nav.newBook}"></a>
                 </div>
                 <div class=" p-2">
-                    <img src="images/addBook.png" class="img-fluid MyiIg">
-                    <a class="p-2 link-secondary fst-italic" th:href="@{newAuthor}"
+                    <img src="images/add-book.png" class="img-fluid MyiIg">
+                    <a class="p-2 link-secondary fst-italic" th:href="@{new-author}"
                        th:text="#{nav.newAuthor}"></a>
                 </div>
             </div>
@@ -74,7 +74,7 @@
                     <td th:text="${author.birthday}"></td>
                     <td th:text="${author.gender}"></td>
                     </form>
-                    <form action="#" th:action="@{/oldAssignAuthor/__${author.id}__}" th:object="${author}"
+                    <form action="#" th:action="@{/old-assign-author/__${author.id}__}" th:object="${author}"
                           method="post">
                         <td>
                             <button type="submit" class="btn btn-secondary" th:text="#{button.assignAuthor}"></button>
