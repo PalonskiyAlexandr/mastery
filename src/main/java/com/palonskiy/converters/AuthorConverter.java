@@ -13,6 +13,10 @@ public class AuthorConverter {
 
     public List<AuthorDto> toDtoList(List<Author> authors) {
         List<AuthorDto> authorsDto = new ArrayList<>();
+        /*AuthorDto authorDto = new AuthorDto();
+        authors.stream()
+                .peek(author -> authorsDto.add(new AuthorDto()))
+                .forEach(author -> BeanUtils.copyProperties(author, authorDto));*/
         for (Author author : authors) {
             AuthorDto authorDto = new AuthorDto();
             BeanUtils.copyProperties(author, authorDto);

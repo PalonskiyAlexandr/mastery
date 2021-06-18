@@ -17,10 +17,10 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping("/update-author/{id}")
-    public String updateAuthorPage(@PathVariable Long id, Model model) {
-        AuthorDto authorDto = authorService.getById(id);
-        model.addAttribute("authorDto", authorService.getById(id));
+    @GetMapping("/update-author/{authorId}")
+    public String updateAuthorPage(@PathVariable long authorId, Model model) {
+        AuthorDto authorDto = authorService.getById(authorId);
+        model.addAttribute("authorDto", authorService.getById(authorId));
         return "update-author";
     }
 
@@ -36,9 +36,9 @@ public class AuthorController {
         return "authors";
     }
 
-    @PostMapping("/delete-author/{id}")
-    public String deleteAuthor(@PathVariable String id) {
-        authorService.delete(Long.valueOf(id));
+    @PostMapping("/delete-author/{authorId}")
+    public String deleteAuthor(@PathVariable long authorId) {
+        authorService.delete(authorId);
         return "redirect:/authors";
     }
 

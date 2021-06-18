@@ -9,17 +9,17 @@ import java.util.List;
 public interface BookService {
     List<BookDto> getAll();
 
-    List<AuthorDto> getBookAuthors(long id);
+    List<AuthorDto> getBookAuthors(long bookId);
 
     void add(BookAuthorDto bookAuthorDto);
 
     void updateWithAuthor(BookAuthorDto bookAuthorDto);
 
-    void delete(long id);
+    void delete(long bookId);
 
     boolean checkIfExist(String name);
 
-    BookDto getById(long id);
+    BookDto getById(long bookId);
 
     void update(BookDto bookDto);
 

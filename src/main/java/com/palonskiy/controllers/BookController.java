@@ -26,7 +26,7 @@ public class BookController {
     }
 
     @GetMapping("/")
-    public String getAll(Model model, Locale locale) {
+    public String getAll(Model model) {
         model.addAttribute("books", bookService.getBookAuthorList());
         return "index";
     }
@@ -40,8 +40,8 @@ public class BookController {
 
 
     @PostMapping("/new-book")
-    public String newBook(Model model, HttpSession session, @ModelAttribute BookDto bookDto, @RequestParam(value = "action", required = true) String action) {
-            /*bookDto.setId(1l);*/
+    public String newBook(Model model, HttpSession session, @ModelAttribute BookDto bookDto,
+                          @RequestParam(value = "action") String action) {
             session.setAttribute("bookDto", bookDto);
         if (action.equals("1")) {
             model.addAttribute("author", new AuthorDto());
@@ -63,22 +63,22 @@ public class BookController {
         return "redirect:/";
     }
 
-    @PostMapping("/assign-author/{id}")
-    public String assignAuthor (HttpSession session, @PathVariable String id) {
+    @PostMapping("/assign-author/{authorId}")
+    public String assignAuthor (HttpSession session, @PathVariable long authorId) {
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
         BookAuthorDto bookAuthorDto = new BookAuthorDto();
         bookAuthorDto.setBook(bookDto);
-        bookAuthorDto.setAuthor(Arrays.asList(authorService.getById(Long.valueOf(id))));
+        bookAuthorDto.setAuthor(Arrays.asList(authorService.getById(authorId)));
         bookService.add(bookAuthorDto);
         return "redirect:/";
     }
 
 
     @PostMapping("/old-assign-author/{authorId}")
-    public String oldAssignAuthor (HttpSession session, @PathVariable String authorId) {
+    public String oldAssignAuthor (HttpSession session, @PathVariable long authorId) {
         String bookId = session.getAttribute("bookId").toString();
         List<AuthorDto> authors = bookService.getBookAuthors(Long.valueOf(bookId));
-        authors.add(authorService.getById(Long.valueOf(authorId)));
+        authors.add(authorService.getById(authorId));
         BookAuthorDto bookAuthorDto = new BookAuthorDto();
         bookAuthorDto.setBook(bookService.getById(Long.valueOf(bookId)));
         bookAuthorDto.setAuthor(authors);
@@ -86,21 +86,22 @@ public class BookController {
         return "redirect:/";
     }
 
-    @PostMapping("/delete-book/{id}")
-    public String deleteBook(@PathVariable String id) {
-        bookService.delete(Long.valueOf(id));
+    @PostMapping("/delete-book/{bookId}")
+    public String deleteBook(@PathVariable long bookId) {
+        bookService.delete(bookId);
         return "redirect:/";
     }
 
-    @GetMapping("/update-book/{id}")
-    public String updateBookPage(@PathVariable String id, Model model, HttpSession session) {
-        model.addAttribute(bookService.getById(Long.valueOf(id)));
-        session.setAttribute("bookId", id);
+    @GetMapping("/update-book/{bookId}")
+    public String updateBookPage(@PathVariable long bookId, Model model, HttpSession session) {
+        model.addAttribute(bookService.getById(bookId));
+        session.setAttribute("bookId", bookId);
         return "update-book";
     }
 
     @PostMapping("/update-book")
-    public String updateBook(Model model, @ModelAttribute BookDto bookDto, @RequestParam(value = "action", required = true) String action) {
+    public String updateBook(Model model, @ModelAttribute BookDto bookDto,
+                             @RequestParam(value = "action") String action) {
         if (action.equals("1")) {
             bookService.update(bookDto);
             return "redirect:/";
@@ -109,7 +110,8 @@ public class BookController {
             List<AuthorDto> exAuthors = bookService.getBookAuthors(bookDto.getId());
             for (int i=0; i<authors.size(); i++){
                 for(int j = 0; j<exAuthors.size(); j++){
-                    if(authors.get(i).getFirstName().equals(exAuthors.get(j).getFirstName()) && authors.get(i).getSecondName().equals(exAuthors.get(j).getSecondName())){
+                    if(authors.get(i).getFirstName().equals(exAuthors.get(j).getFirstName())
+                            && authors.get(i).getSecondName().equals(exAuthors.get(j).getSecondName())){
                         authors.remove(i);
                     }
                 }

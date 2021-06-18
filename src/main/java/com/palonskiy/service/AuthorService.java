@@ -9,13 +9,13 @@ import java.util.List;
 public interface AuthorService {
     List<AuthorDto> getAll();
 
-    List<BookDto> getAuthorBooks(long id);
+    List<BookDto> getAuthorBooks(long authorId);
 
     Author add(AuthorDto authorDto);
 
-    void delete(long id);
+    void delete(long authorId);
 
-    AuthorDto getById(long id);
+    AuthorDto getById(long authorId);
 
     void update(AuthorDto authorDto);
 

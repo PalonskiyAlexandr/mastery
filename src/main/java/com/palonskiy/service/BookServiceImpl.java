@@ -43,8 +43,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public BookDto getById(long id) {
-        return bookConverter.toBookDto(bookDao.getById(id));
+    public BookDto getById(long bookId) {
+        return bookConverter.toBookDto(bookDao.getById(bookId));
     }
 
     @Override
@@ -63,8 +63,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<AuthorDto> getBookAuthors(long id) {
-        return authorConverter.toDtoList(bookDao.getBookAuthors(id));
+    public List<AuthorDto> getBookAuthors(long bookId) {
+        return authorConverter.toDtoList(bookDao.getBookAuthors(bookId));
     }
 
 
@@ -106,8 +106,8 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void delete(long id) {
-        bookDao.delete(bookDao.getById(id));
+    public void delete(long bookId) {
+        bookDao.delete(bookDao.getById(bookId));
     }
 
     @Override

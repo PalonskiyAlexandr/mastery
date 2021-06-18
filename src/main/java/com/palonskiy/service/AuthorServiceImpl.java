@@ -37,8 +37,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public AuthorDto getById(long id) {
-        return authorConverter.toAuthorDto(authorDao.getById(id));
+    public AuthorDto getById(long authorId) {
+        return authorConverter.toAuthorDto(authorDao.getById(authorId));
     }
 
     @Override
@@ -47,8 +47,8 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public List<BookDto> getAuthorBooks(long id) {
-        return bookConverter.toDtoList(authorDao.getAuthorBooks(id));
+    public List<BookDto> getAuthorBooks(long authorId) {
+        return bookConverter.toDtoList(authorDao.getAuthorBooks(authorId));
     }
 
     @Override
@@ -57,17 +57,16 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     @Override
-    public void delete(long id) {
-        List<Book> books = authorDao.getAuthorBooks(id);
-        Author author = authorDao.getById(id);
+    public void delete(long authorId) {
+        List<Book> books = authorDao.getAuthorBooks(authorId);
+        Author author = authorDao.getById(authorId);
         for (Book book:books) {
-            List<Author> authors = bookDao.getBookAuthors(book.getId());
+            List<Author> authors = book.getAuthors();
             if (authors.size()==1)
             {
                 bookDao.delete(book);
             }else{
                 authors.remove(author);
-                book.setAuthors(authors);
                 bookDao.update(book);
             }
         }
