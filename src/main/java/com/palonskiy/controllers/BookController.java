@@ -3,6 +3,7 @@ package com.palonskiy.controllers;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
+import com.palonskiy.model.Action;
 import com.palonskiy.service.AuthorService;
 import com.palonskiy.service.BookService;
 import org.springframework.stereotype.Controller;
@@ -34,16 +35,15 @@ public class BookController {
     @GetMapping("/new-book")
     public String newBookPage(Model model) {
         model.addAttribute("bookDto", new BookDto());
-        model.addAttribute("index", new String());
         return "new-book";
     }
 
 
     @PostMapping("/new-book")
     public String newBook(Model model, HttpSession session, @ModelAttribute BookDto bookDto,
-                          @RequestParam(value = "action") String action) {
+                          @RequestParam(value = "action") Action action) {
             session.setAttribute("bookDto", bookDto);
-        if (action.equals("1")) {
+        if (Action.CREATE_AUTHOR.equals(action)) {
             model.addAttribute("author", new AuthorDto());
             return "new-book-author";
         } else  {
@@ -54,7 +54,6 @@ public class BookController {
 
     @PostMapping("/new-book-author")
     public String newBookAuthor(HttpSession session, @ModelAttribute AuthorDto authorDto) {
-        /*authorDto.setId(1l);*/
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
         BookAuthorDto bookAuthorDto = new BookAuthorDto();
         bookAuthorDto.setBook(bookDto);
@@ -101,11 +100,8 @@ public class BookController {
 
     @PostMapping("/update-book")
     public String updateBook(Model model, @ModelAttribute BookDto bookDto,
-                             @RequestParam(value = "action") String action) {
-        if (action.equals("1")) {
-            bookService.update(bookDto);
-            return "redirect:/";
-        } else  {
+                             @RequestParam(value = "action") Action action) {
+        if (Action.ASSIGN_AUTHOR.equals(action)) {
             List<AuthorDto> authors = authorService.getAll();
             List<AuthorDto> exAuthors = bookService.getBookAuthors(bookDto.getId());
             for (int i=0; i<authors.size(); i++){
@@ -119,6 +115,9 @@ public class BookController {
             authors.remove(exAuthors);
             model.addAttribute("authors", authors);
             return "old-book-author-assign";
+        } else  {
+            bookService.update(bookDto);
+            return "redirect:/";
         }
 
     }

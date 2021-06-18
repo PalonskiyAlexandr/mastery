@@ -19,7 +19,6 @@ public class AuthorController {
 
     @GetMapping("/update-author/{authorId}")
     public String updateAuthorPage(@PathVariable long authorId, Model model) {
-        AuthorDto authorDto = authorService.getById(authorId);
         model.addAttribute("authorDto", authorService.getById(authorId));
         return "update-author";
     }
@@ -44,7 +43,6 @@ public class AuthorController {
 
     @PostMapping("/new-author")
     public String newAuthor(@ModelAttribute AuthorDto author) {
-        /*author.setId(10L);*/
         authorService.add(author);
         return "redirect:/authors";
     }
