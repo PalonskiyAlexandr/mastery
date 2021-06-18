@@ -20,7 +20,7 @@ import java.util.Properties;
 
 @Configuration
 @EnableTransactionManagement
-@PropertySource("classpath:application.properties")
+@PropertySource({"classpath:application.properties"})
 public class HibernateConfig {
     @Value("${db.url}")
     private String url;
@@ -36,13 +36,6 @@ public class HibernateConfig {
     private String formatSql;
     @Value("${db.sql_comments}")
     private String sqlComments;
-
-
-
-
-    @Autowired
-    private Environment environment;
-
 
     @Bean
     public DataSource dataSource() {

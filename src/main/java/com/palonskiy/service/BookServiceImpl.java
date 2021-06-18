@@ -89,18 +89,21 @@ public class BookServiceImpl implements BookService {
         if (bookAuthorDto.getAuthors() == null) {
             new NullAuthorException();
         }
-        if (!bookDao.checkIfExist(bookAuthorDto.getBook().getName())) {
+        if (!bookDao.checkIfBookExist(bookAuthorDto.getBook().getName())) {
             Book book = bookDao.add(bookConverter.toBook(bookAuthorDto.getBook()));
             List<Author> authors = new ArrayList<>();
             for (AuthorDto author : bookAuthorDto.getAuthors()) {
                 long id;
-                if (!authorService.checkIfExist(author)) {
+                if (!authorService.checkIfAuthorExist(author)) {
                     id = authorService.add(author).getId();
                 }else {
                     id = author.getId();
                 }
                 authors.add(authorConverter.toAuthor(authorService.getById(id)));
             }
+            bookAuthorDto.getAuthors().stream()
+                    .filter(authorDto -> !authorService.checkIfAuthorExist(authorDto));
+
             book.setAuthors(authors);
             bookDao.update(book);
         } else throw new ExistingEntityException();
@@ -113,7 +116,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public boolean checkIfExist(String name) {
-        return bookDao.checkIfExist(name);
+        return bookDao.checkIfBookExist(name);
     }
 
     @Override

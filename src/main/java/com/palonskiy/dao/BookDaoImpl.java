@@ -32,7 +32,7 @@ public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
     }
 
     @Override
-    public boolean checkIfExist(String name) {
+    public boolean checkIfBookExist(String name) {
         logger.debug("finding existing book by name {}", name);
         try {
             CriteriaBuilder cb = currentSession().getCriteriaBuilder();

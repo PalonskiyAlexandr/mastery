@@ -15,9 +15,6 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -70,7 +67,7 @@ class BookDaoImplTest {
         when(session.createQuery(cQuery)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(obj);
 
-        bookDao.checkIfExist(name);
+        bookDao.checkIfBookExist(name);
 
         verify(query).getSingleResult();
     }

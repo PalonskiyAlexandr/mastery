@@ -21,7 +21,7 @@ public interface AuthorService {
 
     List<BookDto> getByJoinField(Object obj, String fieldName);
 
-    boolean checkIfExist(AuthorDto authorDto);
+    boolean checkIfAuthorExist(AuthorDto authorDto);
 
     List<AuthorDto> getAuthorExceptAuthors(BookDto bookDto);
 }
