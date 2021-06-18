@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -119,5 +120,22 @@ public class BookServiceImpl implements BookService {
     public List<BookDto> getByField(Object obj, String fieldName) {
         List<BookDto> list = bookConverter.toDtoList(bookDao.getByField(obj, fieldName));
         return list;
+    }
+
+    @Override
+    public BookAuthorDto createBookAuthorDto(BookDto bookDto, AuthorDto authorDto) {
+        return new BookAuthorDto(Arrays.asList(authorDto), bookDto);
+    }
+
+    @Override
+    public BookAuthorDto createBookAuthorDto(BookDto bookDto, long authorDtoId) {
+        return new BookAuthorDto(Arrays.asList(authorService.getById(authorDtoId)), bookDto);
+    }
+
+    @Override
+    public BookAuthorDto createBookAuthorDto(long bookDtoId, long authorDtoId) {
+        List<AuthorDto> authors = getBookAuthors(bookDtoId);
+        authors.add(authorService.getById(authorDtoId));
+        return new BookAuthorDto(authors, getById(bookDtoId));
     }
 }

@@ -26,4 +26,10 @@ public interface BookService {
     List<BookDto> getByField(Object obj, String fieldName);
 
     List<BookAuthorDto> getBookAuthorList();
+
+    BookAuthorDto createBookAuthorDto(BookDto bookDto, AuthorDto authorDto);
+
+    BookAuthorDto createBookAuthorDto(BookDto bookDto, long authorDtoId);
+
+    BookAuthorDto createBookAuthorDto(long bookDtoId, long authorDtoId);
 }

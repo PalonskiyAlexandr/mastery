@@ -1,6 +1,7 @@
 package com.palonskiy.dao;
 
 import com.palonskiy.dto.AuthorDto;
+import com.palonskiy.dto.BookDto;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
 import org.hibernate.SessionFactory;
@@ -39,7 +40,7 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
     @Override
     //TODO refactor joinField method
     public List<Book> getByJoinField(Object obj, String fieldName) {
-        String hql = "SELECT b FROM book b INNER JOIN b.authors a WHERE :fieldName = :obj";
+        String hql = "SELECT b FROM Book b INNER JOIN b.authors a WHERE :fieldName = :obj";
         return currentSession().createQuery(hql, Book.class)
                 .setParameter("obj", obj)
                 .setParameter("fieldName", fieldName)
@@ -62,4 +63,11 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
         }
     }
 
+    @Override
+    public List<Author> getAuthorExceptAuthors(BookDto bookDto) {
+        String hql = "FROM Author WHERE id NOT IN (SELECT a FROM Author a JOIN a.books b where b.id = :id)";
+        return currentSession().createQuery(hql, Author.class)
+                .setParameter("id", bookDto.getId())
+                .getResultList();
+    }
 }

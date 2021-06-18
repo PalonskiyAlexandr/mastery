@@ -7,32 +7,21 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class AuthorConverter {
 
     public List<AuthorDto> toDtoList(List<Author> authors) {
-        List<AuthorDto> authorsDto = new ArrayList<>();
-        /*AuthorDto authorDto = new AuthorDto();
-        authors.stream()
-                .peek(author -> authorsDto.add(new AuthorDto()))
-                .forEach(author -> BeanUtils.copyProperties(author, authorDto));*/
-        for (Author author : authors) {
-            AuthorDto authorDto = new AuthorDto();
-            BeanUtils.copyProperties(author, authorDto);
-            authorsDto.add(authorDto);
-        }
-        return authorsDto;
+        return authors.stream()
+                .map(this::toAuthorDto)
+                .collect(Collectors.toList());
     }
 
     public List<Author> toList(List<AuthorDto> authorsDto) {
-        List<Author> authors = new ArrayList<>();
-        for (AuthorDto authorDto : authorsDto) {
-            Author author = new Author();
-            BeanUtils.copyProperties(authorDto, author);
-            authors.add(author);
-        }
-        return authors;
+        return authorsDto.stream()
+                .map(this::toAuthor)
+                .collect(Collectors.toList());
     }
 
     public Author toAuthor(AuthorDto authorDto) {

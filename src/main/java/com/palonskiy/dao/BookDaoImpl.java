@@ -47,4 +47,6 @@ public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
         }
 
     }
+
+
 }

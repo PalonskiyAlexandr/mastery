@@ -7,18 +7,15 @@ import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Component
 public class BookConverter {
 
     public List<BookDto> toDtoList(List<Book> books) {
-        List<BookDto> booksDto = new ArrayList<>();
-        for (Book book : books) {
-            BookDto bookDto = new BookDto();
-            BeanUtils.copyProperties(book, bookDto);
-            booksDto.add(bookDto);
-        }
-        return booksDto;
+        return books.stream()
+                .map(this::toBookDto)
+                .collect(Collectors.toList());
     }
 
     public Book toBook(BookDto bookDto) {

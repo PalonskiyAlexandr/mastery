@@ -27,9 +27,9 @@ public class AppConfig implements WebMvcConfigurer {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/css/**")
-                .addResourceLocations("/staticContent/css/");
+                .addResourceLocations("/static/css/");
         registry.addResourceHandler("/images/**")
-                .addResourceLocations("staticContent/images/");
+                .addResourceLocations("static/images/");
     }
 
     //Thymeleaf
@@ -37,7 +37,7 @@ public class AppConfig implements WebMvcConfigurer {
     public SpringResourceTemplateResolver templateResolver() {
         SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
         templateResolver.setApplicationContext(applicationContext);
-        templateResolver.setPrefix("/staticContent/views/");
+        templateResolver.setPrefix("/static/views/");
         templateResolver.setSuffix(".html");
         templateResolver.setCharacterEncoding("UTF-8");
         return templateResolver;

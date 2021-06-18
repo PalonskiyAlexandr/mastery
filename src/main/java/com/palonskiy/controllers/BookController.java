@@ -55,20 +55,14 @@ public class BookController {
     @PostMapping("/new-book-author")
     public String newBookAuthor(HttpSession session, @ModelAttribute AuthorDto authorDto) {
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
-        BookAuthorDto bookAuthorDto = new BookAuthorDto();
-        bookAuthorDto.setBook(bookDto);
-        bookAuthorDto.setAuthor(Arrays.asList(authorDto));
-        bookService.add(bookAuthorDto);
+        bookService.add(bookService.createBookAuthorDto(bookDto, authorDto));
         return "redirect:/";
     }
 
     @PostMapping("/assign-author/{authorId}")
     public String assignAuthor (HttpSession session, @PathVariable long authorId) {
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
-        BookAuthorDto bookAuthorDto = new BookAuthorDto();
-        bookAuthorDto.setBook(bookDto);
-        bookAuthorDto.setAuthor(Arrays.asList(authorService.getById(authorId)));
-        bookService.add(bookAuthorDto);
+        bookService.add(bookService.createBookAuthorDto(bookDto, authorId));
         return "redirect:/";
     }
 
@@ -76,12 +70,7 @@ public class BookController {
     @PostMapping("/old-assign-author/{authorId}")
     public String oldAssignAuthor (HttpSession session, @PathVariable long authorId) {
         String bookId = session.getAttribute("bookId").toString();
-        List<AuthorDto> authors = bookService.getBookAuthors(Long.valueOf(bookId));
-        authors.add(authorService.getById(authorId));
-        BookAuthorDto bookAuthorDto = new BookAuthorDto();
-        bookAuthorDto.setBook(bookService.getById(Long.valueOf(bookId)));
-        bookAuthorDto.setAuthor(authors);
-        bookService.updateWithAuthor(bookAuthorDto);
+        bookService.updateWithAuthor(bookService.createBookAuthorDto(Long.valueOf(bookId), authorId));
         return "redirect:/";
     }
 
@@ -102,18 +91,7 @@ public class BookController {
     public String updateBook(Model model, @ModelAttribute BookDto bookDto,
                              @RequestParam(value = "action") Action action) {
         if (Action.ASSIGN_AUTHOR.equals(action)) {
-            List<AuthorDto> authors = authorService.getAll();
-            List<AuthorDto> exAuthors = bookService.getBookAuthors(bookDto.getId());
-            for (int i=0; i<authors.size(); i++){
-                for(int j = 0; j<exAuthors.size(); j++){
-                    if(authors.get(i).getFirstName().equals(exAuthors.get(j).getFirstName())
-                            && authors.get(i).getSecondName().equals(exAuthors.get(j).getSecondName())){
-                        authors.remove(i);
-                    }
-                }
-            }
-            authors.remove(exAuthors);
-            model.addAttribute("authors", authors);
+            model.addAttribute("authors", authorService.getAuthorExceptAuthors(bookDto));
             return "old-book-author-assign";
         } else  {
             bookService.update(bookDto);

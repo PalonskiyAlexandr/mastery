@@ -34,8 +34,6 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
         CriteriaQuery<T> query = currentSession().getCriteriaBuilder().createQuery(clazz);
         Root<T> tRoot = query.from(clazz);
         query.select(tRoot);
-        Query query1 = currentSession().createQuery(query);
-        List<T> list= query1.getResultList();
         return currentSession().createQuery(query).getResultList();
     }
 
