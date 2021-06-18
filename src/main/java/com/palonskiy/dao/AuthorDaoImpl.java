@@ -48,7 +48,7 @@ public class AuthorDaoImpl extends CrudDaoImpl<Author> implements AuthorDao {
     }
 
     @Override
-    public boolean checkIfExist(AuthorDto authorDto) {
+    public boolean checkIfAuthorExist(AuthorDto authorDto) {
         logger.debug("finding existing author {}", authorDto);
         try {
             CriteriaBuilder cb = currentSession().getCriteriaBuilder();

@@ -70,7 +70,7 @@ class AuthorDaoImplTest {
         when(session.createQuery(cQuery)).thenReturn(query);
         when(query.getSingleResult()).thenReturn(obj);
 
-        authorDao.checkIfExist(authorDto);
+        authorDao.checkIfAuthorExist(authorDto);
 
         verify(query).getSingleResult();
     }

@@ -81,7 +81,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public boolean checkIfExist(AuthorDto authorDto) {
-        return authorDao.checkIfExist(authorDto);
+        return authorDao.checkIfAuthorExist(authorDto);
     }
 
     @Override

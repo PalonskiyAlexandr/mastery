@@ -30,11 +30,11 @@ public class HibernateConfig {
     private String password;
     @Value("${db.driverClassName}")
     private String driverClassName;
-    @Value("${showSql}")
+    @Value("${db.show_sql}")
     private String showSql;
-    @Value("${formatSql}")
+    @Value("${db.format_sql}")
     private String formatSql;
-    @Value("${sqlComments}")
+    @Value("${db.sql_comments}")
     private String sqlComments;
 
 
