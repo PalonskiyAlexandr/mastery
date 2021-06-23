@@ -1,16 +1,18 @@
 package com.palonskiy.service;
 
 import com.palonskiy.dao.UserDao;
-import com.palonskiy.model.User;
-import com.palonskiy.model.UserDetailImpl;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional
 public class UserDetailsServiceImpl implements UserDetailsService {
 
     private UserDao userDao;
@@ -21,10 +23,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        Optional<User> optionalUser = userDao.findByName(username);
-        optionalUser
+        return userDao.findByName(username)
+                .map(user -> new User(
+                        user.getLogin(),
+                        user.getPassword(),
+                        user.getRoles()
+                                .stream()
+                                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
+                                .collect(Collectors.toList())))
                 .orElseThrow(() -> new UsernameNotFoundException("Username not found"));
-        return optionalUser
-                .map(UserDetailImpl::new).get();
     }
 }

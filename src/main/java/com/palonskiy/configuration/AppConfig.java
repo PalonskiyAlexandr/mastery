@@ -3,10 +3,7 @@ package com.palonskiy.configuration;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Profile;
+import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Profiles;
@@ -15,6 +12,7 @@ import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
+import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
@@ -54,6 +52,7 @@ public class AppConfig implements WebMvcConfigurer {
         templateEngine.setTemplateResolver(templateResolver());
         templateEngine.setEnableSpringELCompiler(true);
         templateEngine.addDialect(new LayoutDialect());
+        templateEngine.addDialect(new SpringSecurityDialect());
         return templateEngine;
     }
 
@@ -94,36 +93,29 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
 
-    //Profiles
-    @Configuration
+    @Bean
     @Profile("prod")
-    static class prodConfiguration {
-        @Bean
-        public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-            PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-            propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("prod/application-prod.properties"));
-            return propertySourcesPlaceholderConfigurer;
-        }
+
+    public PropertySourcesPlaceholderConfigurer prodPropertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+        propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("prod/application-prod.properties"));
+        return propertySourcesPlaceholderConfigurer;
     }
 
-    @Configuration
+
+    @Bean
     @Profile("local")
-    static class localConfiguration {
-        @Bean
-        public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-            PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-            propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("local/application-local.properties"));
-            return propertySourcesPlaceholderConfigurer;
-        }
+    public static PropertySourcesPlaceholderConfigurer localPropertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+        propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("local/application-local.properties"));
+        return propertySourcesPlaceholderConfigurer;
     }
 
-    @Configuration
-    static class defaultConfiguration {
-        @Bean
-        public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
-            PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-            propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("application.properties"));
-            return propertySourcesPlaceholderConfigurer;
-        }
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer defaultPropertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+        propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("application.properties"));
+        return propertySourcesPlaceholderConfigurer;
     }
+
 }

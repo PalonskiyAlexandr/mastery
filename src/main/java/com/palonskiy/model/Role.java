@@ -1,9 +1,8 @@
 package com.palonskiy.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Role {
@@ -12,6 +11,10 @@ public class Role {
     private Long id;
 
     private String name;
+
+    @ManyToMany(mappedBy = "roles",
+            cascade = CascadeType.PERSIST)
+    private List<User> users = new ArrayList<>();
 
     public Role() {
     }

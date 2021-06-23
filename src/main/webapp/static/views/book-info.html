@@ -17,13 +17,19 @@
 <main class="container">
     <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
         <div class="col-md-6 px-0">
-            <h1 class="display-4 fst-italic" th:text="#{h1.createBook}">Books</h1>
-            <form action="#" th:action="@{/admin/new-book}" th:object="${bookAuthorDto}" method="post">
+            <h1 class="display-4 fst-italic" th:text="#{h1.bookInfo}">Books</h1>
+                <div class="form-row p-2">
+                    <label for="inputId" th:text="#{label.bookId}"></label>
+                    <div class="">
+                        <input type="text" class="form-control" id="inputId" th:value = "${bookDto.id}"
+                               th:field="${bookDto.id}" readonly>
+                    </div>
+                </div>
                 <div class="form-row p-2">
                     <label th:text="#{bookName}" for="inputName"></label>
                     <div class="">
                         <input type="text" class="form-control" id="inputName" th:placeholder="#{placeholder.name}"
-                               th:field="${bookDto.name}">
+                               th:field="${bookDto.name}" readonly>
                     </div>
                 </div>
                 <div class="form-group row p-2">
@@ -31,31 +37,18 @@
                     <div class="">
                         <input type="text" class="form-control" id="inputPublisher"
                                th:placeholder="#{placeholder.publisher}"
-                               th:field="${bookDto.publisher}">
+                               th:field="${bookDto.publisher}" readonly>
                     </div>
                 </div>
                 <div class="form-group row p-2">
                     <label for="inputYear" th:text="#{bookDate}"></label>
                     <div class="">
                         <input type="date" class="form-control" id="inputYear"
-                               th:field="${bookDto.year}">
+                               th:field="${bookDto.year}" readonly>
                     </div>
                 </div>
-                <div class="form-group row">
-                    <div class=" d-flex justify-content-center">
-                        <div class="p-2">
-                        <button type="submit" class="btn btn-secondary p-2" th:text="#{button.addAuthor}" name="action" value="CREATE_AUTHOR"></button>
-                        </div>
-                        <div class="p-2">
-                        <button type="submit" class="btn btn-secondary p-2" th:text="#{button.assignAuthor}" name="action" value="ASSIGN_AUTHOR"></button>
-                        </div>
-                    </div>
-                </div>
-            </form>
         </div>
     </div>
-
-    <div  th:replace="~{fragments/feature :: fragment}"></div>
 
 </main>
 </body>

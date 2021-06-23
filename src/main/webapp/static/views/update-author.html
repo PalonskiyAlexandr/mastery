@@ -17,8 +17,8 @@
 <main class="container">
     <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
         <div class="col-md-6 px-0">
-            <h1 class="display-4 fst-italic" th:text="#{h1.createAuthor}">Books</h1>
-            <form action="#" th:action="@{/update-author}" th:object="${authorDto}" method="post">
+            <h1 class="display-4 fst-italic" th:text="#{h1.updateAuthor}">Books</h1>
+            <form action="#" th:action="@{/admin/update-author}" th:object="${authorDto}" method="post">
                 <div class="form-row p-2">
                     <label for="inputId" th:text="#{label.authorId}"></label>
                     <div class="">

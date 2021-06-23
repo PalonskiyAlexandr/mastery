@@ -4,6 +4,8 @@ import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.service.AuthorService;
 
 
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,37 +19,57 @@ public class AuthorController {
         this.authorService = authorService;
     }
 
-    @GetMapping("/update-author/{authorId}")
+    @GetMapping("/get-author-info/{authorId}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String getAuthorInfo(@PathVariable long authorId, Model model) {
+        model.addAttribute("authorDto", authorService.getById(authorId));
+        return "author-info";
+    }
+
+    @GetMapping("/admin/update-author/{authorId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateAuthorPage(@PathVariable long authorId, Model model) {
         model.addAttribute("authorDto", authorService.getById(authorId));
         return "update-author";
     }
 
-    @PostMapping("/update-author")
+    @PostMapping("/admin/update-author")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateAuthor(@ModelAttribute AuthorDto authorDto) {
         authorService.update(authorDto);
-        return "redirect:/";
+        return "redirect:/admin/authors";
     }
 
     @GetMapping("/authors")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public String getAll(Model model) {
         model.addAttribute("authors", authorService.getAll());
         return "authors";
     }
 
-    @PostMapping("/delete-author/{authorId}")
+    @GetMapping("/admin/authors")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String getAuthorList(Model model) {
+        model.addAttribute("authors", authorService.getAll());
+        return "admin-authors";
+    }
+
+    @PostMapping("/admin/delete-author/{authorId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteAuthor(@PathVariable long authorId) {
         authorService.delete(authorId);
-        return "redirect:/authors";
+        return "redirect:/admin/authors";
     }
 
-    @PostMapping("/new-author")
+    @PostMapping("/admin/new-author")
+    @PreAuthorize("hasRole('ADMIN')")
     public String newAuthor(@ModelAttribute AuthorDto author) {
         authorService.add(author);
-        return "redirect:/authors";
+        return "redirect:/admin/authors";
     }
 
-    @GetMapping("/new-author")
+    @GetMapping("/admin/new-author")
+    @PreAuthorize("hasRole('ADMIN')")
     public String newAuthorPage(Model model) {
         model.addAttribute("author", new AuthorDto());
         return "new-author";

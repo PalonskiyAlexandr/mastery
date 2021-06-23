@@ -8,9 +8,10 @@ import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class AppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
+
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[]{HibernateConfig.class, SecurityConfiguration.class};
+        return null;//new Class[]{HibernateConfig.class, SecurityConfiguration.class};
     }
 
     @Override

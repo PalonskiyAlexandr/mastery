@@ -5,6 +5,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
+@Table(name = "users")
 public class User {
 
     @Id
@@ -18,22 +19,13 @@ public class User {
 
     @ManyToMany(cascade = CascadeType.PERSIST)
     @JoinTable(
-            name = "users_roles",
+            name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "role_id")
     )
     private List<Role> roles;
 
     public User() {
-    }
-
-    public User(User user) {
-        this.id = user.getId();
-        this.login = user.getLogin();
-        this.password = user.getPassword();
-        this.name = user.getName();
-        this.surname = user.getSurname();
-        this.roles = user.getRoles();
     }
 
     public Long getId() {

@@ -6,6 +6,8 @@ import com.palonskiy.dto.BookDto;
 import com.palonskiy.model.Action;
 import com.palonskiy.service.AuthorService;
 import com.palonskiy.service.BookService;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -26,20 +28,37 @@ public class BookController {
         this.authorService = authorService;
     }
 
+    @GetMapping("/get-book-info/{bookId}")
+    @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
+    public String getBookInfo(@PathVariable long bookId, Model model, HttpSession session) {
+        model.addAttribute(bookService.getById(bookId));
+        session.setAttribute("bookId", bookId);
+        return "book-info";
+    }
+
     @GetMapping("/")
     public String getAll(Model model) {
         model.addAttribute("books", bookService.getBookAuthorList());
         return "index";
     }
 
-    @GetMapping("/new-book")
+    @GetMapping("/admin/books")
+    @PreAuthorize("hasRole('ADMIN')")
+    public String getListBooks(Model model) {
+        model.addAttribute("books", bookService.getBookAuthorList());
+        return "admin-books";
+    }
+
+    @GetMapping("/admin/new-book")
+    @PreAuthorize("hasRole('ADMIN')")
     public String newBookPage(Model model) {
         model.addAttribute("bookDto", new BookDto());
         return "new-book";
     }
 
 
-    @PostMapping("/new-book")
+    @PostMapping("/admin/new-book")
+    @PreAuthorize("hasRole('ADMIN')")
     public String newBook(Model model, HttpSession session, @ModelAttribute BookDto bookDto,
                           @RequestParam(value = "action") Action action) {
             session.setAttribute("bookDto", bookDto);
@@ -52,42 +71,48 @@ public class BookController {
         }
     }
 
-    @PostMapping("/new-book-author")
+    @PostMapping("/admin/new-book-author")
+    @PreAuthorize("hasRole('ADMIN')")
     public String newBookAuthor(HttpSession session, @ModelAttribute AuthorDto authorDto) {
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
         bookService.add(bookService.createBookAuthorDto(bookDto, authorDto));
-        return "redirect:/";
+        return "redirect:/admin/books";
     }
 
-    @PostMapping("/assign-author/{authorId}")
+    @PostMapping("/admin/assign-author/{authorId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String assignAuthor (HttpSession session, @PathVariable long authorId) {
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
         bookService.add(bookService.createBookAuthorDto(bookDto, authorId));
-        return "redirect:/";
+        return "redirect:/admin/books";
     }
 
 
-    @PostMapping("/old-assign-author/{authorId}")
+    @PostMapping("/admin/old-assign-author/{authorId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String oldAssignAuthor (HttpSession session, @PathVariable long authorId) {
         String bookId = session.getAttribute("bookId").toString();
         bookService.updateWithAuthor(bookService.createBookAuthorDto(Long.valueOf(bookId), authorId));
         return "redirect:/";
     }
 
-    @PostMapping("/delete-book/{bookId}")
+    @PostMapping("/admin/delete-book/{bookId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String deleteBook(@PathVariable long bookId) {
         bookService.delete(bookId);
-        return "redirect:/";
+        return "redirect:/admin/books";
     }
 
-    @GetMapping("/update-book/{bookId}")
+    @GetMapping("/admin/update-book/{bookId}")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateBookPage(@PathVariable long bookId, Model model, HttpSession session) {
         model.addAttribute(bookService.getById(bookId));
         session.setAttribute("bookId", bookId);
         return "update-book";
     }
 
-    @PostMapping("/update-book")
+    @PostMapping("/admin/update-book")
+    @PreAuthorize("hasRole('ADMIN')")
     public String updateBook(Model model, @ModelAttribute BookDto bookDto,
                              @RequestParam(value = "action") Action action) {
         if (Action.ASSIGN_AUTHOR.equals(action)) {
@@ -95,7 +120,7 @@ public class BookController {
             return "old-book-author-assign";
         } else  {
             bookService.update(bookDto);
-            return "redirect:/";
+            return "redirect:/admin/books";
         }
 
     }
