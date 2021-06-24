@@ -18,11 +18,11 @@
                         </li>
                         <li class="nav-item">
                             <img src="/images/author.svg" class="img-fluid MyiIg">
-                            <a class="p-2 link-secondary fst-italic" th:href="@{authors}"
+                            <a class="p-2 link-secondary fst-italic" th:href="@{/authors}"
                                th:text="#{nav.authors}"></a>
                         </li>
                         <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"  th:text="#{nav.admin}">
+                            <a class="nav-link dropdown-toggle p-2 fst-italic" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"  th:text="#{nav.admin}">
                                 Dropdown link
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
@@ -44,13 +44,19 @@
                                 </li>
                             </ul>
                         </li>
-                        <li class="float-right">
-                            <a class="p-2 link-secondary fst-italic" th:href="@{/login}"
-                               th:text="#{nav.login}"></a>
-                        </li>
+
                     </ul>
 
                 </div>
+            </div>
+            <div class="mx-3" sec:authorize="isAnonymous()">
+                <a class="btn btn-secondary" th:href="@{/login}"
+                   th:text="#{nav.login}" role="button"></a>
+            </div>
+
+            <div class="mx-3" sec:authorize="isAuthenticated()">
+                <a class="btn btn-secondary" th:href="@{/logout}"
+                   th:text="#{nav.logout}" role="button"></a>
             </div>
         </nav>
 </div>

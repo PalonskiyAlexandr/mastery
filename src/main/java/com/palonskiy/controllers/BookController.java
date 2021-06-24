@@ -28,6 +28,7 @@ public class BookController {
         this.authorService = authorService;
     }
 
+
     @GetMapping("/get-book-info/{bookId}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public String getBookInfo(@PathVariable long bookId, Model model, HttpSession session) {
