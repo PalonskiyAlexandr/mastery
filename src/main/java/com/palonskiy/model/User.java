@@ -1,6 +1,8 @@
 package com.palonskiy.model;
 
 
+import com.palonskiy.registration.token.VerificationToken;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -17,7 +19,7 @@ public class User {
     private String name;
     private String surname;
 
-    @ManyToMany(cascade = CascadeType.PERSIST)
+    @ManyToMany(cascade = CascadeType.ALL)
     @JoinTable(
             name = "users_role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -25,7 +27,30 @@ public class User {
     )
     private List<Role> roles;
 
+    private boolean enabled = false;
+    private String email;
+
+    @OneToMany(mappedBy="user")
+    private List<VerificationToken> tokens;
+
     public User() {
+    }
+
+    public User(String login, String password, String name, String surname, List<Role> roles, String email) {
+        this.login = login;
+        this.password = password;
+        this.name = name;
+        this.surname = surname;
+        this.roles = roles;
+        this.email = email;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getId() {
@@ -74,5 +99,21 @@ public class User {
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+
+    public List<VerificationToken> getTokens() {
+        return tokens;
+    }
+
+    public void setTokens(List<VerificationToken> tokens) {
+        this.tokens = tokens;
     }
 }

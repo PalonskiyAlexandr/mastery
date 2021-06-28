@@ -16,7 +16,7 @@ import java.util.Optional;
 @Repository
 public class UserDaoImpl implements UserDao{
 
-    protected SessionFactory sessionFactory;
+    private SessionFactory sessionFactory;
 
     public UserDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -28,18 +28,25 @@ public class UserDaoImpl implements UserDao{
 
     @Override
     public Optional<User> findByName(String username) {
-/*        CriteriaBuilder cb = currentSession().getCriteriaBuilder();
-        CriteriaQuery<User> query = cb.createQuery(User.class);
-        Root<User> tRoot = query.from(User.class);
-        query.where(cb.equal(tRoot.get("login"), username));
-        Query q = currentSession().createQuery(query);
-        List<User> l = q.getResultList();
-        Optional<User> optionalUser = currentSession().createQuery(query).getResultList().stream().findFirst();*/
         String hql = "SELECT u FROM User u WHERE u.login = :username";
         Optional<User> optionalUser = currentSession().createQuery(hql, User.class)
                 .setParameter("username", username)
                 .getResultList()
-                .stream().findFirst();
+                .stream().findAny();
         return optionalUser;
+    }
+
+    @Override
+    public void save(User user) {
+        currentSession().save(user);
+    }
+
+    @Override
+    public void enableUser(String username) {
+        String hql = "UPDATE User u SET u.enabled = TRUE WHERE u.login = :username";
+        currentSession().createQuery(hql)
+                .setParameter("username", username)
+                .executeUpdate();
+
     }
 }

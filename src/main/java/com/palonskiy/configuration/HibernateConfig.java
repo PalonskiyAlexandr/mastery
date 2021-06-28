@@ -51,7 +51,7 @@ public class HibernateConfig {
     public LocalSessionFactoryBean sessionFactory() {
         LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
         sessionFactory.setDataSource(dataSource());
-        sessionFactory.setPackagesToScan("com.palonskiy.model");
+        sessionFactory.setPackagesToScan("com.palonskiy");
         sessionFactory.setHibernateProperties(hibernateProperties());
         return sessionFactory;
     }
