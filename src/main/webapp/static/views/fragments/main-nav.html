@@ -54,6 +54,11 @@
                    th:text="#{nav.login}" role="button"></a>
             </div>
 
+            <div class="mx-3" sec:authorize="isAnonymous()">
+                <a class="btn btn-secondary" th:href="@{/registration}"
+                   th:text="#{nav.registration}" role="button"></a>
+            </div>
+
             <div class="mx-3" sec:authorize="isAuthenticated()">
                 <a class="btn btn-secondary" th:href="@{/logout}"
                    th:text="#{nav.logout}" role="button"></a>

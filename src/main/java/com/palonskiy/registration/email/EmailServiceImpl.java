@@ -1,7 +1,5 @@
 package com.palonskiy.registration.email;
 
-import com.palonskiy.dao.CrudDaoImpl;
-import com.sun.xml.internal.org.jvnet.mimepull.MIMEMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.mail.javamail.JavaMailSender;

@@ -31,7 +31,7 @@ public class RegistrationServiceImpl implements RegistrationService{
     }
 
     @Override
-    public String register(RegistrationRequest request) {
+    public void register(RegistrationRequest request) {
         boolean isValidEmail = emailValidator.test(request.getEmail());
         if(!isValidEmail){
             throw new IllegalStateException("email not valid");
@@ -46,13 +46,12 @@ public class RegistrationServiceImpl implements RegistrationService{
                         request.getEmail()
                 )
         );
-        String link = "http://localhost:8080/api/registration/confirm?token=" + token;
+        String link = "http://localhost:8080/registration/confirm?token=" + token;
         emailService.send(request.getEmail(),  buildEmail(request.getName(), link));
-        return token;
     }
 
     @Override
-    public String confirmToken(String token) {
+    public void confirmToken(String token) {
         VerificationToken verificationToken = verificationTokenService.getToken(token)
                 .orElseThrow(() ->
                         new IllegalStateException("token not found"));
@@ -70,7 +69,6 @@ public class RegistrationServiceImpl implements RegistrationService{
         verificationTokenService.setConfirmedAt(token);
         userService.enableAppUser(
                 verificationToken.getUser().getLogin());
-        return "confirmed";
     }
 
     private String buildEmail(String name, String link) {
@@ -129,7 +127,7 @@ public class RegistrationServiceImpl implements RegistrationService{
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +
                 "      <td style=\"font-family:Helvetica,Arial,sans-serif;font-size:19px;line-height:1.315789474;max-width:560px\">\n" +
                 "        \n" +
-                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Please click on the below link to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Activate Now</a> </p></blockquote>\n Link will expire in 15 minutes. <p>See you soon</p>" +
+                "            <p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\">Hi " + name + ",</p><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> Thank you for registering. Please click on the below link to activate your account: </p><blockquote style=\"Margin:0 0 20px 0;border-left:10px solid #b1b4b6;padding:15px 0 0.1px 15px;font-size:19px;line-height:25px\"><p style=\"Margin:0 0 20px 0;font-size:19px;line-height:25px;color:#0b0c0c\"> <a href=\"" + link + "\">Activate Now</a> </p></blockquote>\n Link will expire in 24 hours. <p>See you soon</p>" +
                 "        \n" +
                 "      </td>\n" +
                 "      <td width=\"10\" valign=\"middle\"><br></td>\n" +

@@ -1,29 +1,35 @@
 package com.palonskiy.registration.controller;
 
 import com.palonskiy.registration.model.RegistrationRequest;
-import com.palonskiy.registration.service.RegistrationServiceImpl;
+import com.palonskiy.registration.service.RegistrationService;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class RegistrationController {
 
-    private RegistrationServiceImpl registrationServiceImpl;
+    private RegistrationService registrationService;
 
-    public RegistrationController(RegistrationServiceImpl registrationServiceImpl) {
-        this.registrationServiceImpl = registrationServiceImpl;
+    public RegistrationController(RegistrationService registrationService) {
+        this.registrationService = registrationService;
     }
 
-    @PostMapping("api/registration")
-    public String register (@RequestBody RegistrationRequest request){
-        return registrationServiceImpl.register(request);
+    @GetMapping("/registration")
+    public String getRegisterPage (Model model){
+        model.addAttribute("request", new RegistrationRequest());
+        return "register";
     }
 
-    @GetMapping("api/registration/confirm")
+    @PostMapping("/registration")
+    public String String (@ModelAttribute RegistrationRequest request){
+        registrationService.register(request);
+        return "redirect:/login";
+    }
+
+    @GetMapping("/registration/confirm")
     public String confirm (@RequestParam("token") String token){
-        return registrationServiceImpl.confirmToken(token);
+        registrationService.confirmToken(token);
+        return "redirect:/login";
     }
 }
