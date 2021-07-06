@@ -17,37 +17,37 @@
 <main class="container">
     <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
         <div class="col-md-6 px-0">
-            <h1 class="display-4 fst-italic" th:text="#{h1.authorInfo}">Books</h1>
+            <h1 class="display-4 fst-italic" th:text="#{title.author-info}">Books</h1>
                 <div class="form-row p-2">
-                    <label for="inputId" th:text="#{label.authorId}"></label>
+                    <label for="inputId" th:text="#{label.author-id}"></label>
                     <div class="">
                         <input type="text" class="form-control" id="inputId" th:value = "${authorDto.id}"
                                th:field="${authorDto.id}" readonly>
                     </div>
                 </div>
                 <div class="form-row p-2">
-                    <label for="inputFirstName" th:text="#{authorFirstName}"></label>
+                    <label for="inputFirstName" th:text="#{label.author-first-name}"></label>
                     <div class="">
-                        <input type="text" class="form-control" id="inputFirstName" th:placeholder="#{placeholder.firstName}"
+                        <input type="text" class="form-control" id="inputFirstName" th:placeholder="#{placeholder.first-name}"
                                th:field="${authorDto.firstName}" readonly>
                     </div>
                 </div>
                 <div class="form-group row p-2">
-                    <label for="inputSecondName" th:text="#{authorSecondName}"></label>
+                    <label for="inputSecondName" th:text="#{label.author-second-name}"></label>
                     <div class="">
-                        <input type="text" class="form-control" id="inputSecondName" th:placeholder="#{placeholder.secondName}"
+                        <input type="text" class="form-control" id="inputSecondName" th:placeholder="#{placeholder.second-name}"
                                th:field="${authorDto.secondName}" readonly>
                     </div>
                 </div>
                 <div class="form-group row p-2">
-                    <label for="inputBirthday" th:text="#{authorBirthday}"></label>
+                    <label for="inputBirthday" th:text="#{label.author-birthday}"></label>
                     <div class="">
                         <input type="date" class="form-control" id="inputBirthday"
                                th:field="${authorDto.birthday}" readonly>
                     </div>
                 </div>
                 <div class="form-group row p-2">
-                    <label for="inputGender" th:text="#{authorGender}"></label>
+                    <label for="inputGender" th:text="#{label.author-gender}"></label>
                     <div class="">
                         <input type="date" class="form-control" id="inputGender"
                                th:field="${authorDto.gender}" readonly>

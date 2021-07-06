@@ -20,8 +20,8 @@ import java.util.Locale;
 @Controller
 public class BookController {
 
-    private BookService bookService;
-    private AuthorService authorService;
+    private final BookService bookService;
+    private final AuthorService authorService;
 
     public BookController(BookService bookService, AuthorService authorService) {
         this.bookService = bookService;
@@ -29,7 +29,7 @@ public class BookController {
     }
 
 
-    @GetMapping("/get-book-info/{bookId}")
+    @GetMapping("/books/{bookId}")
     @PreAuthorize("hasAnyRole('USER', 'ADMIN')")
     public String getBookInfo(@PathVariable long bookId, Model model, HttpSession session) {
         model.addAttribute(bookService.getById(bookId));
@@ -93,7 +93,7 @@ public class BookController {
     @PreAuthorize("hasRole('ADMIN')")
     public String oldAssignAuthor (HttpSession session, @PathVariable long authorId) {
         String bookId = session.getAttribute("bookId").toString();
-        bookService.updateWithAuthor(bookService.createBookAuthorDto(Long.valueOf(bookId), authorId));
+        bookService.updateWithAuthor(bookService.createBookAuthorDto(Long.parseLong(bookId), authorId));
         return "redirect:/";
     }
 

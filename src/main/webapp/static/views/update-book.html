@@ -17,7 +17,7 @@
 <main class="container">
     <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
         <div class="col-md-6 px-0">
-            <h1 class="display-4 fst-italic" th:text="#{h1.updateBook}">Books</h1>
+            <h1 class="display-4 fst-italic" th:text="#{title.update-book}"></h1>
             <form action="#" th:action="@{/admin/update-book}" th:object="${bookDto}" method="post">
                 <div class="form-row p-2">
                     <label for="inputId" th:text="#{label.bookId}"></label>
@@ -27,14 +27,14 @@
                     </div>
                 </div>
                 <div class="form-row p-2">
-                    <label th:text="#{bookName}" for="inputName"></label>
+                    <label th:text="#{label.book-name}" for="inputName"></label>
                     <div class="">
                         <input type="text" class="form-control" id="inputName" th:placeholder="#{placeholder.name}"
                                th:field="${bookDto.name}">
                     </div>
                 </div>
                 <div class="form-group row p-2">
-                    <label for="inputPublisher" th:text="#{bookPublisher}"></label>
+                    <label for="inputPublisher" th:text="#{label.book-publisher}"></label>
                     <div class="">
                         <input type="text" class="form-control" id="inputPublisher"
                                th:placeholder="#{placeholder.publisher}"
@@ -42,7 +42,7 @@
                     </div>
                 </div>
                 <div class="form-group row p-2">
-                    <label for="inputYear" th:text="#{bookDate}"></label>
+                    <label for="inputYear" th:text="#{label.book-date}"></label>
                     <div class="">
                         <input type="date" class="form-control" id="inputYear"
                                th:field="${bookDto.year}">
@@ -54,7 +54,7 @@
                             <button type="submit" class="btn btn-secondary p-2" th:text="#{button.update}" name="action" value="CREATE_AUTHOR"></button>
                         </div>
                         <div class="p-2">
-                            <button type="submit" class="btn btn-secondary p-2" th:text="#{button.assignAuthor}" name="action" value="ASSIGN_AUTHOR"></button>
+                            <button type="submit" class="btn btn-secondary p-2" th:text="#{button.assign-author}" name="action" value="ASSIGN_AUTHOR"></button>
                         </div>
                     </div>
                 </div>

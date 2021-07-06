@@ -19,14 +19,14 @@
 <main class="container">
   <div class="p-2 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
     <div class="">
-      <h1 class="display-4 fst-italic" th:text="#{h1.books}"></h1>
+      <h1 class="display-4 fst-italic" th:text="#{title.books}"></h1>
       <table class="table table-hover table-dark">
         <thead class="">
         <tr>
-          <th th:text="#{bookName}"></th>
-          <th th:text="#{bookPublisher}"></th>
-          <th th:text="#{bookDate}"></th>
-          <th th:text="#{table.Author}"></th>
+          <th th:text="#{table.head.book-name}"></th>
+          <th th:text="#{table.head.book-publisher}"></th>
+          <th th:text="#{table.head.book-date}"></th>
+          <th th:text="#{table.author}"></th>
         </tr>
         </thead>
         <tbody>
@@ -55,7 +55,6 @@
     </div>
   </div>
 
-  <div  th:replace="~{fragments/feature :: fragment}"></div>
 
 </main>
 </body>

@@ -14,33 +14,34 @@
                         <li class="nav-item">
                             <img src="/images/book.svg" class="img-fluid MyiIg">
                             <a class="p-2 link-secondary fst-italic" th:href="@{/}"
-                               th:text="#{nav.books}"></a>
+                               th:text="#{navigation.books}"></a>
                         </li>
                         <li class="nav-item">
                             <img src="/images/author.svg" class="img-fluid MyiIg">
                             <a class="p-2 link-secondary fst-italic" th:href="@{/authors}"
-                               th:text="#{nav.authors}"></a>
+                               th:text="#{navigation.authors}"></a>
                         </li>
                         <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                            <a class="nav-link dropdown-toggle p-2 fst-italic" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false"  th:text="#{nav.admin}">
+                            <a class="nav-link dropdown-toggle p-2 fst-italic" href="#" id="navbarDropdownMenuLink"
+                               role="button" data-bs-toggle="dropdown" aria-expanded="false"  th:text="#{navigation.admin}">
                                 Dropdown link
                             </a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                                 <li>
                                     <a class="p-2 link-secondary fst-italic" th:href="@{/admin/new-book}"
-                                       th:text="#{nav.admin.newBook}"></a>
+                                       th:text="#{navigation.admin.new-book}"></a>
                                 </li>
                                 <li>
                                     <a class="p-2 link-secondary fst-italic" th:href="@{/admin/new-author}"
-                                       th:text="#{nav.admin.newAuthor}"></a>
+                                       th:text="#{navigation.admin.new-author}"></a>
                                 </li>
                                 <li>
                                     <a class="p-2 link-secondary fst-italic" th:href="@{/admin/books}"
-                                       th:text="#{nav.admin.Books}"></a>
+                                       th:text="#{navigation.admin.books}"></a>
                                 </li>
                                 <li>
                                     <a class="p-2 link-secondary fst-italic" th:href="@{/admin/authors}"
-                                       th:text="#{nav.admin.Authors}"></a>
+                                       th:text="#{navigation.admin.authors}"></a>
                                 </li>
                             </ul>
                         </li>
@@ -51,17 +52,17 @@
             </div>
             <div class="mx-3" sec:authorize="isAnonymous()">
                 <a class="btn btn-secondary" th:href="@{/login}"
-                   th:text="#{nav.login}" role="button"></a>
+                   th:text="#{navigation.login}" role="button"></a>
             </div>
 
             <div class="mx-3" sec:authorize="isAnonymous()">
                 <a class="btn btn-secondary" th:href="@{/registration}"
-                   th:text="#{nav.registration}" role="button"></a>
+                   th:text="#{navigation.registration}" role="button"></a>
             </div>
 
             <div class="mx-3" sec:authorize="isAuthenticated()">
                 <a class="btn btn-secondary" th:href="@{/logout}"
-                   th:text="#{nav.logout}" role="button"></a>
+                   th:text="#{navigation.logout}" role="button"></a>
             </div>
         </nav>
 </div>

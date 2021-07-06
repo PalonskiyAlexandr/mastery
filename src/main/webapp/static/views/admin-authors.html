@@ -18,14 +18,14 @@
 <main class="container">
   <div class="p-2 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
     <div class="">
-      <h1 class="display-4 fst-italic" th:text="#{h1.authors}"></h1>
+      <h1 class="display-4 fst-italic" th:text="#{title.authors}"></h1>
       <table class="table table-hover table-dark">
         <thead>
         <tr>
-          <th th:text="#{authorFirstName}"></th>
-          <th th:text="#{authorSecondName}"></th>
-          <th th:text="#{authorBirthday}"></th>
-          <th th:text="#{authorGender}"></th>
+          <th th:text="#{table.head.author-first-name}"></th>
+          <th th:text="#{table.head.author-second-name}"></th>
+          <th th:text="#{table.head.author-birthday}"></th>
+          <th th:text="#{table.head.author-gender}"></th>
           <th></th>
         </tr>
         </thead>
@@ -56,7 +56,6 @@
     </div>
   </div>
 
-  <div  th:replace="~{fragments/feature :: fragment}"></div>
 
 </main>
 </body>

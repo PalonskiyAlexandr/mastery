@@ -17,31 +17,31 @@
 <main class="container">
     <div class="p-4 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
         <div class="col-md-6 px-0">
-            <h1 class="display-4 fst-italic" th:text="#{h1.createAuthor}">Books</h1>
+            <h1 class="display-4 fst-italic" th:text="#{title.create-author}"></h1>
             <form action="#" th:action="@{/admin/new-author}" th:object="${author}" method="post">
                 <div class="form-row p-2">
-                    <label for="inputFirstName" th:text="#{authorFirstName}"></label>
+                    <label for="inputFirstName" th:text="#{label.author-first-name}"></label>
                     <div class="">
-                        <input type="text" class="form-control" id="inputFirstName" th:placeholder="#{placeholder.firstName}"
+                        <input type="text" class="form-control" id="inputFirstName" th:placeholder="#{placeholder.first-name}"
                                th:field="${author.firstName}">
                     </div>
                 </div>
                 <div class="form-group row p-2">
-                    <label for="inputSecondName" th:text="#{authorSecondName}"></label>
+                    <label for="inputSecondName" th:text="#{label.author-second-name}"></label>
                     <div class="">
-                        <input type="text" class="form-control" id="inputSecondName" th:placeholder="#{placeholder.secondName}"
+                        <input type="text" class="form-control" id="inputSecondName" th:placeholder="#{placeholder.second-name}"
                                th:field="${author.secondName}">
                     </div>
                 </div>
                 <div class="form-group row p-2">
-                    <label for="inputBirthday" th:text="#{authorBirthday}"></label>
+                    <label for="inputBirthday" th:text="#{label.author-birthday}"></label>
                     <div class="">
                         <input type="date" class="form-control" id="inputBirthday"
                                th:field="${author.birthday}">
                     </div>
                 </div>
                 <div class="form-group row p-2">
-                    <label for="inputGender" th:text="#{authorGender}"></label>
+                    <label for="inputGender" th:text="#{label.author-gender}"></label>
                     <div class="">
                         <select class="form-control" id="inputGender" th:field="${author.gender}">
                             <option selected = "selected" value="MALE" th:text="#{select.male}"></option>
