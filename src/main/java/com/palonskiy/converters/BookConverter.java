@@ -3,33 +3,28 @@ package com.palonskiy.converters;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.model.Book;
 import org.springframework.beans.BeanUtils;
+import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
+@Component
 public class BookConverter {
 
-    private BookConverter() {
-        throw new IllegalStateException("Utility class");
+    public List<BookDto> toDtoList(List<Book> books) {
+        return books.stream()
+                .map(this::toBookDto)
+                .collect(Collectors.toList());
     }
 
-    public static List<BookDto> toDtoList(List<Book> books) {
-        List<BookDto> booksDto = new ArrayList<>();
-        for (Book book : books) {
-            BookDto bookDto = new BookDto();
-            BeanUtils.copyProperties(book, bookDto);
-            booksDto.add(bookDto);
-        }
-        return booksDto;
-    }
-
-    public static Book toBook(BookDto bookDto) {
+    public Book toBook(BookDto bookDto) {
         Book book = new Book();
         BeanUtils.copyProperties(bookDto, book);
         return book;
     }
 
-    public static BookDto toBookDto(Book book) {
+    public BookDto toBookDto(Book book) {
         BookDto bookDto = new BookDto();
         BeanUtils.copyProperties(book, bookDto);
         return bookDto;

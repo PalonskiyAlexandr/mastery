@@ -14,9 +14,9 @@
         <maven.compiler.source>${project.java.version}</maven.compiler.source>
         <maven.compiler.target>${project.java.version}</maven.compiler.target>
 
-        <javax.servlet>1.2</javax.servlet>
         <hikari.version>4.0.3</hikari.version>
         <spring-framework-version>5.2.1.RELEASE</spring-framework-version>
+        <spring.security.version>5.3.4.RELEASE</spring.security.version>
         <h2.version>1.4.197</h2.version>
         <hibernate.version>5.4.2.Final</hibernate.version>
         <jackson.version>2.9.9</jackson.version>
@@ -69,6 +69,11 @@
         </dependency>
         <dependency>
             <groupId>org.springframework</groupId>
+            <artifactId>spring-context-support</artifactId>
+            <version>${spring-framework-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
             <version>${spring-framework-version}</version>
         </dependency>
@@ -76,6 +81,26 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-orm</artifactId>
             <version>${spring-framework-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-core</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-web</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-config</artifactId>
+            <version>${spring.security.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-taglibs</artifactId>
+            <version>${spring.security.version}</version>
         </dependency>
 
 
@@ -93,6 +118,11 @@
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>${h2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>42.2.20</version>
         </dependency>
 
 
@@ -141,6 +171,24 @@
             <artifactId>thymeleaf-spring5</artifactId>
             <version>${thymeleaf.version}</version>
         </dependency>
+        <dependency>
+            <groupId>nz.net.ultraq.thymeleaf</groupId>
+            <artifactId>thymeleaf-layout-dialect</artifactId>
+            <version>2.4.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.thymeleaf.extras</groupId>
+            <artifactId>thymeleaf-extras-springsecurity5</artifactId>
+            <version>3.0.4.RELEASE</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.sun.mail</groupId>
+            <artifactId>javax.mail</artifactId>
+            <version>1.6.1</version>
+        </dependency>
+
 
         <dependency>
             <groupId>org.junit.jupiter</groupId>
@@ -180,9 +228,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-resources-plugin</artifactId>
                 <version>${maven.resources.plugin.version}</version>
-                <configuration>
-                    <encoding>UTF-8</encoding>
-                </configuration>
+                <!--                <configuration>
+                                    <encoding>${project.build.sourceEncoding}</encoding>
+                                </configuration>-->
             </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -191,7 +239,7 @@
                 <configuration>
                     <source>${project.java.version}</source>
                     <target>${project.java.version}</target>
-                    <encoding>${project.build.sourceEncoding}</encoding>
+                    <!--                    <encoding>${project.build.sourceEncoding}</encoding>-->
                 </configuration>
 
             </plugin>
@@ -222,6 +270,9 @@
                 <groupId>org.flywaydb</groupId>
                 <artifactId>flyway-maven-plugin</artifactId>
                 <version>${flywaydb.version}</version>
+                <configuration>
+                    <!--TODO <configFile>/src/main/resources/flyway.properties</configFile>-->
+                </configuration>
             </plugin>
         </plugins>
     </build>

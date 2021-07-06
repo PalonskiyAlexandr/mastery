@@ -11,6 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+import java.util.List;
 
 @Repository
 public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
@@ -22,17 +23,16 @@ public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
     }
 
     @Override
-    public Author getBookAuthor(long bookId) {
+    public List<Author> getBookAuthors(long bookId) {
         logger.debug("getting authors of book with id {}", bookId);
         String hql = "SELECT a FROM Author a INNER JOIN a.books b WHERE b.id = :bookId";
-        logger.debug("getting authors of book with id:{}", bookId);
         return currentSession().createQuery(hql, Author.class)
                 .setParameter("bookId", bookId)
-                .getSingleResult();
+                .getResultList();
     }
 
     @Override
-    public boolean checkIfExist(String name) {
+    public boolean checkIfBookExist(String name) {
         logger.debug("finding existing book by name {}", name);
         try {
             CriteriaBuilder cb = currentSession().getCriteriaBuilder();
@@ -47,4 +47,6 @@ public class BookDaoImpl extends CrudDaoImpl<Book> implements BookDao {
         }
 
     }
+
+
 }

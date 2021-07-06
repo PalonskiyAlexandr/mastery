@@ -5,6 +5,7 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -23,7 +24,7 @@ public class Author {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
@@ -42,17 +43,17 @@ public class Author {
     private Gender gender;
 
     @ManyToMany(mappedBy = "authors",
-            cascade = CascadeType.ALL)
+            cascade = CascadeType.PERSIST)
     private List<Book> books = new ArrayList<>();
 
     public Author() {
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
