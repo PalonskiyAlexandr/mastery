@@ -1,4 +1,6 @@
-package com.palonskiy.registration.token;
+package com.palonskiy.service;
+
+import com.palonskiy.model.VerificationToken;
 
 import java.util.Optional;
 

@@ -1,6 +1,6 @@
-package com.palonskiy.registration.service;
+package com.palonskiy.service;
 
-import com.palonskiy.registration.model.RegistrationRequest;
+import com.palonskiy.model.RegistrationRequest;
 
 public interface RegistrationService {
     void register(RegistrationRequest request);

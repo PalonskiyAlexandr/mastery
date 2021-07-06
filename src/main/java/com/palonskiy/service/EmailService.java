@@ -1,4 +1,4 @@
-package com.palonskiy.registration.email;
+package com.palonskiy.service;
 
 public interface EmailService {
     void send(String to, String email);

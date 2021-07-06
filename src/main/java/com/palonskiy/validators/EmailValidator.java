@@ -1,4 +1,4 @@
-package com.palonskiy.registration.validators;
+package com.palonskiy.validators;
 
 import org.springframework.stereotype.Service;
 

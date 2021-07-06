@@ -1,8 +1,7 @@
 package com.palonskiy.service;
 
 import com.palonskiy.dao.UserDao;
-import com.palonskiy.registration.token.VerificationToken;
-import com.palonskiy.registration.token.VerificationTokenService;
+import com.palonskiy.model.VerificationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;

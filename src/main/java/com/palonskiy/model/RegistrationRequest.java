@@ -1,4 +1,4 @@
-package com.palonskiy.registration.model;
+package com.palonskiy.model;
 
 public class RegistrationRequest {
 

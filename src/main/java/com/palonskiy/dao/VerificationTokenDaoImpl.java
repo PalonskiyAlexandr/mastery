@@ -1,6 +1,6 @@
-package com.palonskiy.registration.token;
+package com.palonskiy.dao;
 
-import com.palonskiy.model.User;
+import com.palonskiy.model.VerificationToken;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-public class VerificationTokenDaoImpl implements VerificationTokenDao{
+public class VerificationTokenDaoImpl implements VerificationTokenDao {
 
     private SessionFactory sessionFactory;
 

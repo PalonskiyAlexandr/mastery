@@ -1,22 +1,17 @@
-package com.palonskiy.registration.service;
+package com.palonskiy.service;
 
 import com.palonskiy.model.Role;
 import com.palonskiy.model.User;
-import com.palonskiy.registration.email.EmailService;
-import com.palonskiy.registration.model.RegistrationRequest;
-import com.palonskiy.registration.token.VerificationToken;
-import com.palonskiy.registration.token.VerificationTokenService;
-import com.palonskiy.registration.validators.EmailValidator;
-import com.palonskiy.service.UserServiceImpl;
-import com.palonskiy.service.UserService;
-import org.springframework.security.core.userdetails.UserDetailsService;
+import com.palonskiy.model.RegistrationRequest;
+import com.palonskiy.model.VerificationToken;
+import com.palonskiy.validators.EmailValidator;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Arrays;
 
 @Service
-public class RegistrationServiceImpl implements RegistrationService{
+public class RegistrationServiceImpl implements RegistrationService {
 
     private UserService userService;
     private EmailValidator emailValidator;

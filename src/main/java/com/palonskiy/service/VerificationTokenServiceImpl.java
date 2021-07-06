@@ -1,5 +1,7 @@
-package com.palonskiy.registration.token;
+package com.palonskiy.service;
 
+import com.palonskiy.dao.VerificationTokenDao;
+import com.palonskiy.model.VerificationToken;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

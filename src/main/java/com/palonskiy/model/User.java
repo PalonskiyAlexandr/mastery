@@ -1,8 +1,6 @@
 package com.palonskiy.model;
 
 
-import com.palonskiy.registration.token.VerificationToken;
-
 import javax.persistence.*;
 import java.util.List;
 

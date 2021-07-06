@@ -1,4 +1,4 @@
-package com.palonskiy.registration.token;
+package com.palonskiy.model;
 
 import com.palonskiy.model.User;
 

@@ -1,7 +1,7 @@
-package com.palonskiy.registration.controller;
+package com.palonskiy.controllers;
 
-import com.palonskiy.registration.model.RegistrationRequest;
-import com.palonskiy.registration.service.RegistrationService;
+import com.palonskiy.model.RegistrationRequest;
+import com.palonskiy.service.RegistrationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
