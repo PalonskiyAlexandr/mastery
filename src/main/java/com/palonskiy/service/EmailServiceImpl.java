@@ -1,20 +1,27 @@
 package com.palonskiy.service;
 
 import com.palonskiy.model.RegistrationRequest;
+import freemarker.template.Configuration;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.io.StringWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 @Service
 public class EmailServiceImpl implements EmailService {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EmailServiceImpl.class);
     private final JavaMailSender mailSender;
+    @Autowired
+    private Configuration fmConfiguration;
 
     public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
@@ -40,10 +47,24 @@ public class EmailServiceImpl implements EmailService {
         String link = "http://localhost:8080/registration/confirm?token=" + token;
         String subject = "Confirm your email";
         String from = "test@gmail.com";
-        send(request.getEmail(), buildConfirmationEmail(request.getName(), link), subject, from);
+        send(request.getEmail(), getEmailContent(request.getName(), link), subject, from);
     }
 
-    private String buildConfirmationEmail(String name, String link) {
+    private String getEmailContent(String name, String link) {
+        StringWriter stringWriter = new StringWriter();
+        Map<String, Object> model = new HashMap<>();
+        model.put("name", name);
+        model.put("link", link);
+        try {
+            fmConfiguration.getTemplate("email.flth").process(model, stringWriter);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stringWriter.getBuffer().toString();
+    }
+}
+
+    /*private String buildConfirmationEmail(String name, String link) {
         return "<div style=\"font-family:Helvetica,Arial,sans-serif;font-size:16px;margin:0;color:#0b0c0c\">\n" +
                 "\n" +
                 "<span style=\"display:none;font-size:1px;color:#fff;max-height:0\"></span>\n" +
@@ -110,5 +131,5 @@ public class EmailServiceImpl implements EmailService {
                 "  </tbody></table><div class=\"yj6qo\"></div><div class=\"adL\">\n" +
                 "\n" +
                 "</div></div>";
-    }
-}
+    }*/
+

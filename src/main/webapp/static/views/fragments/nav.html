@@ -1,8 +1,8 @@
-<div class="container p-0" th:fragment = "fragment">
+<div class="container p-0" th:fragment="fragment">
     <header class="blog-header py-3">
         <div class="row flex-nowrap justify-content-center align-items-center">
             <div class="col-4 text-center p-2">
-                <img src="/images/logo-book.svg" class=" MyiIg" style="height: 50px; width: 100px;">
+                <img class=" MyiIg" src="/images/logo-book.svg" style="height: 50px; width: 100px;">
                 <h1 class="blog-header-logo text-dark p-2" href="#">Black Books</h1>
             </div>
         </div>
@@ -13,21 +13,21 @@
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
                 <ul class="navbar-nav ">
                     <li class="nav-item">
-                        <img src="/images/book.svg" class="img-fluid MyiIg">
+                        <img class="img-fluid MyiIg" src="/images/book.svg">
                         <a class="p-2 link-secondary fst-italic" th:href="@{/}"
                            th:text="#{navigation.books}"></a>
                     </li>
                     <li class="nav-item">
-                        <img src="/images/author.svg" class="img-fluid MyiIg">
+                        <img class="img-fluid MyiIg" src="/images/author.svg">
                         <a class="p-2 link-secondary fst-italic" th:href="@{authors}"
                            th:text="#{navigation.authors}"></a>
                     </li>
                     <li class="nav-item dropdown" sec:authorize="hasRole('ADMIN')">
-                        <a class="nav-link dropdown-toggle p-2 fst-italic" href="#" id="navbarDropdownMenuLink"
-                           role="button" data-bs-toggle="dropdown" aria-expanded="false"  th:text="#{navigation.admin}">
+                        <a aria-expanded="false" class="nav-link dropdown-toggle p-2 fst-italic" data-bs-toggle="dropdown"
+                           href="#" id="navbarDropdownMenuLink" role="button" th:text="#{navigation.admin}">
                             Dropdown link
                         </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                        <ul aria-labelledby="navbarDropdownMenuLink" class="dropdown-menu">
                             <li>
                                 <a class="p-2 link-secondary fst-italic" th:href="@{/admin/new-book}"
                                    th:text="#{navigation.admin.new-book}"></a>
