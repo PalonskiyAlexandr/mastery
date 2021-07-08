@@ -18,6 +18,9 @@
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
                 <input name="" class="form-control" th:placeholder="#{registration.name}" type="text" th:field="${request.name}" >
+                <div th:if="${#fields.hasErrors('name')}">
+                    This is a danger alert with
+                </div>
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">

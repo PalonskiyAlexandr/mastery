@@ -4,7 +4,7 @@ import com.palonskiy.model.Role;
 import com.palonskiy.model.User;
 import com.palonskiy.model.RegistrationRequest;
 import com.palonskiy.model.VerificationToken;
-import com.palonskiy.validators.EmailValidator;
+import com.palonskiy.validators.RequestValidator;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -14,23 +14,19 @@ import java.util.Arrays;
 public class RegistrationServiceImpl implements RegistrationService {
 
     private UserService userService;
-    private EmailValidator emailValidator;
+    private RequestValidator requestValidator;
     private VerificationTokenService verificationTokenService;
     private EmailService emailService;
 
-    public RegistrationServiceImpl(UserService userService, EmailValidator emailValidator, VerificationTokenService verificationTokenService, EmailService emailService) {
+    public RegistrationServiceImpl(UserService userService, RequestValidator requestValidator, VerificationTokenService verificationTokenService, EmailService emailService) {
         this.userService = userService;
-        this.emailValidator = emailValidator;
+        this.requestValidator = requestValidator;
         this.verificationTokenService = verificationTokenService;
         this.emailService = emailService;
     }
 
     @Override
     public void register(RegistrationRequest request) {
-        boolean isValidEmail = emailValidator.test(request.getEmail());
-        if(!isValidEmail){
-            throw new IllegalStateException("email not valid");
-        }
         String token = userService.signUpUser(
                 new User(
                         request.getLogin(),

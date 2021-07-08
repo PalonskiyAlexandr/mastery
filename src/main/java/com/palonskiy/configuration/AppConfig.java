@@ -3,6 +3,7 @@ package com.palonskiy.configuration;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.*;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
@@ -123,4 +124,5 @@ public class AppConfig implements WebMvcConfigurer {
         propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("application.properties"));
         return propertySourcesPlaceholderConfigurer;
     }
+
 }

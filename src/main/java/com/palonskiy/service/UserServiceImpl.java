@@ -63,8 +63,6 @@ public class UserServiceImpl implements UserService {
                 user
         );
         verificationTokenService.saveVerificationToken(verificationToken);
-
-        /*TODO Send email*/
         return token;
     }
 

@@ -1,6 +1,8 @@
 package com.palonskiy.model;
 
 
+import org.hibernate.validator.constraints.Email;
+
 import javax.persistence.*;
 import java.util.List;
 
