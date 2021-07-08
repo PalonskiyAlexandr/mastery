@@ -6,15 +6,13 @@ import java.util.List;
 
 @Entity
 public class Role {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-
-    private String name;
-
     @ManyToMany(mappedBy = "roles",
             cascade = CascadeType.ALL)
     private final List<User> users = new ArrayList<>();
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    private String name;
 
     public Role() {
     }

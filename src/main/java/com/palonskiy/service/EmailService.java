@@ -1,5 +1,7 @@
 package com.palonskiy.service;
 
+import com.palonskiy.model.RegistrationRequest;
+
 public interface EmailService {
-    void send(String to, String email);
+    void sendConfirmationEmail(String token, RegistrationRequest request);
 }
