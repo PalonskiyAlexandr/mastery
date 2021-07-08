@@ -23,11 +23,11 @@ import java.util.List;
 @Transactional
 public class BookServiceImpl implements BookService {
 
-    private BookDao bookDao;
-    private AuthorService authorService;
+    private final BookDao bookDao;
+    private final AuthorService authorService;
 
-    private AuthorConverter authorConverter;
-    private BookConverter bookConverter;
+    private final AuthorConverter authorConverter;
+    private final BookConverter bookConverter;
 
 
     public BookServiceImpl(BookDao bookDao, AuthorService authorService, AuthorConverter authorConverter, BookConverter bookConverter) {
@@ -96,7 +96,7 @@ public class BookServiceImpl implements BookService {
                 long id;
                 if (!authorService.checkIfAuthorExist(author)) {
                     id = authorService.add(author).getId();
-                }else {
+                } else {
                     id = author.getId();
                 }
                 authors.add(authorConverter.toAuthor(authorService.getById(id)));

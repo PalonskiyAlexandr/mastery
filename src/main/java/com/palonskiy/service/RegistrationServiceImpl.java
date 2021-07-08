@@ -1,8 +1,8 @@
 package com.palonskiy.service;
 
+import com.palonskiy.model.RegistrationRequest;
 import com.palonskiy.model.Role;
 import com.palonskiy.model.User;
-import com.palonskiy.model.RegistrationRequest;
 import com.palonskiy.model.VerificationToken;
 import com.palonskiy.validators.RequestValidator;
 import org.springframework.stereotype.Service;
@@ -13,10 +13,10 @@ import java.util.Arrays;
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
 
-    private UserService userService;
-    private RequestValidator requestValidator;
-    private VerificationTokenService verificationTokenService;
-    private EmailService emailService;
+    private final UserService userService;
+    private final RequestValidator requestValidator;
+    private final VerificationTokenService verificationTokenService;
+    private final EmailService emailService;
 
     public RegistrationServiceImpl(UserService userService, RequestValidator requestValidator, VerificationTokenService verificationTokenService, EmailService emailService) {
         this.userService = userService;
@@ -38,7 +38,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                 )
         );
         String link = "http://localhost:8080/registration/confirm?token=" + token;
-        emailService.send(request.getEmail(),  buildEmail(request.getName(), link));
+        emailService.send(request.getEmail(), buildEmail(request.getName(), link));
     }
 
     @Override

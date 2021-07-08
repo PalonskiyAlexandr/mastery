@@ -1,21 +1,16 @@
 package com.palonskiy.controllers;
 
 import com.palonskiy.dto.AuthorDto;
-import com.palonskiy.dto.BookAuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.model.Action;
 import com.palonskiy.service.AuthorService;
 import com.palonskiy.service.BookService;
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
 
 @Controller
 public class BookController {
@@ -62,11 +57,11 @@ public class BookController {
     @PreAuthorize("hasRole('ADMIN')")
     public String newBook(Model model, HttpSession session, @ModelAttribute BookDto bookDto,
                           @RequestParam(value = "action") Action action) {
-            session.setAttribute("bookDto", bookDto);
+        session.setAttribute("bookDto", bookDto);
         if (Action.CREATE_AUTHOR.equals(action)) {
             model.addAttribute("author", new AuthorDto());
             return "new-book-author";
-        } else  {
+        } else {
             model.addAttribute("authors", authorService.getAll());
             return "new-book-author-assign";
         }
@@ -82,7 +77,7 @@ public class BookController {
 
     @PostMapping("/admin/assign-author/{authorId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public String assignAuthor (HttpSession session, @PathVariable long authorId) {
+    public String assignAuthor(HttpSession session, @PathVariable long authorId) {
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
         bookService.add(bookService.createBookAuthorDto(bookDto, authorId));
         return "redirect:/admin/books";
@@ -91,7 +86,7 @@ public class BookController {
 
     @PostMapping("/admin/old-assign-author/{authorId}")
     @PreAuthorize("hasRole('ADMIN')")
-    public String oldAssignAuthor (HttpSession session, @PathVariable long authorId) {
+    public String oldAssignAuthor(HttpSession session, @PathVariable long authorId) {
         String bookId = session.getAttribute("bookId").toString();
         bookService.updateWithAuthor(bookService.createBookAuthorDto(Long.parseLong(bookId), authorId));
         return "redirect:/";
@@ -119,7 +114,7 @@ public class BookController {
         if (Action.ASSIGN_AUTHOR.equals(action)) {
             model.addAttribute("authors", authorService.getAuthorExceptAuthors(bookDto));
             return "old-book-author-assign";
-        } else  {
+        } else {
             bookService.update(bookDto);
             return "redirect:/admin/books";
         }

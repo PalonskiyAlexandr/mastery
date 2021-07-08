@@ -3,14 +3,13 @@ package com.palonskiy.configuration;
 import nz.net.ultraq.thymeleaf.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
-import org.springframework.context.MessageSource;
-import org.springframework.context.annotation.*;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
-import org.springframework.core.env.Profiles;
 import org.springframework.core.io.ClassPathResource;
-import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
@@ -19,8 +18,6 @@ import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 import org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring5.view.ThymeleafViewResolver;
-
-import java.util.Properties;
 
 
 @Configuration
@@ -31,6 +28,28 @@ public class AppConfig implements WebMvcConfigurer {
     @Autowired
     private ApplicationContext applicationContext;
 
+    @Bean
+    @Profile("local")
+    public PropertySourcesPlaceholderConfigurer localPropertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+        propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("local/application-local.properties"));
+        return propertySourcesPlaceholderConfigurer;
+    }
+
+    @Bean
+    @Profile("prod")
+    public PropertySourcesPlaceholderConfigurer prodPropertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+        propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("prod/application-prod.properties"));
+        return propertySourcesPlaceholderConfigurer;
+    }
+
+    @Bean
+    public PropertySourcesPlaceholderConfigurer defaultPropertySourcesPlaceholderConfigurer() {
+        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
+        propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("application.properties"));
+        return propertySourcesPlaceholderConfigurer;
+    }
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
@@ -71,7 +90,6 @@ public class AppConfig implements WebMvcConfigurer {
         registry.viewResolver(resolver);
     }
 
-
     //Internationalization
     @Bean
     public ResourceBundleMessageSource messageSource() {
@@ -100,29 +118,5 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
 
-    @Bean
-    @Profile("prod")
-
-    public PropertySourcesPlaceholderConfigurer prodPropertySourcesPlaceholderConfigurer() {
-        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-        propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("prod/application-prod.properties"));
-        return propertySourcesPlaceholderConfigurer;
-    }
-
-
-    @Bean
-    @Profile("local")
-    public static PropertySourcesPlaceholderConfigurer localPropertySourcesPlaceholderConfigurer() {
-        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-        propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("local/application-local.properties"));
-        return propertySourcesPlaceholderConfigurer;
-    }
-
-    @Bean
-    public static PropertySourcesPlaceholderConfigurer defaultPropertySourcesPlaceholderConfigurer() {
-        PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer = new PropertySourcesPlaceholderConfigurer();
-        propertySourcesPlaceholderConfigurer.setLocations(new ClassPathResource("application.properties"));
-        return propertySourcesPlaceholderConfigurer;
-    }
 
 }

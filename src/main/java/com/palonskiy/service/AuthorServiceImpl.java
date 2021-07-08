@@ -17,11 +17,11 @@ import java.util.List;
 @Transactional
 public class AuthorServiceImpl implements AuthorService {
 
-    private AuthorDao authorDao;
-    private BookDao bookDao;
+    private final AuthorDao authorDao;
+    private final BookDao bookDao;
 
-    private AuthorConverter authorConverter;
-    private BookConverter bookConverter;
+    private final AuthorConverter authorConverter;
+    private final BookConverter bookConverter;
 
     public AuthorServiceImpl(AuthorDao authorDao, BookDao bookDao, AuthorConverter authorConverter, BookConverter bookConverter) {
         this.authorDao = authorDao;
@@ -60,12 +60,11 @@ public class AuthorServiceImpl implements AuthorService {
     public void delete(long authorId) {
         List<Book> books = authorDao.getAuthorBooks(authorId);
         Author author = authorDao.getById(authorId);
-        for (Book book:books) {
+        for (Book book : books) {
             List<Author> authors = book.getAuthors();
-            if (authors.size()==1)
-            {
+            if (authors.size() == 1) {
                 bookDao.delete(book);
-            }else{
+            } else {
                 authors.remove(author);
                 bookDao.update(book);
             }

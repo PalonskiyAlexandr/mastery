@@ -6,7 +6,10 @@ import com.palonskiy.validators.RequestValidator;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class RegistrationController {
@@ -20,13 +23,13 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration")
-    public String getRegisterPage (Model model){
+    public String getRegisterPage(Model model) {
         model.addAttribute("request", new RegistrationRequest());
         return "register";
     }
 
     @PostMapping("/registration")
-    public String String (@ModelAttribute RegistrationRequest request, BindingResult bindingResult, Model model){
+    public String String(@ModelAttribute RegistrationRequest request, BindingResult bindingResult, Model model) {
         requestValidator.validate(request, bindingResult);
         if (bindingResult.hasErrors()) {
             model.addAttribute("request", new RegistrationRequest());
@@ -37,7 +40,7 @@ public class RegistrationController {
     }
 
     @GetMapping("/registration/confirm")
-    public String confirm (@RequestParam("token") String token){
+    public String confirm(@RequestParam("token") String token) {
         registrationService.confirmToken(token);
         return "redirect:/login";
     }

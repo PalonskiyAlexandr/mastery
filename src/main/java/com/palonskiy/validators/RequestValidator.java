@@ -2,12 +2,10 @@ package com.palonskiy.validators;
 
 import com.palonskiy.model.RegistrationRequest;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Service;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import java.util.function.Predicate;
 import java.util.regex.Pattern;
 
 @Component

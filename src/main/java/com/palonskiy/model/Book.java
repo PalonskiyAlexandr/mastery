@@ -2,10 +2,8 @@ package com.palonskiy.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Pattern;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
-import java.time.Year;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -37,12 +35,12 @@ public class Book {
     )
     private List<Author> authors = new ArrayList<>();
 
-   /* @NotNull(message = NULL_MESSAGE)*/
+    /* @NotNull(message = NULL_MESSAGE)*/
     private LocalDate year;
 
     @NotNull(message = NULL_MESSAGE)
     @Size(min = 3, message = SIZE_MESSAGE)
- /*   @Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
+    /*   @Pattern(regexp = "^[A-Z][a-z]+", message = PATTERN_MESSAGE)*/
     private String publisher;
 
     public Book() {

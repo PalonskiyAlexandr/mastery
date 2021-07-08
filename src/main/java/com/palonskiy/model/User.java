@@ -1,8 +1,6 @@
 package com.palonskiy.model;
 
 
-import org.hibernate.validator.constraints.Email;
-
 import javax.persistence.*;
 import java.util.List;
 
@@ -30,7 +28,7 @@ public class User {
     private boolean enabled = false;
     private String email;
 
-    @OneToMany(mappedBy="user")
+    @OneToMany(mappedBy = "user")
     private List<VerificationToken> tokens;
 
     public User() {

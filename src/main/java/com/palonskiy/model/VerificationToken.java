@@ -1,12 +1,7 @@
 package com.palonskiy.model;
 
-import com.palonskiy.model.User;
-
 import javax.persistence.*;
-import java.sql.Date;
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Calendar;
 
 @Entity
 @Table(name = "verification_token")

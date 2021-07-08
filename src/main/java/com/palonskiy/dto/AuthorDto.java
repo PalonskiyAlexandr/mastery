@@ -6,8 +6,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import java.time.LocalDate;
-import java.time.Year;
-import java.util.Objects;
 
 public class AuthorDto {
 

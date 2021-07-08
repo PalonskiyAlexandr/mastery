@@ -5,7 +5,6 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -13,11 +12,9 @@ import java.util.List;
 
 public class CrudDaoImpl<T> implements CrudDao<T> {
 
-    protected SessionFactory sessionFactory;
-
-    protected Class<T> clazz;
-
     private static final Logger logger = LoggerFactory.getLogger(CrudDaoImpl.class);
+    protected SessionFactory sessionFactory;
+    protected Class<T> clazz;
 
     public CrudDaoImpl(SessionFactory sessionFactory, Class<T> clazz) {
         this.sessionFactory = sessionFactory;
@@ -47,7 +44,7 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
     public T add(T obj) {
         logger.debug("adding {}", obj);
         //TODO can't pass the test with primitive type
-        return getById(((Long)currentSession().save(obj)) );
+        return getById(((Long) currentSession().save(obj)));
     }
 
     @Override
@@ -68,7 +65,7 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
     }
 
     @Override
-    public  List<T>  getByField(Object obj, String fieldName) {
+    public List<T> getByField(Object obj, String fieldName) {
         logger.debug("getting by field: {} with value: {}", fieldName, obj);
         CriteriaBuilder cb = currentSession().getCriteriaBuilder();
         CriteriaQuery<T> query = cb.createQuery(clazz);

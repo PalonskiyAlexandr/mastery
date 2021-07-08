@@ -12,13 +12,12 @@ import javax.mail.internet.MimeMessage;
 @Service
 public class EmailServiceImpl implements EmailService {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(EmailServiceImpl.class);
     private final JavaMailSender mailSender;
 
     public EmailServiceImpl(JavaMailSender mailSender) {
         this.mailSender = mailSender;
     }
-
-    private static final Logger LOGGER = LoggerFactory.getLogger(EmailServiceImpl.class);
 
     @Override
     public void send(String to, String email) {
@@ -30,7 +29,7 @@ public class EmailServiceImpl implements EmailService {
             helper.setSubject("Confirm your email");
             helper.setFrom("test@gmail.com");
             mailSender.send(mimeMessage);
-        } catch (MessagingException e){
+        } catch (MessagingException e) {
             LOGGER.error("failed to send email", e);
             throw new IllegalStateException("failed to send email");
         }

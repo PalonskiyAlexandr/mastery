@@ -11,7 +11,7 @@ import java.util.Optional;
 @Repository
 public class VerificationTokenDaoImpl implements VerificationTokenDao {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public VerificationTokenDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -37,7 +37,7 @@ public class VerificationTokenDaoImpl implements VerificationTokenDao {
     }
 
     @Override
-    public void updateConfirmedAt(String token, LocalDateTime confirmedAt){
+    public void updateConfirmedAt(String token, LocalDateTime confirmedAt) {
         String hql = "UPDATE VerificationToken v SET v.confirmedAt = :confirmedAt WHERE v.token = :token";
         currentSession().createQuery(hql)
                 .setParameter("confirmedAt", confirmedAt)
