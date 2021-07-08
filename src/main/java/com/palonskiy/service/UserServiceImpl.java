@@ -1,5 +1,6 @@
 package com.palonskiy.service;
 
+import com.palonskiy.converters.SecurityUserConverter;
 import com.palonskiy.dao.UserDao;
 import com.palonskiy.model.VerificationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -18,36 +19,26 @@ import java.util.stream.Collectors;
 @Transactional
 public class UserServiceImpl implements UserService {
 
-    private UserDao userDao;
-    private BCryptPasswordEncoder bCryptPasswordEncoder;
-    private VerificationTokenService verificationTokenService;
+    private final UserDao userDao;
+    private final BCryptPasswordEncoder bCryptPasswordEncoder;
+    private final VerificationTokenService verificationTokenService;
+    private final SecurityUserConverter securityUserConverter;
 
-    public UserServiceImpl(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder,
-                           VerificationTokenService verificationTokenService) {
+    public UserServiceImpl(UserDao userDao, BCryptPasswordEncoder bCryptPasswordEncoder, VerificationTokenService verificationTokenService, SecurityUserConverter securityUserConverter) {
         this.userDao = userDao;
         this.bCryptPasswordEncoder = bCryptPasswordEncoder;
         this.verificationTokenService = verificationTokenService;
+        this.securityUserConverter = securityUserConverter;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        return userDao.findByName(username)
-                .map(user -> new User(
-                        user.getLogin(),
-                        user.getPassword(),
-                        user.isEnabled(),
-                        true,
-                        true,
-                        true,
-                        user.getRoles()
-                                .stream()
-                                .map(role -> new SimpleGrantedAuthority("ROLE_" + role.getName()))
-                                .collect(Collectors.toList())))
+        return securityUserConverter.toSecurityUser(userDao.findByLogin(username))
                 .orElseThrow(() -> new UsernameNotFoundException(String.format("Username: {0} not found", username)));
     }
 
     public String signUpUser(com.palonskiy.model.User user){
-        boolean userExist = userDao.findByName(user.getLogin()).isPresent();
+        boolean userExist = userDao.findByLogin(user.getLogin()).isPresent();
         /*TODO findByEmail*/
         if(userExist){
             throw new IllegalStateException("login already taken");

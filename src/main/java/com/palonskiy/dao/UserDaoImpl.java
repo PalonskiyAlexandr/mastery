@@ -27,7 +27,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public Optional<User> findByName(String username) {
+    public Optional<User> findByLogin(String username) {
         String hql = "SELECT u FROM User u WHERE u.login = :username";
         Optional<User> optionalUser = currentSession().createQuery(hql, User.class)
                 .setParameter("username", username)
