@@ -38,7 +38,7 @@ public class RequestValidator implements Validator {
         }
         if (registrationRequest.getSurname() != null && registrationRequest.getSurname().length() < 2 ||
                 registrationRequest.getSurname().length() > 20) {
-            errors.rejectValue("name", "registrationRequest.surname.size");
+            errors.rejectValue("surname", "registrationRequest.surname.size");
         }
 
         if (registrationRequest.getPassword() != null && registrationRequest.getPassword().contains(" ")) {

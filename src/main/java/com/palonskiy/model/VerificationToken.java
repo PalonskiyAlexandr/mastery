@@ -2,6 +2,7 @@ package com.palonskiy.model;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 @Entity
 @Table(name = "verification_token")
@@ -80,5 +81,30 @@ public class VerificationToken {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        VerificationToken that = (VerificationToken) o;
+        return Objects.equals(id, that.id) && Objects.equals(token, that.token) && Objects.equals(createdAt, that.createdAt) && Objects.equals(expiredAt, that.expiredAt) && Objects.equals(confirmedAt, that.confirmedAt) && Objects.equals(user, that.user);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, token, createdAt, expiredAt, confirmedAt, user);
+    }
+
+    @Override
+    public String toString() {
+        return "VerificationToken{" +
+                "id=" + id +
+                ", token='" + token + '\'' +
+                ", createdAt=" + createdAt +
+                ", expiredAt=" + expiredAt +
+                ", confirmedAt=" + confirmedAt +
+                ", user=" + user +
+                '}';
     }
 }

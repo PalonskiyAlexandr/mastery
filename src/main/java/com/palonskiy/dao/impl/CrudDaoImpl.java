@@ -1,5 +1,6 @@
-package com.palonskiy.dao;
+package com.palonskiy.dao.impl;
 
+import com.palonskiy.dao.CrudDao;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -43,7 +44,6 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
     @Override
     public T add(T obj) {
         logger.debug("adding {}", obj);
-        //TODO can't pass the test with primitive type
         return getById(((Long) currentSession().save(obj)));
     }
 
@@ -54,7 +54,6 @@ public class CrudDaoImpl<T> implements CrudDao<T> {
     }
 
     @Override
-    //TODO change Long to primitive type
     public T getById(Long id) {
         logger.debug("getting by id {}", id);
         CriteriaBuilder cb = currentSession().getCriteriaBuilder();

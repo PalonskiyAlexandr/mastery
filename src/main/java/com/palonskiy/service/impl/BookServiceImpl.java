@@ -1,4 +1,4 @@
-package com.palonskiy.service;
+package com.palonskiy.service.impl;
 
 import com.palonskiy.converters.AuthorConverter;
 import com.palonskiy.converters.BookConverter;
@@ -11,6 +11,8 @@ import com.palonskiy.exceptions.NullAuthorException;
 import com.palonskiy.exceptions.NullBookException;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
+import com.palonskiy.service.AuthorService;
+import com.palonskiy.service.BookService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

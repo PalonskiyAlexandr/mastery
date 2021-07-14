@@ -3,6 +3,7 @@ package com.palonskiy.controllers;
 import com.palonskiy.model.RegistrationRequest;
 import com.palonskiy.service.RegistrationService;
 import com.palonskiy.validators.RequestValidator;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,6 +11,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Locale;
 
 @Controller
 public class RegistrationController {
@@ -24,18 +27,18 @@ public class RegistrationController {
 
     @GetMapping("/registration")
     public String getRegisterPage(Model model) {
-        model.addAttribute("request", new RegistrationRequest());
+        model.addAttribute("registrationRequest", new RegistrationRequest());
         return "register";
     }
 
     @PostMapping("/registration")
-    public String String(@ModelAttribute RegistrationRequest request, BindingResult bindingResult, Model model) {
-        requestValidator.validate(request, bindingResult);
+    public String String(@ModelAttribute("registrationRequest") RegistrationRequest registrationRequest, BindingResult bindingResult, Model model) {
+        requestValidator.validate(registrationRequest, bindingResult);
         if (bindingResult.hasErrors()) {
-            model.addAttribute("request", new RegistrationRequest());
             return "register";
         }
-        registrationService.register(request);
+        Locale locale = LocaleContextHolder.getLocale();
+        registrationService.register(registrationRequest, locale);
         return "redirect:/login";
     }
 

@@ -7,42 +7,52 @@
     <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
     <link href="css/blog.css" rel="stylesheet">
 </head>
-
 <body class="bg-light">
 <div>
     <article class="card-body mx-auto" style="max-width: 400px;">
         <h4 class="card-title mt-3 text-center" th:text="#{registration.title}"></h4>
-        <form action="#" method="post" th:action="@{/registration}" th:object="${request}">
-            <div class="form-group input-group">
+        <div th:text="${request}"></div>
+        <form method="post" th:action="@{/registration}" th:object="${registrationRequest}">
+            <div class="form-group input-group ">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input class="form-control" name="" th:field="${request.name}" th:placeholder="#{registration.name}"
-                       type="text">
-                <div th:if="${#fields.hasErrors('name')}">
-                    This is a danger alert with
-                </div>
+                <input class="form-control" th:errorclass="is-invalid" th:field="*{name}"
+                       th:placeholder="#{registration.name}" type="text">
+            </div>
+            <div class="alert alert-danger py-0 mx-1" th:errors="*{name}" th:if="${#fields.hasErrors('name')}">
+                <!--th:errors="*{name}"-->
+                <p></p>
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input class="form-control" name="" th:field="${request.surname}" th:placeholder="#{registration.surname}"
+                <input class="form-control" th:field="*{surname}" th:placeholder="#{registration.surname}"
                        type="text">
+            </div>
+            <div class="alert alert-danger" role="alert" th:errors="*{surname}" th:if="${#fields.hasErrors('surname')}">
+                <p th:each="err : ${#fields.errors('surname')}" th:text="${err}"></p>
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-user"></i> </span>
                 </div>
-                <input class="form-control" name="" th:field="${request.login}" th:placeholder="#{registration.login}"
+                <input class="form-control" th:field="*{login}" th:placeholder="#{registration.login}"
                        type="text">
+            </div>
+            <div class="alert alert-danger" role="alert" th:errors="*{login}" th:if="${#fields.hasErrors('login')}">
+                <p th:each="err : ${#fields.errors('login')}" th:text="${err}"></p>
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
                     <span class="input-group-text"> <i class="fa fa-envelope"></i> </span>
                 </div>
-                <input class="form-control" name="" th:field="${request.email}" th:placeholder="#{registration.email}"
+                <input class="form-control" th:field="*{email}" th:placeholder="#{registration.email}"
                        type="email">
+            </div>
+            <div class="alert alert-danger" role="alert" th:errors="*{email}" th:if="${#fields.hasErrors('email')}">
+                <p th:each="err : ${#fields.errors('email')}" th:text="${err}"></p>
             </div>
             <div class="form-group input-group">
                 <div class="input-group-prepend">
@@ -57,7 +67,11 @@
                     <span class="input-group-text"> <i class="fa fa-lock"></i> </span>
                 </div>
                 <input class="form-control" id="ConfirmPassword" required
-                       th:field="${request.password}" th:placeholder="#{registration.repeat.password}" type="password">
+                       th:field="*{password}" th:placeholder="#{registration.repeat.password}" type="password">
+            </div>
+            <div class="alert alert-danger" role="alert" th:errors="*{password}"
+                 th:if="${#fields.hasErrors('password')}">
+                <p th:each="err : ${#fields.errors('password')}" th:text="${err}"></p>
             </div>
             <div class="form-group">
                 <button class="btn btn-primary btn-block" th:text="#{registration.button.create}"

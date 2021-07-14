@@ -1,4 +1,4 @@
-package com.palonskiy.service;
+package com.palonskiy.service.impl;
 
 import com.palonskiy.converters.AuthorConverter;
 import com.palonskiy.converters.BookConverter;
@@ -8,6 +8,7 @@ import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
+import com.palonskiy.service.AuthorService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -74,8 +75,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<BookDto> getByJoinField(Object obj, String fieldName) {
-        List<BookDto> list = bookConverter.toDtoList(authorDao.getByJoinField(obj, fieldName));
-        return list;
+        return bookConverter.toDtoList(authorDao.getByJoinField(obj, fieldName));
     }
 
     @Override

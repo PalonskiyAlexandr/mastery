@@ -1,13 +1,18 @@
-package com.palonskiy.service;
+package com.palonskiy.service.impl;
 
 import com.palonskiy.model.RegistrationRequest;
 import com.palonskiy.model.Role;
 import com.palonskiy.model.User;
 import com.palonskiy.model.VerificationToken;
+import com.palonskiy.service.EmailService;
+import com.palonskiy.service.RegistrationService;
+import com.palonskiy.service.UserService;
+import com.palonskiy.service.VerificationTokenService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.Locale;
 
 @Service
 public class RegistrationServiceImpl implements RegistrationService {
@@ -23,7 +28,7 @@ public class RegistrationServiceImpl implements RegistrationService {
     }
 
     @Override
-    public void register(RegistrationRequest request) {
+    public void register(RegistrationRequest request, Locale locale) {
         String token = userService.signUpUser(
                 new User(
                         request.getLogin(),
@@ -34,7 +39,7 @@ public class RegistrationServiceImpl implements RegistrationService {
                         request.getEmail()
                 )
         );
-        emailService.sendConfirmationEmail(token, request);
+        emailService.sendConfirmationEmail(token, request, locale);
     }
 
     @Override

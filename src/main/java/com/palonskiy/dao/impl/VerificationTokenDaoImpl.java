@@ -1,5 +1,6 @@
-package com.palonskiy.dao;
+package com.palonskiy.dao.impl;
 
+import com.palonskiy.dao.VerificationTokenDao;
 import com.palonskiy.model.VerificationToken;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

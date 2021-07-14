@@ -1,7 +1,9 @@
-package com.palonskiy.service;
+package com.palonskiy.service.impl;
 
 import com.palonskiy.converters.SecurityUserConverter;
 import com.palonskiy.dao.UserDao;
+import com.palonskiy.service.UserService;
+import com.palonskiy.service.VerificationTokenService;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

@@ -100,7 +100,7 @@ public class AppConfig implements WebMvcConfigurer {
     @Bean
     public ResourceBundleMessageSource messageSource() {
         ResourceBundleMessageSource source = new ResourceBundleMessageSource();
-        source.setBasenames("messages");
+        source.setBasenames("messages", "validationMessages");
         source.setUseCodeAsDefaultMessage(true);
         source.setDefaultEncoding("UTF-8");
         return source;
@@ -119,9 +119,9 @@ public class AppConfig implements WebMvcConfigurer {
     }
 
     @Bean
-    public FreeMarkerConfigurationFactoryBean getFreeMarkerConfiguration() {
+    public FreeMarkerConfigurationFactoryBean freeMarkerConfiguration() {
         FreeMarkerConfigurationFactoryBean fmConfigFactoryBean = new FreeMarkerConfigurationFactoryBean();
-        fmConfigFactoryBean.setTemplateLoaderPath("/static/views/flth/");
+        fmConfigFactoryBean.setTemplateLoaderPath("/static/views/email/");
         return fmConfigFactoryBean;
     }
 }
