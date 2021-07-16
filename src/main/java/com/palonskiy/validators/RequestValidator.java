@@ -27,6 +27,7 @@ public class RequestValidator implements Validator {
         ValidationUtils.rejectIfEmpty(errors, "password", "registrationRequest.password.empty");
         ValidationUtils.rejectIfEmpty(errors, "email", "registrationRequest.email.empty");
 
+
         RegistrationRequest registrationRequest = (RegistrationRequest) target;
         if (registrationRequest.getLogin() != null && registrationRequest.getLogin().length() < 2 ||
                 registrationRequest.getLogin().length() > 20) {
@@ -52,6 +53,10 @@ public class RequestValidator implements Validator {
 
         if (registrationRequest.getEmail() != null && !EMAIL_REGEX.matcher(registrationRequest.getEmail()).matches()) {
             errors.rejectValue("email", "registrationRequest.email.invalid");
+        }
+
+        if (!registrationRequest.getPassword().equals(registrationRequest.getRepeatedPassword())) {
+            errors.rejectValue("repeatedPassword", "registrationRequest.repeatedPassword.compare");
         }
     }
 }

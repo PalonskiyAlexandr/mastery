@@ -8,6 +8,7 @@ public class RegistrationRequest {
     private String name;
     private String surname;
     private String password;
+    private String repeatedPassword;
     private String email;
 
 
@@ -46,6 +47,14 @@ public class RegistrationRequest {
         this.password = password;
     }
 
+    public String getRepeatedPassword() {
+        return repeatedPassword;
+    }
+
+    public void setRepeatedPassword(String repeatedPassword) {
+        this.repeatedPassword = repeatedPassword;
+    }
+
     public String getEmail() {
         return email;
     }
@@ -59,12 +68,12 @@ public class RegistrationRequest {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         RegistrationRequest that = (RegistrationRequest) o;
-        return Objects.equals(login, that.login) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(password, that.password) && Objects.equals(email, that.email);
+        return Objects.equals(login, that.login) && Objects.equals(name, that.name) && Objects.equals(surname, that.surname) && Objects.equals(password, that.password) && Objects.equals(repeatedPassword, that.repeatedPassword) && Objects.equals(email, that.email);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(login, name, surname, password, email);
+        return Objects.hash(login, name, surname, password, repeatedPassword, email);
     }
 
     @Override
@@ -74,6 +83,7 @@ public class RegistrationRequest {
                 ", name='" + name + '\'' +
                 ", surname='" + surname + '\'' +
                 ", password='" + password + '\'' +
+                ", repeatedPassword='" + repeatedPassword + '\'' +
                 ", email='" + email + '\'' +
                 '}';
     }

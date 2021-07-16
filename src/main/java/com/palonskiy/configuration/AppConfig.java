@@ -63,8 +63,6 @@ public class AppConfig implements WebMvcConfigurer {
                 .addResourceLocations("/static/css/");
         registry.addResourceHandler("/images/**")
                 .addResourceLocations("static/images/");
-        registry.addResourceHandler("/js/**")
-                .addResourceLocations("static/js/");
     }
 
     //Thymeleaf
