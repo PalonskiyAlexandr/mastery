@@ -32,7 +32,8 @@ public class RegistrationController {
     }
 
     @PostMapping("/registration")
-    public String String(@ModelAttribute("registrationRequest") RegistrationRequest registrationRequest, BindingResult bindingResult, Model model) {
+    public String String(@ModelAttribute("registrationRequest") RegistrationRequest registrationRequest,
+                         BindingResult bindingResult, Model model) {
         requestValidator.validate(registrationRequest, bindingResult);
         if (bindingResult.hasErrors()) {
             return "register";

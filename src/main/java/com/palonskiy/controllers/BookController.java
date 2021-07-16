@@ -1,19 +1,28 @@
 package com.palonskiy.controllers;
 
+import com.palonskiy.dao.impl.CrudDaoImpl;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.model.Action;
+import com.palonskiy.model.Message;
+import com.palonskiy.model.MessageType;
 import com.palonskiy.service.AuthorService;
 import com.palonskiy.service.BookService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
+import javax.persistence.NoResultException;
 import javax.servlet.http.HttpSession;
 
 @Controller
 public class BookController {
+
+    private static final Logger logger = LoggerFactory.getLogger(CrudDaoImpl.class);
 
     private final BookService bookService;
     private final AuthorService authorService;
@@ -40,8 +49,16 @@ public class BookController {
 
     @GetMapping("/admin/books")
     @PreAuthorize("hasRole('ADMIN')")
-    public String getListBooks(Model model) {
+    public String getListBooks(Model model, HttpSession session) {
         model.addAttribute("books", bookService.getBookAuthorList());
+        Message message = new Message();
+        if (null != session.getAttribute("message")) {
+            message = (Message)session.getAttribute("message");
+            model.addAttribute("addingMessage", message);
+        }else {
+            model.addAttribute("addingMessage", message);
+        }
+        session.removeAttribute("message");
         return "admin-books";
     }
 
@@ -69,9 +86,18 @@ public class BookController {
 
     @PostMapping("/admin/new-book-author")
     @PreAuthorize("hasRole('ADMIN')")
-    public String newBookAuthor(HttpSession session, @ModelAttribute AuthorDto authorDto) {
+    public String newBookAuthor(HttpSession session, @ModelAttribute AuthorDto authorDto, BindingResult bindingResult) {
         BookDto bookDto = (BookDto) session.getAttribute("bookDto");
-        bookService.add(bookService.createBookAuthorDto(bookDto, authorDto));
+        Message message = new Message();
+        try {
+            bookService.add(bookService.createBookAuthorDto(bookDto, authorDto));
+            message = new Message(MessageType.SUCCESS, "Book has been successfully added");
+        } catch (Exception e) {
+            message = new Message(MessageType.ERROR, e.toString());
+            logger.warn("can not add new book: {0}", e);
+        } finally {
+            session.setAttribute("message", message);
+        }
         return "redirect:/admin/books";
     }
 

@@ -12,6 +12,20 @@
     <div class="p-2 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
         <div class="">
             <h1 class="display-4 fst-italic" th:text="#{title.books}"></h1>
+
+            <div th:if="${addingMessage.type == T(com.palonskiy.model.MessageType).ERROR}">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <p>bad</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            <div th:if="${addingMessage.type == T(com.palonskiy.model.MessageType).SUCCESS}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <p>good</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+
             <table class="table table-hover table-dark">
                 <thead class="">
                 <tr>
@@ -26,7 +40,8 @@
                     <form method="get" th:action="@{/admin/update-book/__${book.book.id}__}"
                           th:object="${book.book}">
                         <td>
-                            <button class="btn btn-link text-white" th:text="${book.book.name}" type="submit"></button>
+                            <button class="btn btn-link text-white" th:text="${book.book.name}"
+                                    type="submit"></button>
                         </td>
                     </form>
                     <td th:text="${book.book.publisher}"></td>

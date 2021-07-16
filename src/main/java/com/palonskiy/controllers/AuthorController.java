@@ -36,6 +36,7 @@ public class AuthorController {
     @PostMapping("/admin/update-author")
     @PreAuthorize("hasRole('ADMIN')")
     public String updateAuthor(@ModelAttribute AuthorDto authorDto) {
+
         authorService.update(authorDto);
         return "redirect:/admin/authors";
     }
