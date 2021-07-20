@@ -10,8 +10,8 @@
     <!--<logger name="com.palonskiy.dao" level="debug" />-->
     <!--<logger name="org.springframework.security" level="debug" />-->
 
-    <root level="info">
-        <appender-ref ref="STDOUT" />
+    <root level="debug">
+        <appender-ref ref="STDOUT"/>
     </root>
 
 </configuration>

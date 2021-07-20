@@ -1,6 +1,7 @@
-package com.palonskiy.registration.token;
+package com.palonskiy.dao.impl;
 
-import com.palonskiy.model.User;
+import com.palonskiy.dao.VerificationTokenDao;
+import com.palonskiy.model.VerificationToken;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
@@ -9,9 +10,9 @@ import java.time.LocalDateTime;
 import java.util.Optional;
 
 @Repository
-public class VerificationTokenDaoImpl implements VerificationTokenDao{
+public class VerificationTokenDaoImpl implements VerificationTokenDao {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public VerificationTokenDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -37,7 +38,7 @@ public class VerificationTokenDaoImpl implements VerificationTokenDao{
     }
 
     @Override
-    public void updateConfirmedAt(String token, LocalDateTime confirmedAt){
+    public void updateConfirmedAt(String token, LocalDateTime confirmedAt) {
         String hql = "UPDATE VerificationToken v SET v.confirmedAt = :confirmedAt WHERE v.token = :token";
         currentSession().createQuery(hql)
                 .setParameter("confirmedAt", confirmedAt)

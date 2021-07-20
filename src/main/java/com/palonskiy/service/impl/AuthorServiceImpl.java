@@ -1,4 +1,4 @@
-package com.palonskiy.service;
+package com.palonskiy.service.impl;
 
 import com.palonskiy.converters.AuthorConverter;
 import com.palonskiy.converters.BookConverter;
@@ -8,6 +8,7 @@ import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
+import com.palonskiy.service.AuthorService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,11 +18,11 @@ import java.util.List;
 @Transactional
 public class AuthorServiceImpl implements AuthorService {
 
-    private AuthorDao authorDao;
-    private BookDao bookDao;
+    private final AuthorDao authorDao;
+    private final BookDao bookDao;
 
-    private AuthorConverter authorConverter;
-    private BookConverter bookConverter;
+    private final AuthorConverter authorConverter;
+    private final BookConverter bookConverter;
 
     public AuthorServiceImpl(AuthorDao authorDao, BookDao bookDao, AuthorConverter authorConverter, BookConverter bookConverter) {
         this.authorDao = authorDao;
@@ -60,12 +61,11 @@ public class AuthorServiceImpl implements AuthorService {
     public void delete(long authorId) {
         List<Book> books = authorDao.getAuthorBooks(authorId);
         Author author = authorDao.getById(authorId);
-        for (Book book:books) {
+        for (Book book : books) {
             List<Author> authors = book.getAuthors();
-            if (authors.size()==1)
-            {
+            if (authors.size() == 1) {
                 bookDao.delete(book);
-            }else{
+            } else {
                 authors.remove(author);
                 bookDao.update(book);
             }
@@ -75,8 +75,7 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public List<BookDto> getByJoinField(Object obj, String fieldName) {
-        List<BookDto> list = bookConverter.toDtoList(authorDao.getByJoinField(obj, fieldName));
-        return list;
+        return bookConverter.toDtoList(authorDao.getByJoinField(obj, fieldName));
     }
 
     @Override

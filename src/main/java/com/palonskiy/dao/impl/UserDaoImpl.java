@@ -1,22 +1,17 @@
-package com.palonskiy.dao;
+package com.palonskiy.dao.impl;
 
-import com.palonskiy.model.Author;
+import com.palonskiy.dao.UserDao;
 import com.palonskiy.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
-import javax.persistence.criteria.Root;
-import java.util.List;
 import java.util.Optional;
 
 @Repository
-public class UserDaoImpl implements UserDao{
+public class UserDaoImpl implements UserDao {
 
-    private SessionFactory sessionFactory;
+    private final SessionFactory sessionFactory;
 
     public UserDaoImpl(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
@@ -27,7 +22,7 @@ public class UserDaoImpl implements UserDao{
     }
 
     @Override
-    public Optional<User> findByName(String username) {
+    public Optional<User> findByLogin(String username) {
         String hql = "SELECT u FROM User u WHERE u.login = :username";
         Optional<User> optionalUser = currentSession().createQuery(hql, User.class)
                 .setParameter("username", username)

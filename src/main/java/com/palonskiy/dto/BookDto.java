@@ -3,7 +3,6 @@ package com.palonskiy.dto;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.time.LocalDate;
-import java.time.Year;
 
 public class BookDto {
 

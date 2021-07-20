@@ -2,18 +2,18 @@ package com.palonskiy.controllers;
 
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.service.AuthorService;
-
-
-import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 public class AuthorController {
 
-    private AuthorService authorService;
+    private final AuthorService authorService;
 
     public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
@@ -36,6 +36,7 @@ public class AuthorController {
     @PostMapping("/admin/update-author")
     @PreAuthorize("hasRole('ADMIN')")
     public String updateAuthor(@ModelAttribute AuthorDto authorDto) {
+
         authorService.update(authorDto);
         return "redirect:/admin/authors";
     }
@@ -74,57 +75,4 @@ public class AuthorController {
         model.addAttribute("author", new AuthorDto());
         return "new-author";
     }
-
-    /*@GetMapping("/author")
-    public ResponseEntity<List<AuthorDto>> getAll() {
-        return new ResponseEntity<>(authorService.getAll(), HttpStatus.OK);
-    }
-
-    @GetMapping("/author/{id}")
-    public ResponseEntity<AuthorDto> getAuthor(@PathVariable int id) {
-        return new ResponseEntity<>(authorService.getById(id), HttpStatus.OK);
-    }
-
-    @PutMapping("/author")
-    public ResponseEntity<?> updateAuthor(@RequestBody AuthorDto authorDto) {
-        authorService.update(authorDto);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }
-
-    @GetMapping("/authorBooks/{id}")
-    public ResponseEntity<List<BookDto>> getAuthorBooks(@PathVariable int id) {
-        return new ResponseEntity<>(authorService.getAuthorBooks(id), HttpStatus.OK);
-    }
-
-    @PostMapping("/author")
-    public ResponseEntity<?> newAuthor(@RequestBody AuthorDto AuthorDto) {
-        authorService.add(AuthorDto);
-        return new ResponseEntity<>(HttpStatus.CREATED);
-    }
-
-    @DeleteMapping("/author")
-    public ResponseEntity<?> deleteAuthor(@RequestParam int id) {
-        authorService.delete(id);
-        return new ResponseEntity<>(HttpStatus.OK);
-    }*/
-
-/*    @GetMapping("/bookByAuthorName")
-    public ResponseEntity<List<BookDto>> getBookByAuthorName(@RequestParam String name) {
-        return new ResponseEntity<>(authorService.getByJoinField(name, "firstName"), HttpStatus.OK);
-    }
-//LocalDate???
-    @GetMapping("/bookByAuthorBirthday")
-    public ResponseEntity<List<BookDto>> getBookByAuthorBirthday(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        return new ResponseEntity<>(authorService.getByJoinField(date, "birthday"), HttpStatus.OK);
-    }
-
-    @GetMapping("/bookByAuthorSecondName")
-    public ResponseEntity<List<BookDto>> getBookByAuthorSecondName(@RequestParam String secondName) {
-        return new ResponseEntity<>(authorService.getByJoinField(secondName, "secondName"), HttpStatus.OK);
-    }
-
-    @GetMapping("/bookByAuthorSex")
-    public ResponseEntity<List<BookDto>> getBookByAuthorSex(@RequestParam String sex) {
-        return new ResponseEntity<>(authorService.getByJoinField(sex, "sex"), HttpStatus.OK);
-    }*/
 }

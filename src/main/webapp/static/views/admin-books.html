@@ -1,61 +1,67 @@
 <!doctype html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <link href="https://fonts.googleapis.com/css?family=Playfair&#43;Display:700,900&amp;display=swap" rel="stylesheet">
-  <link href="/css/blog.css" rel="stylesheet">
-</head>
+<div th:replace="~{fragments/head :: fragment(title = #{title.books})}"></div>
+
 <body>
 
-<div  th:replace="~{fragments/main-nav :: fragment}"></div>
+<div th:replace="~{fragments/main-nav :: fragment}"></div>
 
 
 <main class="container">
-  <div class="p-2 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
-    <div class="">
-      <h1 class="display-4 fst-italic" th:text="#{h1.books}"></h1>
-      <table class="table table-hover table-dark">
-        <thead class="">
-        <tr>
-          <th th:text="#{bookName}"></th>
-          <th th:text="#{bookPublisher}"></th>
-          <th th:text="#{bookDate}"></th>
-          <th th:text="#{table.Author}"></th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr th:each="book : ${books}">
-          <form action="#" th:action="@{/admin/update-book/__${book.book.id}__}" th:object="${book.book}"
-                method="get">
-            <td>
-              <button type="submit" class="btn btn-link text-white" th:text="${book.book.name}"></button>
-            </td>
-          </form>
-          <td th:text="${book.book.publisher}"></td>
-          <td th:text="${book.book.year}"></td>
-          <td>
+    <div class="p-2 p-md-5 mb-4 text-white rounded bg-dark d-flex justify-content-center">
+        <div class="">
+            <h1 class="display-4 fst-italic" th:text="#{title.books}"></h1>
+
+            <div th:if="${addingMessage.type == T(com.palonskiy.model.MessageType).ERROR}">
+                <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                    <p>bad</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+            <div th:if="${addingMessage.type == T(com.palonskiy.model.MessageType).SUCCESS}">
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <p>good</p>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            </div>
+
+            <table class="table table-hover table-dark">
+                <thead class="">
+                <tr>
+                    <th th:text="#{table.head.book-name}"></th>
+                    <th th:text="#{table.head.book-publisher}"></th>
+                    <th th:text="#{table.head.book-date}"></th>
+                    <th th:text="#{table.author}"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="book : ${books}">
+                    <form method="get" th:action="@{/admin/update-book/__${book.book.id}__}"
+                          th:object="${book.book}">
+                        <td>
+                            <button class="btn btn-link text-white" th:text="${book.book.name}"
+                                    type="submit"></button>
+                        </td>
+                    </form>
+                    <td th:text="${book.book.publisher}"></td>
+                    <td th:text="${book.book.year}"></td>
+                    <td>
                         <span th:each="author : ${book.authors}"
                               th:utext="${author.firstName + ' ' + author.secondName +'</br>' }"><br></span>
-          </td>
-          <form action="#" th:action="@{/admin/delete-book/__${book.book.id}__}" th:object="${book.book}"
-                method="post">
-            <td>
-              <button type="submit" class="btn btn-secondary" th:text="#{button.delete}"></button>
-            </td>
-          </form>
-        </tr>
-        </tbody>
-      </table>
+                    </td>
+                    <form method="post" th:action="@{/admin/delete-book/__${book.book.id}__}"
+                          th:object="${book.book}">
+                        <td>
+                            <button class="btn btn-secondary" th:text="#{button.delete}" type="submit"></button>
+                        </td>
+                    </form>
+                </tr>
+                </tbody>
+            </table>
+        </div>
     </div>
-  </div>
 
-  <div  th:replace="~{fragments/feature :: fragment}"></div>
 
 </main>
 </body>

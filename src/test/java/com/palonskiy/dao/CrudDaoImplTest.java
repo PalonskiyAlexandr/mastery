@@ -1,5 +1,6 @@
 package com.palonskiy.dao;
 
+import com.palonskiy.dao.impl.CrudDaoImpl;
 import com.palonskiy.model.Author;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -7,7 +8,6 @@ import org.hibernate.query.Query;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 
 import static org.mockito.Mockito.*;

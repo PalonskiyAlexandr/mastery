@@ -1,4 +1,6 @@
-package com.palonskiy.registration.token;
+package com.palonskiy.dao;
+
+import com.palonskiy.model.VerificationToken;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

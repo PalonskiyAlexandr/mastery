@@ -1,5 +1,6 @@
-package com.palonskiy.dao;
+package com.palonskiy.dao.impl;
 
+import com.palonskiy.dao.AuthorDao;
 import com.palonskiy.dto.AuthorDto;
 import com.palonskiy.dto.BookDto;
 import com.palonskiy.model.Author;

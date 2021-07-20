@@ -1,5 +1,6 @@
 package com.palonskiy.dao;
 
+import com.palonskiy.dao.impl.BookDaoImpl;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
 import org.hibernate.Session;

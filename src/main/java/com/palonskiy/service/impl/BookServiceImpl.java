@@ -1,4 +1,4 @@
-package com.palonskiy.service;
+package com.palonskiy.service.impl;
 
 import com.palonskiy.converters.AuthorConverter;
 import com.palonskiy.converters.BookConverter;
@@ -11,6 +11,8 @@ import com.palonskiy.exceptions.NullAuthorException;
 import com.palonskiy.exceptions.NullBookException;
 import com.palonskiy.model.Author;
 import com.palonskiy.model.Book;
+import com.palonskiy.service.AuthorService;
+import com.palonskiy.service.BookService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,11 +25,11 @@ import java.util.List;
 @Transactional
 public class BookServiceImpl implements BookService {
 
-    private BookDao bookDao;
-    private AuthorService authorService;
+    private final BookDao bookDao;
+    private final AuthorService authorService;
 
-    private AuthorConverter authorConverter;
-    private BookConverter bookConverter;
+    private final AuthorConverter authorConverter;
+    private final BookConverter bookConverter;
 
 
     public BookServiceImpl(BookDao bookDao, AuthorService authorService, AuthorConverter authorConverter, BookConverter bookConverter) {
@@ -96,7 +98,7 @@ public class BookServiceImpl implements BookService {
                 long id;
                 if (!authorService.checkIfAuthorExist(author)) {
                     id = authorService.add(author).getId();
-                }else {
+                } else {
                     id = author.getId();
                 }
                 authors.add(authorConverter.toAuthor(authorService.getById(id)));
